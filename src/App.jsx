@@ -181,7 +181,7 @@ const CARD = { background: 'rgba(255,255,255,.03)', border: '1px solid rgba(255,
 export default function App() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const typedText = useTypewriter(['Agentic AI Pipelines', 'RAG Applications', 'Fine-tuned NLP Models', 'Multi-Agent Systems', 'LLM Applications'])
+  const typedText = useTypewriter(['AI Researcher', 'NLP Engineer', 'Agentic Systems Developer', 'LLM Specialist', 'RAG Architect'])
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 30)
@@ -241,21 +241,18 @@ export default function App() {
             Open to opportunities
           </div>
           <h1 style={{ fontWeight: 800, lineHeight: 1.15, margin: '0 0 14px', fontSize: 'clamp(2.1rem,5vw,3.8rem)' }}>
-            Hi, I'm{' '}
             <span style={{ background: 'linear-gradient(135deg,#818cf8,#a78bfa,#c084fc)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
               Manar Attar
             </span>
           </h1>
-          <p style={{ fontSize: 'clamp(1.1rem,2.5vw,1.5rem)', color: '#94a3b8', fontWeight: 300, margin: '0 0 18px', minHeight: '2em' }}>
-            I build{' '}
-            <span style={{ color: '#a78bfa', fontWeight: 600 }}>
-              {typedText}<span className="cursor">|</span>
-            </span>
+          <p style={{ fontSize: 'clamp(1.1rem,2.5vw,1.5rem)', color: '#a78bfa', fontWeight: 600, margin: '0 0 18px', minHeight: '2em' }}>
+            {typedText}<span className="cursor">|</span>
           </p>
-          <p style={{ maxWidth: 560, margin: '0 auto 32px', color: '#94a3b8', lineHeight: 1.7, fontSize: 15 }}>
-            Master's student in Language & AI at VU Amsterdam. I build intelligent systems —
-            agentic AI pipelines, fine-tuned NLP models, and RAG applications.
-            Currently researching author profiling on hate speech data using LLMs and BERT.
+          <p style={{ maxWidth: 580, margin: '0 auto 32px', color: '#94a3b8', lineHeight: 1.8, fontSize: 15 }}>
+            AI Researcher and Developer specialising in agentic architectures, RAG pipelines,
+            and fine-tuned NLP models. Pursuing a Master's in Language &amp; AI at Vrije Universiteit
+            Amsterdam, with thesis research on author profiling in multilingual hate speech data —
+            benchmarking zero-shot LLMs against fine-tuned BERT models.
           </p>
           <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 12, marginBottom: 40 }}>
             <button onClick={() => go('projects')} style={{ padding: '11px 26px', borderRadius: 10, border: 'none', background: 'linear-gradient(135deg,#6366f1,#8b5cf6)', color: '#fff', fontWeight: 600, fontSize: 14, cursor: 'pointer' }}>
