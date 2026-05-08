@@ -509,26 +509,38 @@ export default function App() {
 
       {/* CONTACT */}
       <section id="contact" style={SEC}>
-        <Fade><div style={{ ...C, textAlign: 'center' }}>
+        <Fade><div style={C}>
           <Hdr label="Get In Touch" title="Contact" />
-          <p style={{ maxWidth: 480, margin: '0 auto 32px', color: '#94a3b8', fontSize: 15, lineHeight: 1.7 }}>
-            Finishing my Master's thesis — open to AI/ML roles from mid-2026.
-            Reach out for collaborations, opportunities, or just to talk AI.
-          </p>
-          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 12 }}>
-            <a href="mailto:manarattar77@gmail.com" style={{ padding: '11px 24px', borderRadius: 10, background: 'linear-gradient(135deg,#6366f1,#8b5cf6)', color: '#fff', fontWeight: 600, fontSize: 14, textDecoration: 'none' }}>
-              manarattar77@gmail.com
-            </a>
-            <a href="https://linkedin.com/in/manar-attar" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: 7, padding: '11px 24px', borderRadius: 10, border: '1px solid rgba(100,116,139,.5)', color: '#cbd5e1', fontWeight: 600, fontSize: 14, textDecoration: 'none' }}>
-              <svg width="17" height="17" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" /></svg>
-              LinkedIn
-            </a>
-            <a href="https://github.com/manarattar" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: 7, padding: '11px 24px', borderRadius: 10, border: '1px solid rgba(100,116,139,.5)', color: '#cbd5e1', fontWeight: 600, fontSize: 14, textDecoration: 'none' }}>
-              {GH} GitHub
-            </a>
-            <a href="/Manar-Attar-CV.pdf" download style={{ padding: '11px 24px', borderRadius: 10, border: '1px solid rgba(100,116,139,.5)', color: '#cbd5e1', fontWeight: 600, fontSize: 14, textDecoration: 'none' }}>
-              Download CV
-            </a>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(min(100%,460px),1fr))', gap: 40, alignItems: 'start' }}>
+
+            {/* Left — blurb + links */}
+            <div>
+              <p style={{ color: '#94a3b8', fontSize: 15, lineHeight: 1.8, margin: '0 0 28px' }}>
+                Finishing my Master's thesis — open to AI/ML roles from mid-2026.
+                Reach out for collaborations, opportunities, or just to talk AI.
+              </p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+                {[
+                  { href: 'mailto:manarattar77@gmail.com', label: 'manarattar77@gmail.com', icon: '✉️' },
+                  { href: 'https://linkedin.com/in/manar-attar', label: 'linkedin.com/in/manar-attar', icon: '💼', blank: true },
+                  { href: 'https://github.com/manarattar', label: 'github.com/manarattar', icon: '🐙', blank: true },
+                ].map(({ href, label, icon, blank }) => (
+                  <a key={label} href={href} {...(blank ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                    style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 16px', borderRadius: 10, background: 'rgba(255,255,255,.03)', border: '1px solid rgba(255,255,255,.07)', color: '#94a3b8', textDecoration: 'none', fontSize: 14, transition: 'border-color .2s, color .2s' }}
+                    onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(99,102,241,.4)'; e.currentTarget.style.color = '#f1f5f9' }}
+                    onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,.07)'; e.currentTarget.style.color = '#94a3b8' }}>
+                    <span style={{ fontSize: 16 }}>{icon}</span>{label}
+                  </a>
+                ))}
+                <a href="/Manar-Attar-CV.pdf" download
+                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: '11px 24px', borderRadius: 10, background: 'linear-gradient(135deg,#6366f1,#8b5cf6)', color: '#fff', fontWeight: 600, fontSize: 14, textDecoration: 'none', marginTop: 4 }}>
+                  Download CV
+                </a>
+              </div>
+            </div>
+
+            {/* Right — contact form */}
+            <ContactForm />
           </div>
         </div></Fade>
       </section>
@@ -572,6 +584,78 @@ export default function App() {
         }
       `}</style>
     </div>
+  )
+}
+
+const WEB3FORMS_KEY = '7ec7a12f-ef4e-4deb-b491-a8703fb92065'
+
+function ContactForm() {
+  const [form, setForm] = useState({ name: '', email: '', message: '' })
+  const [status, setStatus] = useState('idle') // idle | sending | success | error
+
+  const set = k => e => setForm(f => ({ ...f, [k]: e.target.value }))
+
+  const submit = async e => {
+    e.preventDefault()
+    setStatus('sending')
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ access_key: WEB3FORMS_KEY, ...form }),
+      })
+      setStatus(res.ok ? 'success' : 'error')
+    } catch { setStatus('error') }
+  }
+
+  const inputStyle = {
+    width: '100%', padding: '11px 14px', borderRadius: 10, fontSize: 14,
+    background: 'rgba(255,255,255,.04)', border: '1px solid rgba(255,255,255,.1)',
+    color: '#f1f5f9', outline: 'none', boxSizing: 'border-box',
+    transition: 'border-color .2s',
+  }
+
+  if (status === 'success') return (
+    <div style={{ ...CARD, padding: '40px 32px', textAlign: 'center' }}>
+      <div style={{ fontSize: 40, marginBottom: 16 }}>✅</div>
+      <p style={{ fontSize: 16, fontWeight: 700, color: '#f1f5f9', margin: '0 0 8px' }}>Message sent!</p>
+      <p style={{ fontSize: 14, color: '#94a3b8', margin: '0 0 24px' }}>I'll get back to you soon.</p>
+      <button onClick={() => { setForm({ name: '', email: '', message: '' }); setStatus('idle') }}
+        style={{ padding: '9px 22px', borderRadius: 8, border: '1px solid rgba(99,102,241,.4)', background: 'transparent', color: '#818cf8', fontSize: 14, cursor: 'pointer' }}>
+        Send another
+      </button>
+    </div>
+  )
+
+  return (
+    <form onSubmit={submit} style={{ ...CARD, padding: '28px 28px 24px', display: 'flex', flexDirection: 'column', gap: 16 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+        <div>
+          <label style={{ display: 'block', fontSize: 12, color: '#64748b', marginBottom: 6, fontWeight: 600, letterSpacing: '0.05em' }}>NAME</label>
+          <input required value={form.name} onChange={set('name')} placeholder="Jane Smith" style={inputStyle}
+            onFocus={e => e.target.style.borderColor = 'rgba(99,102,241,.6)'}
+            onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,.1)'} />
+        </div>
+        <div>
+          <label style={{ display: 'block', fontSize: 12, color: '#64748b', marginBottom: 6, fontWeight: 600, letterSpacing: '0.05em' }}>EMAIL</label>
+          <input required type="email" value={form.email} onChange={set('email')} placeholder="jane@company.com" style={inputStyle}
+            onFocus={e => e.target.style.borderColor = 'rgba(99,102,241,.6)'}
+            onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,.1)'} />
+        </div>
+      </div>
+      <div>
+        <label style={{ display: 'block', fontSize: 12, color: '#64748b', marginBottom: 6, fontWeight: 600, letterSpacing: '0.05em' }}>MESSAGE</label>
+        <textarea required value={form.message} onChange={set('message')} placeholder="Hi Manar, I'd love to discuss..." rows={5}
+          style={{ ...inputStyle, resize: 'vertical', fontFamily: 'inherit' }}
+          onFocus={e => e.target.style.borderColor = 'rgba(99,102,241,.6)'}
+          onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,.1)'} />
+      </div>
+      {status === 'error' && <p style={{ fontSize: 13, color: '#f87171', margin: 0 }}>Something went wrong — try emailing directly.</p>}
+      <button type="submit" disabled={status === 'sending'}
+        style={{ padding: '12px', borderRadius: 10, border: 'none', background: 'linear-gradient(135deg,#6366f1,#8b5cf6)', color: '#fff', fontWeight: 600, fontSize: 15, cursor: status === 'sending' ? 'not-allowed' : 'pointer', opacity: status === 'sending' ? 0.7 : 1, transition: 'opacity .2s' }}>
+        {status === 'sending' ? 'Sending…' : 'Send Message'}
+      </button>
+    </form>
   )
 }
 
