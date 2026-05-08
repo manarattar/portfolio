@@ -463,14 +463,6 @@ export default function App() {
         </div></Fade>
       </section>
 
-      {/* GITHUB STATS */}
-      <section style={SEC}>
-        <Fade><div style={C}>
-          <Hdr label="Open Source" title="GitHub Activity" />
-          <GitHubStats username="manarattar" />
-        </div></Fade>
-      </section>
-
       {/* PUBLICATIONS */}
       <section style={SEC}>
         <Fade><div style={C}>
@@ -526,85 +518,6 @@ export default function App() {
           .nav-mobile{display:block!important}
         }
       `}</style>
-    </div>
-  )
-}
-
-function GitHubStats({ username }) {
-  const [data, setData] = useState(null)
-  const [langs, setLangs] = useState(null)
-
-  useEffect(() => {
-    fetch(`https://api.github.com/users/${username}`)
-      .then(r => r.json()).then(setData).catch(() => {})
-    fetch(`https://api.github.com/users/${username}/repos?per_page=100`)
-      .then(r => r.json()).then(repos => {
-        if (!Array.isArray(repos)) return
-        const stars = repos.reduce((s, r) => s + r.stargazers_count, 0)
-        const map = {}
-        repos.forEach(r => { if (r.language) map[r.language] = (map[r.language] || 0) + 1 })
-        const sorted = Object.entries(map).sort((a, b) => b[1] - a[1]).slice(0, 6)
-        setLangs({ stars, sorted })
-      }).catch(() => {})
-  }, [username])
-
-  const LANG_COLORS = { Python: '#3572A5', JavaScript: '#f1e05a', TypeScript: '#3178c6', HTML: '#e34c26', CSS: '#563d7c', Shell: '#89e051', Jupyter: '#DA5B0B', R: '#198CE7' }
-
-  if (!data) return (
-    <div style={{ textAlign: 'center', color: '#475569', padding: '32px 0' }}>Loading GitHub stats…</div>
-  )
-
-  const stats = [
-    { label: 'Public Repos', value: data.public_repos ?? '—' },
-    { label: 'Followers', value: data.followers ?? '—' },
-    { label: 'Stars Earned', value: langs?.stars ?? '—' },
-    { label: 'Following', value: data.following ?? '—' },
-  ]
-
-  return (
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(min(100%,480px),1fr))', gap: 16 }}>
-      {/* Stats card */}
-      <div style={{ ...CARD, padding: '24px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
-          {data.avatar_url && <img src={data.avatar_url} alt="avatar" style={{ width: 42, height: 42, borderRadius: '50%', border: '2px solid rgba(129,140,248,.4)' }} />}
-          <div>
-            <div style={{ fontSize: 15, fontWeight: 700, color: '#f1f5f9' }}>{data.name || username}</div>
-            <a href={data.html_url} target="_blank" rel="noopener noreferrer" style={{ fontSize: 12, color: '#818cf8', textDecoration: 'none' }}>@{username}</a>
-          </div>
-        </div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-          {stats.map(({ label, value }) => (
-            <div key={label} style={{ background: 'rgba(255,255,255,.04)', borderRadius: 10, padding: '12px 16px' }}>
-              <div style={{ fontSize: 22, fontWeight: 800, color: '#818cf8' }}>{value}</div>
-              <div style={{ fontSize: 11, color: '#64748b', marginTop: 2 }}>{label}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Top languages card */}
-      <div style={{ ...CARD, padding: '24px' }}>
-        <div style={{ fontSize: 11, fontWeight: 700, color: '#818cf8', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 16 }}>Top Languages</div>
-        {langs?.sorted ? (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-            {langs.sorted.map(([lang, count]) => {
-              const total = langs.sorted.reduce((s, [, c]) => s + c, 0)
-              const pct = Math.round((count / total) * 100)
-              return (
-                <div key={lang}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
-                    <span style={{ fontSize: 13, color: '#cbd5e1' }}>{lang}</span>
-                    <span style={{ fontSize: 12, color: '#64748b' }}>{pct}%</span>
-                  </div>
-                  <div style={{ height: 6, borderRadius: 3, background: 'rgba(255,255,255,.07)', overflow: 'hidden' }}>
-                    <div style={{ height: '100%', width: `${pct}%`, borderRadius: 3, background: LANG_COLORS[lang] || '#818cf8', transition: 'width 0.8s ease' }} />
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-        ) : <div style={{ color: '#475569', fontSize: 13 }}>Loading…</div>}
-      </div>
     </div>
   )
 }
