@@ -51,7 +51,7 @@ const AI_PROJECTS = [
     status: 'Live on Render',
     badge: { bg: 'rgba(139,92,246,0.12)', color: '#a78bfa', border: 'rgba(139,92,246,0.25)' },
     github: 'https://github.com/manarattar/contract-risk-analyzer',
-    demo: 'https://contract-analyzer-frontend-1dje.onrender.com/',
+    demo: 'https://contracts.manarattar.com',
     preview: '/preview-contract-analyzer.gif',
   },
   {
@@ -61,7 +61,7 @@ const AI_PROJECTS = [
     status: 'Live on Render',
     badge: { bg: 'rgba(139,92,246,0.12)', color: '#a78bfa', border: 'rgba(139,92,246,0.25)' },
     github: 'https://github.com/manarattar/multi-agent-researcher',
-    demo: 'https://researcher-frontend-psho.onrender.com',
+    demo: 'https://researcher.manarattar.com',
     preview: '/preview-researcher.gif',
   },
   {
@@ -71,7 +71,7 @@ const AI_PROJECTS = [
     status: 'Live on Render',
     badge: { bg: 'rgba(139,92,246,0.12)', color: '#a78bfa', border: 'rgba(139,92,246,0.25)' },
     github: 'https://github.com/manarattar/debate-engine',
-    demo: 'https://debate-engine-frontend.onrender.com',
+    demo: 'https://debate.manarattar.com',
     preview: '/preview-debate-engine.gif',
   },
   {
@@ -81,7 +81,7 @@ const AI_PROJECTS = [
     status: 'Live on Render',
     badge: { bg: 'rgba(139,92,246,0.12)', color: '#a78bfa', border: 'rgba(139,92,246,0.25)' },
     github: null,
-    demo: 'https://swiper-2xu5.onrender.com/',
+    demo: 'https://swipeat.manarattar.com',
     preview: '/preview-swipeat.gif',
   },
 ]
