@@ -1,5 +1,27 @@
 import { useState, useEffect, useRef } from 'react'
 
+function useTypewriter(words, typeSpeed = 75, deleteSpeed = 40, pauseMs = 1800) {
+  const [display, setDisplay] = useState('')
+  const [idx, setIdx] = useState(0)
+  const [deleting, setDeleting] = useState(false)
+  useEffect(() => {
+    const word = words[idx % words.length]
+    let t
+    if (!deleting && display === word) {
+      t = setTimeout(() => setDeleting(true), pauseMs)
+    } else if (deleting && display === '') {
+      setDeleting(false)
+      setIdx(i => i + 1)
+    } else {
+      t = setTimeout(() => {
+        setDisplay(deleting ? word.slice(0, display.length - 1) : word.slice(0, display.length + 1))
+      }, deleting ? deleteSpeed : typeSpeed)
+    }
+    return () => clearTimeout(t)
+  }, [display, idx, deleting, words, typeSpeed, deleteSpeed, pauseMs])
+  return display
+}
+
 function useFadeIn() {
   const ref = useRef(null)
   const [visible, setVisible] = useState(false)
@@ -159,6 +181,7 @@ const CARD = { background: 'rgba(255,255,255,.03)', border: '1px solid rgba(255,
 export default function App() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const typedText = useTypewriter(['Agentic AI Pipelines', 'RAG Applications', 'Fine-tuned NLP Models', 'Multi-Agent Systems', 'LLM Applications'])
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 30)
@@ -223,8 +246,11 @@ export default function App() {
               Manar Attar
             </span>
           </h1>
-          <p style={{ fontSize: 'clamp(1.1rem,2.5vw,1.5rem)', color: '#94a3b8', fontWeight: 300, margin: '0 0 18px' }}>
-            AI Researcher &amp; Developer
+          <p style={{ fontSize: 'clamp(1.1rem,2.5vw,1.5rem)', color: '#94a3b8', fontWeight: 300, margin: '0 0 18px', minHeight: '2em' }}>
+            I build{' '}
+            <span style={{ color: '#a78bfa', fontWeight: 600 }}>
+              {typedText}<span className="cursor">|</span>
+            </span>
           </p>
           <p style={{ maxWidth: 560, margin: '0 auto 32px', color: '#94a3b8', lineHeight: 1.7, fontSize: 15 }}>
             Master's student in Language & AI at VU Amsterdam. I build intelligent systems —
@@ -263,31 +289,33 @@ export default function App() {
           <Hdr label="Portfolio" title="AI Projects" />
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(min(100%,320px),1fr))', gap: 20 }}>
             {AI_PROJECTS.map(p => (
-              <div key={p.title} style={{ ...CARD, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-                {p.preview && (
-                  <div style={{ width: '100%', height: 160, overflow: 'hidden', borderBottom: '1px solid rgba(255,255,255,.07)' }}>
-                    <img src={p.preview} alt={`${p.title} preview`} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }} />
+              <div key={p.title} className="glow-wrap">
+                <div className="glow-inner" style={{ display: 'flex', flexDirection: 'column' }}>
+                  {p.preview && (
+                    <div style={{ width: '100%', height: 160, overflow: 'hidden', borderBottom: '1px solid rgba(255,255,255,.07)' }}>
+                      <img src={p.preview} alt={`${p.title} preview`} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }} />
+                    </div>
+                  )}
+                  <div style={{ padding: '18px 20px 16px', display: 'flex', flexDirection: 'column', flex: 1 }}>
+                    <span style={{ display: 'inline-block', fontSize: 11, fontWeight: 600, padding: '4px 10px', borderRadius: 999, background: p.badge.bg, color: p.badge.color, border: `1px solid ${p.badge.border}`, marginBottom: 12, alignSelf: 'flex-start' }}>
+                      {p.status}
+                    </span>
+                    <h3 style={{ fontSize: 15, fontWeight: 700, color: '#f1f5f9', margin: '0 0 8px', lineHeight: 1.4 }}>{p.title}</h3>
+                    <p style={{ fontSize: 13, color: '#94a3b8', lineHeight: 1.65, margin: '0 0 14px', flex: 1 }}>{p.desc}</p>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 16 }}>
+                      {p.tags.map(t => <span key={t} style={{ fontSize: 11, padding: '3px 8px', borderRadius: 6, background: 'rgba(30,41,59,.9)', color: '#94a3b8' }}>{t}</span>)}
+                    </div>
+                    <div style={{ display: 'flex', gap: 10 }}>
+                      {p.github
+                        ? <a href={p.github} target="_blank" rel="noopener noreferrer" style={{ flex: 1, textAlign: 'center', fontSize: 13, padding: '8px', borderRadius: 8, border: '1px solid rgba(71,85,105,.6)', color: '#94a3b8', textDecoration: 'none' }}>GitHub</a>
+                        : <span style={{ flex: 1, textAlign: 'center', fontSize: 13, padding: '8px', borderRadius: 8, border: '1px solid rgba(71,85,105,.3)', color: '#475569' }}>Private</span>
+                      }
+                      {p.demo
+                        ? <a href={p.demo} target="_blank" rel="noopener noreferrer" style={{ flex: 1, textAlign: 'center', fontSize: 13, padding: '8px', borderRadius: 8, background: 'linear-gradient(135deg,#6366f1,#8b5cf6)', color: '#fff', textDecoration: 'none' }}>Live Demo</a>
+                        : <span style={{ flex: 1, textAlign: 'center', fontSize: 13, padding: '8px', borderRadius: 8, border: '1px solid rgba(71,85,105,.3)', color: '#475569' }}>No demo</span>
+                      }
+                    </div>
                   </div>
-                )}
-                <div style={{ padding: '18px 20px 16px', display: 'flex', flexDirection: 'column', flex: 1 }}>
-                <span style={{ display: 'inline-block', fontSize: 11, fontWeight: 600, padding: '4px 10px', borderRadius: 999, background: p.badge.bg, color: p.badge.color, border: `1px solid ${p.badge.border}`, marginBottom: 12, alignSelf: 'flex-start' }}>
-                  {p.status}
-                </span>
-                <h3 style={{ fontSize: 15, fontWeight: 700, color: '#f1f5f9', margin: '0 0 8px', lineHeight: 1.4 }}>{p.title}</h3>
-                <p style={{ fontSize: 13, color: '#94a3b8', lineHeight: 1.65, margin: '0 0 14px', flex: 1 }}>{p.desc}</p>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 16 }}>
-                  {p.tags.map(t => <span key={t} style={{ fontSize: 11, padding: '3px 8px', borderRadius: 6, background: 'rgba(30,41,59,.9)', color: '#94a3b8' }}>{t}</span>)}
-                </div>
-                <div style={{ display: 'flex', gap: 10 }}>
-                  {p.github
-                    ? <a href={p.github} target="_blank" rel="noopener noreferrer" style={{ flex: 1, textAlign: 'center', fontSize: 13, padding: '8px', borderRadius: 8, border: '1px solid rgba(71,85,105,.6)', color: '#94a3b8', textDecoration: 'none' }}>GitHub</a>
-                    : <span style={{ flex: 1, textAlign: 'center', fontSize: 13, padding: '8px', borderRadius: 8, border: '1px solid rgba(71,85,105,.3)', color: '#475569' }}>Private</span>
-                  }
-                  {p.demo
-                    ? <a href={p.demo} target="_blank" rel="noopener noreferrer" style={{ flex: 1, textAlign: 'center', fontSize: 13, padding: '8px', borderRadius: 8, background: 'linear-gradient(135deg,#6366f1,#8b5cf6)', color: '#fff', textDecoration: 'none' }}>Live Demo</a>
-                    : <span style={{ flex: 1, textAlign: 'center', fontSize: 13, padding: '8px', borderRadius: 8, border: '1px solid rgba(71,85,105,.3)', color: '#475569' }}>No demo</span>
-                  }
-                </div>
                 </div>
               </div>
             ))}
@@ -511,6 +539,31 @@ export default function App() {
 
       <style>{`
         @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+        @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+        @keyframes spin-border{to{transform:rotate(360deg)}}
+
+        .cursor{animation:blink 1s step-end infinite;color:#6366f1;font-weight:300}
+
+        .glow-wrap{
+          position:relative;border-radius:17px;overflow:hidden;
+          padding:1px;background:rgba(255,255,255,.07);
+          display:flex;flex-direction:column;
+        }
+        .glow-wrap::before{
+          content:'';position:absolute;
+          width:200%;height:200%;top:-50%;left:-50%;
+          background:conic-gradient(from 0deg,transparent 0%,#6366f1 25%,#a78bfa 50%,#c084fc 62%,transparent 75%);
+          animation:spin-border 2.5s linear infinite;
+          opacity:0;transition:opacity 0.4s ease;
+          z-index:0;
+        }
+        .glow-wrap:hover::before{opacity:1}
+        .glow-inner{
+          position:relative;z-index:1;
+          border-radius:16px;background:#0d1220;
+          flex:1;overflow:hidden;
+        }
+
         .nav-desktop{display:flex}
         .nav-mobile{display:none}
         @media(max-width:680px){
