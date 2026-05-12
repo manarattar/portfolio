@@ -75,6 +75,16 @@ const AI_PROJECTS = [
     preview: '/preview-debate-engine.gif',
   },
   {
+    title: 'RivalScan: Competitor Intelligence Dashboard',
+    desc: 'Track competitor product updates in real time — RSS feeds, GitHub releases, and changelogs aggregated, AI-summarised, and scored by business impact.',
+    tags: ['FastAPI', 'OpenAI', 'SQLAlchemy', 'React', 'Vite'],
+    status: 'Live on Render',
+    badge: { bg: 'rgba(139,92,246,0.12)', color: '#a78bfa', border: 'rgba(139,92,246,0.25)' },
+    github: 'https://github.com/manarattar/rival-scan',
+    demo: 'https://rivals.manarattar.com',
+    preview: '/preview-rival-scan.gif',
+  },
+  {
     title: 'SwipeEat: Adaptive Meal Recommendation',
     desc: 'Preference-based recommendation algorithm matching users with meals via an intuitive swipe-driven UI. Built for Vervai as a mobile web app MVP.',
     tags: ['Python', 'JavaScript', 'Flask', 'HTML/CSS'],

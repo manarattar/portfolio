@@ -11,6 +11,9 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.4",
+    "canvas": "^3.2.3",
+    "gif-encoder-2": "^1.0.5",
+    "playwright": "^1.60.0",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "tailwindcss": "^4.2.4"

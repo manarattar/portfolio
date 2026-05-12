@@ -120,6 +120,32 @@ async function run() {
 
   await makeGif(contractFrames, join(PUBLIC, 'preview-contract-analyzer.gif'), 100)
 
+  // ── RivalScan ──────────────────────────────────────────────────────────
+  console.log('\n🎬 RivalScan...')
+  await page.goto('https://rival-scan-frontend.onrender.com', { waitUntil: 'networkidle', timeout: 90000 })
+  await wait(2000)
+  const rivalFrames = []
+
+  for (let i = 0; i < 8; i++) { rivalFrames.push(await shot(page)); await wait(150) }
+
+  // Click a competitor in the sidebar
+  const compBtn = page.locator('aside button, aside [role="button"], aside div[class*="cursor"]').nth(1)
+  if (await compBtn.count()) {
+    await compBtn.click()
+    await wait(600)
+    for (let i = 0; i < 8; i++) { rivalFrames.push(await shot(page)); await wait(200) }
+  }
+
+  // Scroll the updates feed
+  for (let s = 0; s < 4; s++) {
+    await page.mouse.wheel(0, 150)
+    await wait(200)
+    rivalFrames.push(await shot(page))
+  }
+  for (let i = 0; i < 6; i++) { rivalFrames.push(await shot(page)); await wait(150) }
+
+  await makeGif(rivalFrames, join(PUBLIC, 'preview-rival-scan.gif'), 90)
+
   // ── SwipeEat ───────────────────────────────────────────────────────────
   console.log('\n🎬 SwipeEat...')
   await page.goto('https://swiper-2xu5.onrender.com/', { waitUntil: 'networkidle', timeout: 60000 })
