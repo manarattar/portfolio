@@ -280,7 +280,7 @@ export default function App() {
             </a>
           </div>
           <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 32 }}>
-            {[['4', 'AI Portfolio Projects'], ['6', 'Academic Projects'], ['2', 'Publications']].map(([v, l]) => (
+            {[['5', 'AI Portfolio Projects'], ['6', 'Academic Projects'], ['2', 'Publications']].map(([v, l]) => (
               <div key={l} style={{ textAlign: 'center' }}>
                 <div style={{ fontSize: 22, fontWeight: 700, color: '#818cf8' }}>{v}</div>
                 <div style={{ fontSize: 12, color: '#64748b', marginTop: 3 }}>{l}</div>
