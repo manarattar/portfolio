@@ -67,7 +67,7 @@ const AI_PROJECTS = [
   {
     title: 'Munazara — AI Debate Engine',
     desc: 'Full-stack debate platform: watch AI argue both sides of any topic, or challenge the AI yourself. Features live streaming, RAG-sourced evidence, real-time fact-checking, a vote system, leaderboard, and an interactive knowledge graph of all debates.',
-    tags: ['FastAPI', 'Cerebras', 'Tavily', 'ChromaDB', 'React', 'Clerk'],
+    tags: ['FastAPI', 'gpt-4o-mini', 'Tavily', 'ChromaDB', 'React', 'SSE'],
     status: 'Live on Vercel',
     badge: { bg: 'rgba(139,92,246,0.12)', color: '#a78bfa', border: 'rgba(139,92,246,0.25)' },
     github: 'https://github.com/manarattar/debate-engine',
