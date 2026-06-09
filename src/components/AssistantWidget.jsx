@@ -9,9 +9,9 @@ const POSITIONS = [
 
 const SUGGESTIONS = [
   "What projects has Manar built?",
-  "Tell me about her thesis research",
-  "What's her tech stack?",
-  "What are her strongest skills?",
+  "Tell me about his thesis research",
+  "What's his tech stack?",
+  "What are his strongest skills?",
 ]
 
 export default function AssistantWidget() {
