@@ -89,6 +89,6 @@ export default async function handler(req, res) {
     res.json({ content: completion.choices[0].message.content });
   } catch (err) {
     console.error('Chat error:', err.message);
-    res.status(500).json({ error: 'Failed to generate response' });
+    res.status(500).json({ error: err.message || 'Failed to generate response' });
   }
 }
