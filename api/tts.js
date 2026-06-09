@@ -4,11 +4,13 @@ export default async function handler(req, res) {
   const { text } = req.body || {};
   if (!text) return res.status(400).json({ error: 'No text provided' });
 
+  const apiKey = (process.env.OPENAI_API_KEY || '').replace(/^﻿/, '').trim();
+
   try {
     const response = await fetch('https://api.openai.com/v1/audio/speech', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
+        'Authorization': `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ model: 'tts-1', voice: 'nova', input: text.slice(0, 4096) }),

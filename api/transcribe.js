@@ -4,6 +4,8 @@ export default async function handler(req, res) {
   const { audio, mimeType = 'audio/webm' } = req.body || {};
   if (!audio) return res.status(400).json({ error: 'No audio provided' });
 
+  const apiKey = (process.env.OPENAI_API_KEY || '').replace(/^﻿/, '').trim();
+
   try {
     const buffer = Buffer.from(audio, 'base64');
     const formData = new FormData();
@@ -12,7 +14,7 @@ export default async function handler(req, res) {
 
     const response = await fetch('https://api.openai.com/v1/audio/transcriptions', {
       method: 'POST',
-      headers: { 'Authorization': `Bearer ${process.env.OPENAI_API_KEY}` },
+      headers: { 'Authorization': `Bearer ${apiKey}` },
       body: formData,
     });
 

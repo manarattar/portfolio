@@ -69,18 +69,19 @@ Start with: "Describe a data challenge in your research where you had to make a 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  // v3-native-fetch
   const { messages = [], mode = 'chat', position = 'ai-ml' } = req.body || {};
 
   const systemPrompt = mode === 'interview'
     ? INTERVIEW_SYSTEMS[position] || INTERVIEW_SYSTEMS['ai-ml']
     : `You are a friendly AI assistant on Manar Attar's portfolio website. Manar is male — always use he/him/his pronouns. Answer questions about Manar accurately and concisely:\n\n${MANAR_BIO}\n\nKeep answers to 2–4 sentences. If asked something not in the profile, say you're not sure and suggest manarattar77@gmail.com.`;
 
+  const apiKey = (process.env.OPENAI_API_KEY || '').replace(/^﻿/, '').trim();
+
   try {
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
+        'Authorization': `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
