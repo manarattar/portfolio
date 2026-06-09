@@ -69,6 +69,7 @@ Start with: "Describe a data challenge in your research where you had to make a 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
+  // v3-native-fetch
   const { messages = [], mode = 'chat', position = 'ai-ml' } = req.body || {};
 
   const systemPrompt = mode === 'interview'
@@ -99,6 +100,6 @@ export default async function handler(req, res) {
     res.json({ content: data.choices[0].message.content });
   } catch (err) {
     console.error('Chat error:', err.message);
-    res.status(500).json({ error: err.message || 'Failed to generate response' });
+    res.status(500).json({ error: err.message || 'Failed to generate response', v: 'native-fetch' });
   }
 }
