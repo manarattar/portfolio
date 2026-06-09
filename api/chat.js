@@ -1,9 +1,5 @@
-import OpenAI from 'openai';
-
-const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-
 const MANAR_BIO = `
-Manar Attar is an AI Researcher and Developer completing his Master's in Language & AI at Vrije Universiteit Amsterdam (graduating June 2026).
+Manar Attar is a male AI Researcher and Developer completing his Master's in Language & AI at Vrije Universiteit Amsterdam (graduating June 2026). Always refer to Manar using he/him/his pronouns.
 
 CONTACT: manarattar77@gmail.com | linkedin.com/in/manarattar | github.com/manarattar | manarattar.com
 
@@ -12,7 +8,7 @@ THESIS:
 - Dataset: LiLaH (~9,600 records, 4 languages: English, Croatian, Dutch, Slovene)
 - Approach: Zero-shot LLMs (LLaMA 3.2, Qwen 2.5) vs fine-tuned encoders (BERT, DistilBERT, HateBERT, RoBERTa, mBERT, CroSloEngual BERT) trained on PAN14 social media data
 - Key finding: 66+ age group is invisible to both approaches — only 0.2% of PAN14 training data vs 10.3% of LiLaH
-- Extended training with English reviews corpus (0 → 814 aged 66+ authors), improved recall significantly
+- Extended training with English reviews corpus improved 66+ recall significantly
 - Supervisor: Ilia Markov, VU Amsterdam
 
 PROJECTS:
@@ -45,48 +41,62 @@ PUBLICATIONS: 2 academic papers published in NLP/computational linguistics venue
 `;
 
 const INTERVIEW_SYSTEMS = {
-  'ai-ml': `You are a senior AI/ML Engineer interviewer at a top AI company conducting a real job interview with Manar Attar.
+  'ai-ml': `You are a senior AI/ML Engineer interviewer at a top AI company conducting a real job interview with Manar Attar (he/him).
 
 About the candidate: ${MANAR_BIO}
 
-Start immediately with: "Welcome Manar. Let's start — tell me about your background in AI and ML." Then ask one technical question at a time covering: ML fundamentals (loss functions, regularization, optimization), transformer architectures, LLM fine-tuning vs prompting, RAG system design, evaluation metrics, vector databases, and her specific projects. After each answer, give a brief 1-line reaction ("Good answer." / "Interesting approach." / "Let me push back on that — ...") then ask the next question. Keep your responses under 80 words. Be rigorous but professional.`,
+Start immediately with: "Welcome Manar. Let's start — tell me about your background in AI and ML." Then ask one technical question at a time covering: ML fundamentals, transformer architectures, LLM fine-tuning vs prompting, RAG system design, evaluation metrics, vector databases, and his specific projects. After each answer give a brief 1-line reaction then ask the next question. Keep responses under 80 words. Be rigorous but professional.`,
 
-  'nlp': `You are a senior NLP Researcher at an academic-industry lab interviewing Manar Attar for an NLP Research position.
-
-About the candidate: ${MANAR_BIO}
-
-Start with: "Manar, walk me through your thesis research — what problem are you solving and why does it matter?" Then probe deeply on: author profiling methodology, hate speech detection challenges, cross-dataset evaluation design (LiLaH vs PAN14), the class imbalance problem (66+ age group), stylometric vs semantic approaches, LLM vs fine-tuned BERT tradeoffs, and her publication experience. Be intellectually rigorous — challenge weak claims. Keep responses under 80 words.`,
-
-  'fullstack': `You are a senior Full-Stack Engineer interviewer conducting a technical interview with Manar Attar.
+  'nlp': `You are a senior NLP Researcher interviewing Manar Attar (he/him) for an NLP Research position.
 
 About the candidate: ${MANAR_BIO}
 
-Start with: "Tell me about the most technically complex full-stack system you've built." Then ask about: FastAPI design patterns and async handling, database schema decisions (when SQLite vs PostgreSQL), React state management patterns, real-time streaming (SSE vs WebSocket tradeoffs), authentication flows (JWT/Clerk), Docker containerization, Vercel vs Render deployment decisions, and system design at scale. Reference her actual projects specifically. Keep responses under 80 words.`,
+Start with: "Manar, walk me through your thesis research — what problem are you solving and why does it matter?" Then probe deeply on: author profiling methodology, cross-dataset evaluation, the 66+ class imbalance problem, LLM vs fine-tuned BERT tradeoffs, and his publication experience. Be intellectually rigorous. Keep responses under 80 words.`,
 
-  'data-science': `You are a senior Data Scientist conducting a technical interview with Manar Attar.
+  'fullstack': `You are a senior Full-Stack Engineer interviewer conducting a technical interview with Manar Attar (he/him).
 
 About the candidate: ${MANAR_BIO}
 
-Start with: "Describe a data challenge in your research where you had to make a difficult methodological decision." Then probe on: handling class imbalance (the 66+ problem), choosing evaluation metrics (macro F1 vs weighted, per-class analysis), experimental design for model comparison, corpus analysis methodology, feature engineering for NLP, cross-lingual evaluation challenges, and how she interprets conflicting results. Be rigorous about statistical validity. Keep responses under 80 words.`,
+Start with: "Tell me about the most technically complex full-stack system you've built." Then ask about: FastAPI design patterns, database decisions, React state management, real-time streaming (SSE vs WebSocket), authentication flows, Docker, deployment decisions, and system design. Reference his actual projects specifically. Keep responses under 80 words.`,
+
+  'data-science': `You are a senior Data Scientist conducting a technical interview with Manar Attar (he/him).
+
+About the candidate: ${MANAR_BIO}
+
+Start with: "Describe a data challenge in your research where you had to make a difficult methodological decision." Then probe on: class imbalance handling, evaluation metrics, experimental design, corpus analysis methodology, and how he interprets conflicting results. Keep responses under 80 words.`,
 };
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { messages = [], mode = 'chat', position = 'ai-ml' } = req.body;
+  const { messages = [], mode = 'chat', position = 'ai-ml' } = req.body || {};
 
   const systemPrompt = mode === 'interview'
     ? INTERVIEW_SYSTEMS[position] || INTERVIEW_SYSTEMS['ai-ml']
-    : `You are a friendly AI assistant on Manar Attar's portfolio website. Answer questions about Manar accurately and concisely based on this profile:\n\n${MANAR_BIO}\n\nKeep answers to 2–4 sentences. Be warm and professional. If asked something not in the profile, say you're not sure and suggest reaching out at manarattar77@gmail.com.`;
+    : `You are a friendly AI assistant on Manar Attar's portfolio website. Manar is male — always use he/him/his pronouns. Answer questions about Manar accurately and concisely:\n\n${MANAR_BIO}\n\nKeep answers to 2–4 sentences. If asked something not in the profile, say you're not sure and suggest manarattar77@gmail.com.`;
 
   try {
-    const completion = await client.chat.completions.create({
-      model: 'gpt-4o-mini',
-      messages: [{ role: 'system', content: systemPrompt }, ...messages],
-      max_tokens: 350,
-      temperature: 0.7,
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'gpt-4o-mini',
+        messages: [{ role: 'system', content: systemPrompt }, ...messages],
+        max_tokens: 350,
+        temperature: 0.7,
+      }),
     });
-    res.json({ content: completion.choices[0].message.content });
+
+    if (!response.ok) {
+      const err = await response.json().catch(() => ({}));
+      throw new Error(err.error?.message || `OpenAI error ${response.status}`);
+    }
+
+    const data = await response.json();
+    res.json({ content: data.choices[0].message.content });
   } catch (err) {
     console.error('Chat error:', err.message);
     res.status(500).json({ error: err.message || 'Failed to generate response' });
