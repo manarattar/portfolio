@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import AssistantWidget from './components/AssistantWidget.jsx'
 
 function useTypewriter(words, typeSpeed = 75, deleteSpeed = 40, pauseMs = 1800) {
   const [display, setDisplay] = useState('')
@@ -600,6 +601,7 @@ export default function App() {
           .nav-mobile{display:block!important}
         }
       `}</style>
+      <AssistantWidget />
     </div>
   )
 }
