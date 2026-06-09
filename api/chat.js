@@ -1,81 +1,99 @@
-const MANAR_BIO = `
-Manar Attar is a male AI Researcher and Developer completing his Master's in Language & AI at Vrije Universiteit Amsterdam (graduating June 2026). Always refer to Manar using he/him/his pronouns.
-
-CONTACT: manarattar77@gmail.com | linkedin.com/in/manarattar | github.com/manarattar | manarattar.com
-
-THESIS:
-- Topic: Author profiling on hate speech data — predicting gender and age of hate speech authors
+// Extra thesis context not captured in the GitHub README
+const THESIS_CONTEXT = `
+THESIS DETAILS:
 - Dataset: LiLaH (~9,600 records, 4 languages: English, Croatian, Dutch, Slovene)
-- Approach: Zero-shot LLMs (LLaMA 3.2, Qwen 2.5) vs fine-tuned encoders (BERT, DistilBERT, HateBERT, RoBERTa, mBERT, CroSloEngual BERT) trained on PAN14 social media data
-- Key finding: 66+ age group is invisible to both approaches — only 0.2% of PAN14 training data vs 10.3% of LiLaH
-- Extended training with English reviews corpus improved 66+ recall significantly
+- Models compared: Zero-shot LLaMA 3.2, Qwen 2.5 vs fine-tuned BERT, DistilBERT, HateBERT, RoBERTa, mBERT, CroSloEngual BERT
+- Training data: PAN14 social media dataset (~420 authors)
+- Age groups: 0–25, 26–35, 36–65, 66+
+- Key finding: 66+ age group completely missed by both approaches — only 0.2% of PAN14 training data vs 10.3% of LiLaH
+- Fix tried: Extended training with English reviews corpus → 66+ recall improved significantly
 - Supervisor: Ilia Markov, VU Amsterdam
+- Graduation: June 2026
+- Languages: Arabic (native), English (fluent), Dutch (intermediate)
+`.trim();
 
-PROJECTS:
-1. Munazara — AI Debate Engine (munazara.manarattar.com)
-   Multi-agent: PRO agent, CON agent, Judge agent — each with persistent memory and separate RAG pipelines
-   Stack: FastAPI, gpt-4o-mini, Tavily web search, ChromaDB, React 19, SSE streaming, PostgreSQL, Clerk auth
-   Features: AI vs AI debate, Human vs AI mode, fact-checking, vote/react, knowledge graph (D3), leaderboard
+// Module-level cache — lives as long as the serverless instance is warm
+let _cachedContext = null;
+let _cacheTime = 0;
+const CACHE_TTL = 60 * 60 * 1000; // 1 hour
 
-2. Contract Risk Analyzer (contracts.manarattar.com)
-   AI-powered legal document analysis — upload PDF/DOCX, identifies risks by category, Q&A, PDF report export
-   Stack: FastAPI, OpenAI, ChromaDB, PyMuPDF, python-docx, ReportLab, React, SQLite
+async function fetchContext() {
+  if (_cachedContext && Date.now() - _cacheTime < CACHE_TTL) return _cachedContext;
 
-3. Multi-Agent Research Assistant (research.manarattar.com)
-   5-agent pipeline: coordinator → analysis → fact-check → synthesis → follow-up, all streamed live
-   Stack: FastAPI, OpenAI, Tavily, SSE streaming, React, SQLite
+  try {
+    const [readmeRes, reposRes] = await Promise.all([
+      fetch('https://raw.githubusercontent.com/manarattar/manarattar/main/README.md'),
+      fetch('https://api.github.com/users/manarattar/repos?sort=updated&per_page=30&type=public', {
+        headers: { 'User-Agent': 'manarattar-portfolio' },
+      }),
+    ]);
 
-4. Rival Scan — Competitive intelligence tool for monitoring competitors
-5. SwipeAt — Mobile food recommendation app (Tinder-style swiping for food/restaurants)
-6. CloudNation RAG Demo — Enterprise RAG system for Dutch Tax Authority
+    const readme = readmeRes.ok ? await readmeRes.text() : '';
+    const repos  = reposRes.ok  ? await reposRes.json() : [];
 
-SKILLS:
-AI/ML: PyTorch, HuggingFace Transformers, BERT fine-tuning, LLM prompting, RAG pipelines, ChromaDB, vector search
-Backend: Python, FastAPI, SQLAlchemy, PostgreSQL, SQLite, Docker, REST APIs, SSE streaming, JWT auth
-Frontend: React 19, Vite, Tailwind CSS v4, JavaScript
-Research: Corpus linguistics, NLP evaluation, statistical analysis, pandas, sklearn, matplotlib, seaborn
-Languages: Arabic (native), English (fluent), Dutch (intermediate)
+    const repoLines = repos
+      .filter(r => !r.fork && r.description)
+      .map(r => `- **${r.name}**: ${r.description}${r.homepage ? ` → ${r.homepage}` : ''}`)
+      .join('\n');
 
-EDUCATION: MSc Language & AI — Vrije Universiteit Amsterdam (2024–2026)
-PUBLICATIONS: 2 academic papers published in NLP/computational linguistics venues
-`;
+    _cachedContext = [
+      'IMPORTANT: Manar Attar is male. Always use he/him/his pronouns.',
+      '',
+      '## GitHub Profile (live)',
+      readme,
+      '',
+      '## GitHub Repositories (live)',
+      repoLines,
+      '',
+      '## Additional Context',
+      THESIS_CONTEXT,
+    ].join('\n');
 
-const INTERVIEW_SYSTEMS = {
-  'ai-ml': `You are Manar Attar (he/him) in a job interview for an AI/ML Engineer position. Speak entirely in first person as Manar answering the interviewer's questions.
+    _cacheTime = Date.now();
+  } catch (err) {
+    console.error('GitHub fetch failed, using static fallback:', err.message);
+    if (!_cachedContext) {
+      _cachedContext = [
+        'IMPORTANT: Manar Attar is male. Always use he/him/his pronouns.',
+        'Manar Attar is an AI Researcher & Developer completing his Master\'s in Language & AI at VU Amsterdam (June 2026).',
+        'Contact: manarattar77@gmail.com | github.com/manarattar | manarattar.com',
+        '',
+        THESIS_CONTEXT,
+      ].join('\n');
+    }
+  }
 
-Your background: ${MANAR_BIO}
+  return _cachedContext;
+}
 
-For your opening message, introduce yourself briefly as a candidate in 2–3 sentences. Then answer whatever the interviewer (user) asks. Be specific — reference your real projects, thesis, and experience. Sound confident and genuine, like a real candidate. Keep answers to 3–5 sentences unless the question warrants more detail.`,
+function buildSystemPrompt(mode, position, context) {
+  if (mode !== 'interview') {
+    return `You are an AI assistant on Manar Attar's portfolio website. Manar is male — always use he/him/his pronouns.\n\nAnswer questions about Manar accurately and concisely using the information below. Keep answers to 2–4 sentences. If something isn't covered, say you're not sure and suggest manarattar77@gmail.com.\n\n${context}`;
+  }
 
-  'nlp': `You are Manar Attar (he/him) in a job interview for an NLP Researcher position. Speak entirely in first person as Manar answering the interviewer's questions.
+  const roles = {
+    'ai-ml':         'AI/ML Engineer',
+    'nlp':           'NLP Researcher',
+    'fullstack':     'Full-Stack Developer',
+    'data-science':  'Data Scientist',
+  };
+  const role = roles[position] || roles['ai-ml'];
 
-Your background: ${MANAR_BIO}
+  return `You are Manar Attar (he/him) being interviewed for a ${role} position. Speak entirely in first person as Manar answering the interviewer's (user's) questions.
 
-For your opening message, briefly introduce yourself and your NLP background in 2–3 sentences. Then answer whatever the interviewer (user) asks. Go deep on your thesis, methodology, the LLM vs BERT comparison, the class imbalance problem, and your publications. Sound like a genuine researcher. Keep answers focused and under 100 words.`,
+For your opening message, introduce yourself as a candidate for this role in 2–3 sentences. Then answer whatever the interviewer asks — be specific, confident, and reference your real projects and experience. Keep answers to 3–5 sentences unless more detail is clearly needed.
 
-  'fullstack': `You are Manar Attar (he/him) in a job interview for a Full-Stack Developer position. Speak entirely in first person as Manar answering the interviewer's questions.
-
-Your background: ${MANAR_BIO}
-
-For your opening message, briefly introduce yourself and your most impressive full-stack project in 2–3 sentences. Then answer whatever the interviewer (user) asks. Reference real technical decisions from your projects (Munazara, Contract Risk Analyzer, Multi-Agent Researcher). Keep answers to 3–5 sentences.`,
-
-  'data-science': `You are Manar Attar (he/him) in a job interview for a Data Scientist position. Speak entirely in first person as Manar answering the interviewer's questions.
-
-Your background: ${MANAR_BIO}
-
-For your opening message, briefly introduce yourself and your data science background in 2–3 sentences. Then answer whatever the interviewer (user) asks. Draw on your thesis research, experimental design, class imbalance work, and analytical experience. Keep answers to 3–5 sentences.`,
-};
+Your background:\n${context}`;
+}
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   const { messages = [], mode = 'chat', position = 'ai-ml' } = req.body || {};
-
-  const systemPrompt = mode === 'interview'
-    ? INTERVIEW_SYSTEMS[position] || INTERVIEW_SYSTEMS['ai-ml']
-    : `You are a friendly AI assistant on Manar Attar's portfolio website. Manar is male — always use he/him/his pronouns. Answer questions about Manar accurately and concisely:\n\n${MANAR_BIO}\n\nKeep answers to 2–4 sentences. If asked something not in the profile, say you're not sure and suggest manarattar77@gmail.com.`;
-
   const apiKey = (process.env.OPENAI_API_KEY || '').replace(/^﻿/, '').trim();
+
+  const context = await fetchContext();
+  const systemPrompt = buildSystemPrompt(mode, position, context);
 
   try {
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -87,7 +105,7 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         model: 'gpt-4o-mini',
         messages: [{ role: 'system', content: systemPrompt }, ...messages],
-        max_tokens: 350,
+        max_tokens: 400,
         temperature: 0.7,
       }),
     });
@@ -101,6 +119,6 @@ export default async function handler(req, res) {
     res.json({ content: data.choices[0].message.content });
   } catch (err) {
     console.error('Chat error:', err.message);
-    res.status(500).json({ error: err.message || 'Failed to generate response', v: 'native-fetch' });
+    res.status(500).json({ error: err.message || 'Failed to generate response' });
   }
 }
