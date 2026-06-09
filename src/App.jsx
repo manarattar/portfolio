@@ -45,6 +45,16 @@ const NAV_LINKS = ['Projects', 'Research', 'Experience', 'Skills', 'Contact']
 
 const AI_PROJECTS = [
   {
+    title: 'TelecomNL Voice AI Assistant',
+    desc: 'Full-stack voice AI customer support agent: speak your issue, hear Sarah respond. Real-time Whisper STT, GPT-4o tool-calling with live diagnostics, ElevenLabs TTS, multi-agent personas, sentiment timeline, and hands-free VAD mode.',
+    tags: ['FastAPI', 'GPT-4o', 'Whisper', 'ElevenLabs', 'Web Audio API', 'SSE'],
+    status: 'Live on Vercel',
+    badge: { bg: 'rgba(16,185,129,0.12)', color: '#10b981', border: 'rgba(16,185,129,0.25)' },
+    github: 'https://github.com/manarattar/telecom-voice-assistant',
+    demo: 'https://voice.manarattar.com',
+    preview: null,
+  },
+  {
     title: 'AI Contract Risk Analyzer',
     desc: 'Upload contracts (PDF/DOCX/TXT), get clause-level risk scores, suggested revisions, Q&A chat, and PDF report export.',
     tags: ['FastAPI', 'ChromaDB', 'OpenAI', 'React'],
