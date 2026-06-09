@@ -3,7 +3,7 @@ import OpenAI from 'openai';
 const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 const MANAR_BIO = `
-Manar Attar is an AI Researcher and Developer completing her Master's in Language & AI at Vrije Universiteit Amsterdam (graduating June 2026).
+Manar Attar is an AI Researcher and Developer completing his Master's in Language & AI at Vrije Universiteit Amsterdam (graduating June 2026).
 
 CONTACT: manarattar77@gmail.com | linkedin.com/in/manarattar | github.com/manarattar | manarattar.com
 

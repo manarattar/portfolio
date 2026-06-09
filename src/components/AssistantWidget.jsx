@@ -54,7 +54,10 @@ export default function AssistantWidget() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ messages: msgs, mode, position: positionId }),
     })
-    if (!res.ok) throw new Error('Chat API error')
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}))
+      throw new Error(err.error || `Server error ${res.status}`)
+    }
     const data = await res.json()
     return data.content
   }, [mode])
@@ -69,8 +72,8 @@ export default function AssistantWidget() {
       const finalMsgs = [...updatedMsgs, aiMsg]
       setMessages(finalMsgs)
       if (mode === 'interview') speak(content)
-    } catch {
-      setMessages(prev => [...prev, { role: 'assistant', content: '⚠️ Connection error. Please try again.' }])
+    } catch (err) {
+      setMessages(prev => [...prev, { role: 'assistant', content: `⚠️ ${err.message || 'Connection error'}. Please try again.` }])
     } finally {
       setIsLoading(false)
     }
