@@ -164,7 +164,7 @@ const EXPERIENCE = [
 ]
 
 const EDUCATION = [
-  { degree: "Master's in Language & AI", school: 'Vrije Universiteit Amsterdam', period: 'Sep 2025 – Present' },
+  { degree: "Master's in Language & AI", school: 'Vrije Universiteit Amsterdam', period: 'Sep 2025 – Jun 2026' },
   { degree: 'Amsterdam Startup Launch Program', school: 'Vrije Universiteit Amsterdam', period: 'Sep 2024 – Jan 2025' },
   { degree: 'BSc Artificial Intelligence', school: 'Vrije Universiteit Amsterdam', period: 'Sep 2020 – Aug 2023' },
 ]
@@ -271,9 +271,9 @@ export default function App() {
           </p>
           <p style={{ maxWidth: 580, margin: '0 auto 32px', color: '#94a3b8', lineHeight: 1.8, fontSize: 15 }}>
             AI Researcher and Developer specialising in agentic architectures, RAG pipelines,
-            and fine-tuned NLP models. Pursuing a Master's in Language &amp; AI at Vrije Universiteit
-            Amsterdam, with thesis research on author profiling in multilingual hate speech data —
-            benchmarking zero-shot LLMs against fine-tuned BERT models.
+            and fine-tuned NLP models. Master's in Language &amp; AI from Vrije Universiteit
+            Amsterdam, with a thesis on author profiling of hate speech authors —
+            benchmarking zero-shot LLMs against fine-tuned BERT-family encoders.
           </p>
           <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 12, marginBottom: 40 }}>
             <button onClick={() => go('projects')} style={{ padding: '11px 26px', borderRadius: 10, border: 'none', background: 'linear-gradient(135deg,#6366f1,#8b5cf6)', color: '#fff', fontWeight: 600, fontSize: 14, cursor: 'pointer' }}>
@@ -373,7 +373,7 @@ export default function App() {
       {/* RESEARCH */}
       <section id="research" style={SEC}>
         <Fade><div style={C}>
-          <Hdr label="Master's Thesis · VU Amsterdam · 2026" title="Current Research" />
+          <Hdr label="Master's Thesis · VU Amsterdam · 2026" title="Thesis Research" />
           <div style={{ position: 'relative', borderRadius: 24, overflow: 'hidden' }}>
             {/* glow backdrop */}
             <div aria-hidden style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg,rgba(99,102,241,.09) 0%,rgba(139,92,246,.06) 50%,rgba(192,132,252,.04) 100%)', borderRadius: 24 }} />
@@ -381,43 +381,54 @@ export default function App() {
 
               {/* status row */}
               <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', gap: 10, marginBottom: 28 }}>
-                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 12, padding: '5px 13px', borderRadius: 999, background: 'rgba(99,102,241,.15)', color: '#a5b4fc', border: '1px solid rgba(99,102,241,.35)', fontWeight: 700, letterSpacing: '0.03em' }}>
-                  <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#818cf8', animation: 'pulse 2s infinite' }} />
-                  In Progress — Due June 2026
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 12, padding: '5px 13px', borderRadius: 999, background: 'rgba(16,185,129,.15)', color: '#6ee7b7', border: '1px solid rgba(16,185,129,.35)', fontWeight: 700, letterSpacing: '0.03em' }}>
+                  ✓ Completed &amp; Passed — June 2026
                 </span>
               </div>
 
               {/* title */}
               <h3 style={{ fontSize: 'clamp(1.2rem,2.8vw,1.7rem)', fontWeight: 800, color: '#f1f5f9', margin: '0 0 6px', textAlign: 'center', letterSpacing: '-0.01em' }}>
-                Author Profiling on Hate Speech Data
+                Author Profiling of Hate Speech Spreaders
               </h3>
               <p style={{ textAlign: 'center', fontSize: 13, color: '#6366f1', fontWeight: 600, margin: '0 0 20px', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
                 Zero-shot LLMs vs. Fine-tuned Encoder Models
               </p>
 
               {/* research question callout */}
-              <div style={{ maxWidth: 680, margin: '0 auto 28px', background: 'rgba(99,102,241,.07)', border: '1px solid rgba(99,102,241,.2)', borderRadius: 14, padding: '16px 20px', textAlign: 'center' }}>
+              <div style={{ maxWidth: 680, margin: '0 auto 20px', background: 'rgba(99,102,241,.07)', border: '1px solid rgba(99,102,241,.2)', borderRadius: 14, padding: '16px 20px', textAlign: 'center' }}>
                 <p style={{ fontSize: 11, fontWeight: 700, color: '#818cf8', textTransform: 'uppercase', letterSpacing: '0.1em', margin: '0 0 8px' }}>Research Question</p>
                 <p style={{ fontSize: 14, color: '#e2e8f0', lineHeight: 1.7, margin: 0, fontStyle: 'italic' }}>
-                  "Can zero-shot large language models match or surpass fine-tuned BERT models
-                  in predicting the gender and age group of hate speech authors across languages?"
+                  "What is the best approach for predicting the age group and gender of authors
+                  from hateful comments: zero-shot classification using LLMs, or a pretrained
+                  encoder model fine-tuned on datasets annotated for age and gender?"
                 </p>
               </div>
 
               {/* description */}
-              <p style={{ maxWidth: 660, margin: '0 auto 28px', color: '#94a3b8', fontSize: 14, lineHeight: 1.8, textAlign: 'center' }}>
-                This thesis evaluates two paradigms against the multilingual <strong style={{ color: '#cbd5e1' }}>LiLaH dataset</strong> (9,600+ records across English, Croatian, Dutch &amp; Slovenian):
-                zero-shot inference with <strong style={{ color: '#cbd5e1' }}>LLaMA-3 &amp; Qwen</strong> versus encoder models
-                (<strong style={{ color: '#cbd5e1' }}>BERT &amp; DistilBERT</strong>) fine-tuned on the cross-domain <strong style={{ color: '#cbd5e1' }}>PAN14</strong> corpus.
+              <p style={{ maxWidth: 660, margin: '0 auto 20px', color: '#94a3b8', fontSize: 14, lineHeight: 1.8, textAlign: 'center' }}>
+                Evaluated on the English portion of <strong style={{ color: '#cbd5e1' }}>LiLaH-HAG</strong> (619 Facebook hate speech comments
+                annotated for author age &amp; gender): zero-shot inference with <strong style={{ color: '#cbd5e1' }}>LLaMA-3.1 &amp; Qwen3</strong> versus
+                BERT-family encoders (<strong style={{ color: '#cbd5e1' }}>BERT, HateBERT, RoBERTa</strong>) fine-tuned on the cross-domain <strong style={{ color: '#cbd5e1' }}>PAN14</strong> corpus.
+                A follow-up experiment extends gender identification to Slovene, testing whether an explicit grammatical gender cue narrows the gap.
               </p>
+
+              {/* key finding callout */}
+              <div style={{ maxWidth: 680, margin: '0 auto 28px', background: 'rgba(16,185,129,.06)', border: '1px solid rgba(16,185,129,.2)', borderRadius: 14, padding: '16px 20px', textAlign: 'center' }}>
+                <p style={{ fontSize: 11, fontWeight: 700, color: '#6ee7b7', textTransform: 'uppercase', letterSpacing: '0.1em', margin: '0 0 8px' }}>Key Finding</p>
+                <p style={{ fontSize: 14, color: '#e2e8f0', lineHeight: 1.7, margin: 0 }}>
+                  Zero-shot LLMs edge out fine-tuned encoders on gender (macro F1 <strong style={{ color: '#cbd5e1' }}>0.515 vs. 0.488</strong>),
+                  while encoders do better on age (<strong style={{ color: '#cbd5e1' }}>0.310 vs. 0.211</strong>) — but neither is reliable enough
+                  for practical use, and the 66+ age group is almost never identified correctly by any model.
+                </p>
+              </div>
 
               {/* stat cards */}
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(min(100%,190px),1fr))', gap: 12, marginBottom: 24 }}>
                 {[
-                  { icon: '🗂️', label: 'Dataset', value: 'LiLaH + PAN14' },
-                  { icon: '🤖', label: 'Models', value: 'BERT · DistilBERT · LLaMA-3 · Qwen' },
-                  { icon: '🌍', label: 'Languages', value: 'EN · HR · NL · SL' },
-                  { icon: '📅', label: 'Status', value: 'Analysis in progress · Results due June 2026' },
+                  { icon: '🗂️', label: 'Dataset', value: 'LiLaH-HAG (EN, n=619) + PAN14' },
+                  { icon: '🤖', label: 'Models', value: 'LLaMA-3.1-8B · Qwen3-32B · BERT · HateBERT · RoBERTa' },
+                  { icon: '🌍', label: 'Languages', value: 'English (primary) · Slovene (extension)' },
+                  { icon: '📅', label: 'Status', value: 'Completed · Passed June 2026' },
                 ].map(({ icon, label, value }) => (
                   <div key={label} style={{ background: 'rgba(255,255,255,.04)', border: '1px solid rgba(255,255,255,.08)', borderRadius: 14, padding: '14px 16px' }}>
                     <div style={{ fontSize: 18, marginBottom: 6 }}>{icon}</div>
@@ -428,10 +439,17 @@ export default function App() {
               </div>
 
               {/* tags */}
-              <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 8 }}>
-                {['NLP', 'Author Profiling', 'Hate Speech Detection', 'LLMs', 'BERT', 'Zero-shot Inference', 'Fine-tuning', 'Cross-dataset Evaluation', 'Demographic Prediction'].map(t => (
+              <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 8, marginBottom: 28 }}>
+                {['NLP', 'Author Profiling', 'Hate Speech Detection', 'LLMs', 'BERT', 'Zero-shot Inference', 'Fine-tuning', 'Cross-dataset Evaluation', 'Error Analysis'].map(t => (
                   <span key={t} style={{ fontSize: 12, padding: '4px 12px', borderRadius: 999, background: 'rgba(99,102,241,.1)', color: '#a5b4fc', border: '1px solid rgba(99,102,241,.2)' }}>{t}</span>
                 ))}
+              </div>
+
+              {/* download */}
+              <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <a href="/Manar-Attar-Thesis.pdf" download style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '11px 26px', borderRadius: 10, border: 'none', background: 'linear-gradient(135deg,#6366f1,#8b5cf6)', color: '#fff', fontWeight: 600, fontSize: 14, textDecoration: 'none' }}>
+                  Download Thesis
+                </a>
               </div>
 
             </div>
