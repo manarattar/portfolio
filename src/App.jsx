@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import AssistantWidget from './components/AssistantWidget.jsx'
+import Icon from './components/Icon'
 
 function useTypewriter(words, typeSpeed = 75, deleteSpeed = 40, pauseMs = 1800) {
   const [display, setDisplay] = useState('')
@@ -425,13 +426,13 @@ export default function App() {
               {/* stat cards */}
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(min(100%,190px),1fr))', gap: 12, marginBottom: 24 }}>
                 {[
-                  { icon: '🗂️', label: 'Dataset', value: 'LiLaH-HAG (EN, n=619) + PAN14' },
-                  { icon: '🤖', label: 'Models', value: 'LLaMA-3.1-8B · Qwen3-32B · BERT · HateBERT · RoBERTa' },
-                  { icon: '🌍', label: 'Languages', value: 'English (primary) · Slovene (extension)' },
-                  { icon: '📅', label: 'Status', value: 'Completed · Passed June 2026' },
+                  { icon: 'folder', label: 'Dataset', value: 'LiLaH-HAG (EN, n=619) + PAN14' },
+                  { icon: 'cpu', label: 'Models', value: 'LLaMA-3.1-8B · Qwen3-32B · BERT · HateBERT · RoBERTa' },
+                  { icon: 'globe', label: 'Languages', value: 'English (primary) · Slovene (extension)' },
+                  { icon: 'calendar', label: 'Status', value: 'Completed · Passed June 2026' },
                 ].map(({ icon, label, value }) => (
                   <div key={label} style={{ background: 'rgba(255,255,255,.04)', border: '1px solid rgba(255,255,255,.08)', borderRadius: 14, padding: '14px 16px' }}>
-                    <div style={{ fontSize: 18, marginBottom: 6 }}>{icon}</div>
+                    <div style={{ marginBottom: 6, color: '#818cf8' }}><Icon name={icon} size={18} /></div>
                     <div style={{ fontSize: 10, color: '#818cf8', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 4 }}>{label}</div>
                     <div style={{ fontSize: 13, color: '#e2e8f0', lineHeight: 1.4, fontWeight: 500 }}>{value}</div>
                   </div>
@@ -557,15 +558,15 @@ export default function App() {
               </p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
                 {[
-                  { href: 'mailto:manarattar77@gmail.com', label: 'manarattar77@gmail.com', icon: '✉️' },
-                  { href: 'https://linkedin.com/in/manar-attar', label: 'linkedin.com/in/manar-attar', icon: '💼', blank: true },
-                  { href: 'https://github.com/manarattar', label: 'github.com/manarattar', icon: '🐙', blank: true },
+                  { href: 'mailto:manarattar77@gmail.com', label: 'manarattar77@gmail.com', icon: 'mail' },
+                  { href: 'https://linkedin.com/in/manar-attar', label: 'linkedin.com/in/manar-attar', icon: 'briefcase', blank: true },
+                  { href: 'https://github.com/manarattar', label: 'github.com/manarattar', icon: 'github', blank: true },
                 ].map(({ href, label, icon, blank }) => (
                   <a key={label} href={href} {...(blank ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                     style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 16px', borderRadius: 10, background: 'rgba(255,255,255,.03)', border: '1px solid rgba(255,255,255,.07)', color: '#94a3b8', textDecoration: 'none', fontSize: 14, transition: 'border-color .2s, color .2s' }}
                     onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(99,102,241,.4)'; e.currentTarget.style.color = '#f1f5f9' }}
                     onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,.07)'; e.currentTarget.style.color = '#94a3b8' }}>
-                    <span style={{ fontSize: 16 }}>{icon}</span>{label}
+                    <Icon name={icon} size={16} />{label}
                   </a>
                 ))}
                 <a href="/Manar-Attar-CV.pdf" download
@@ -654,7 +655,7 @@ function ContactForm() {
 
   if (status === 'success') return (
     <div style={{ ...CARD, padding: '40px 32px', textAlign: 'center' }}>
-      <div style={{ fontSize: 40, marginBottom: 16 }}>✅</div>
+      <div style={{ marginBottom: 16, display: 'flex', justifyContent: 'center', color: '#34d399' }}><Icon name="checkCircle" size={40} /></div>
       <p style={{ fontSize: 16, fontWeight: 700, color: '#f1f5f9', margin: '0 0 8px' }}>Message sent!</p>
       <p style={{ fontSize: 14, color: '#94a3b8', margin: '0 0 24px' }}>I'll get back to you soon.</p>
       <button onClick={() => { setForm({ name: '', email: '', message: '' }); setStatus('idle') }}

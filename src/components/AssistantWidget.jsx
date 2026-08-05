@@ -1,10 +1,11 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
+import Icon from './Icon'
 
 const POSITIONS = [
-  { id: 'ai-ml',        icon: '🤖', label: 'AI/ML Engineer',       desc: 'ML models, LLMs, RAG, fine-tuning' },
-  { id: 'nlp',          icon: '🔬', label: 'NLP Researcher',        desc: 'Thesis, author profiling, transformers' },
-  { id: 'fullstack',    icon: '⚡', label: 'Full-Stack Developer',   desc: 'FastAPI, React, system design' },
-  { id: 'data-science', icon: '📊', label: 'Data Scientist',        desc: 'Analysis, metrics, experimental design' },
+  { id: 'ai-ml',        icon: 'cpu', label: 'AI/ML Engineer',       desc: 'ML models, LLMs, RAG, fine-tuning' },
+  { id: 'nlp',          icon: 'flask', label: 'NLP Researcher',        desc: 'Thesis, author profiling, transformers' },
+  { id: 'fullstack',    icon: 'zap', label: 'Full-Stack Developer',   desc: 'FastAPI, React, system design' },
+  { id: 'data-science', icon: 'chart', label: 'Data Scientist',        desc: 'Analysis, metrics, experimental design' },
 ]
 
 const SUGGESTIONS = [
@@ -73,7 +74,7 @@ export default function AssistantWidget() {
       setMessages(finalMsgs)
       if (mode === 'interview') speak(content)
     } catch (err) {
-      setMessages(prev => [...prev, { role: 'assistant', content: `⚠️ ${err.message || 'Connection error'}. Please try again.` }])
+      setMessages(prev => [...prev, { role: 'assistant', content: `${err.message || 'Connection error'}. Please try again.` }])
     } finally {
       setIsLoading(false)
     }
@@ -246,7 +247,7 @@ export default function AssistantWidget() {
           onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.1)'; e.currentTarget.style.boxShadow = '0 8px 32px rgba(99,102,241,0.75)' }}
           onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = '0 4px 24px rgba(99,102,241,0.55)' }}
         >
-          💬
+          <Icon name="message" size={26} />
         </button>
       )}
 
@@ -265,17 +266,17 @@ export default function AssistantWidget() {
               width: 34, height: 34, borderRadius: '50%', flexShrink: 0,
               background: 'linear-gradient(135deg,#6366f1,#a78bfa)',
               display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 17,
-            }}>🤖</div>
+            }}><Icon name="bot" size={18} color="#fff" /></div>
             <div style={{ flex: 1, minWidth: 0 }}>
               <div style={{ color: '#f1f5f9', fontWeight: 700, fontSize: 14 }}>Manar AI</div>
               <div style={{ color: '#64748b', fontSize: 11 }}>
-                {mode === 'interview' && interviewStarted ? `🎯 ${position?.label} Interview` : 'Ask me anything'}
+                {mode === 'interview' && interviewStarted ? `${position?.label} Interview` : 'Ask me anything'}
               </div>
             </div>
 
             {/* Mode toggle */}
             <div style={{ display: 'flex', gap: 3, background: 'rgba(0,0,0,0.35)', borderRadius: 9, padding: 3, flexShrink: 0 }}>
-              {[['chat','💬 Chat'],['interview','🎯 Interview']].map(([m, label]) => (
+              {[['chat','Chat'],['interview','Interview']].map(([m, label]) => (
                 <button key={m} onClick={() => setMode(m)} style={{
                   background: mode === m ? 'linear-gradient(135deg,#6366f1,#a78bfa)' : 'transparent',
                   border: 'none', color: mode === m ? '#fff' : '#64748b',
@@ -309,7 +310,7 @@ export default function AssistantWidget() {
                 onMouseEnter={e => { e.currentTarget.style.background = 'rgba(99,102,241,0.18)'; e.currentTarget.style.borderColor = 'rgba(99,102,241,0.45)' }}
                 onMouseLeave={e => { e.currentTarget.style.background = 'rgba(99,102,241,0.07)'; e.currentTarget.style.borderColor = 'rgba(99,102,241,0.2)' }}
                 >
-                  <span style={{ fontSize: 26 }}>{pos.icon}</span>
+                  <span style={{ color: '#a78bfa' }}><Icon name={pos.icon} size={24} /></span>
                   <div>
                     <div style={{ color: '#e2e8f0', fontWeight: 600, fontSize: 13 }}>{pos.label}</div>
                     <div style={{ color: '#64748b', fontSize: 11, marginTop: 1 }}>{pos.desc}</div>
@@ -328,7 +329,7 @@ export default function AssistantWidget() {
                 {messages.length === 0 && mode === 'chat' && (
                   <div style={{ marginTop: 16 }}>
                     <p style={{ color: '#475569', fontSize: 12, textAlign: 'center', marginBottom: 12 }}>
-                      Ask me anything about Manar 👋
+                      Ask me anything about Manar
                     </p>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
                       {SUGGESTIONS.map(s => (
@@ -398,7 +399,7 @@ export default function AssistantWidget() {
                       color: isSpeaking ? '#a78bfa' : '#475569',
                       fontSize: 15, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
                     }}
-                  >{isSpeaking ? '🔊' : '🔇'}</button>
+                  ><Icon name={isSpeaking ? 'volumeOn' : 'volumeOff'} size={16} /></button>
                 )}
 
                 <textarea
@@ -431,7 +432,7 @@ export default function AssistantWidget() {
                     display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
                     animation: isRecording ? 'recordPulse 1s ease-in-out infinite' : 'none',
                   }}
-                >🎤</button>
+                ><Icon name="mic" size={16} /></button>
 
                 {/* Send button */}
                 <button
@@ -446,7 +447,7 @@ export default function AssistantWidget() {
                     color: input.trim() && !isLoading ? '#fff' : '#475569',
                     fontSize: 15, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
                   }}
-                >➤</button>
+                ><Icon name="send" size={15} /></button>
               </div>
             </>
           )}
