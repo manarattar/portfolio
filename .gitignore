@@ -4,3 +4,8 @@ dist/
 .env.local
 *.log
 .vercel
+
+# LaTeX build artifacts
+cv/*.aux
+cv/*.out
+cv/*.log
