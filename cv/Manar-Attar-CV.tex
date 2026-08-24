@@ -1,0 +1,196 @@
+% Manar Attar — CV (2 pages, clean professional)
+% Compile: pdflatex Manar-Attar-CV.tex   (run twice for links)
+\documentclass[10pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1.5cm, top=1.2cm, bottom=1.2cm]{geometry}
+\usepackage{carlito}                 % Calibri-metric professional font
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{microtype}               % refined spacing, no rivers
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fontawesome5}
+
+% ---- Restrained palette: one accent only ----
+\definecolor{navy}{HTML}{1F3556}   % headings + name
+\definecolor{link}{HTML}{2A5DB0}   % hyperlinks only
+\definecolor{gray}{HTML}{555555}   % meta / dates
+\definecolor{rule}{HTML}{BFC7D2}
+
+\hypersetup{urlcolor=link}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+
+% ---- Section headings: navy, rule beneath ----
+\titleformat{\section}
+  {\normalfont\large\bfseries\color{navy}}
+  {}{0pt}{}[{\vspace{1pt}\color{rule}\titlerule[0.8pt]}]
+\titlespacing*{\section}{0pt}{8pt}{4pt}
+
+% ---- Helpers ----
+\newcommand{\entry}[2]{\vspace{2pt}{\bfseries #1}\hfill{\small\color{gray}#2}\par}
+\newcommand{\project}[2]{\vspace{3pt}{\bfseries #1}\hfill{\footnotesize\color{gray}#2}\par\vspace{-1pt}}
+\newcommand{\presult}[1]{{\small\textbf{Result:} #1}\par}
+\newcommand{\pskills}[1]{{\small\textbf{Skills:} #1}\par}
+
+\newlist{tights}{itemize}{1}
+\setlist[tights]{leftmargin=1.15em, itemsep=0.5pt, topsep=1.5pt, parsep=0pt,
+  before=\small, label={\color{navy}\footnotesize$\bullet$}}
+
+\begin{document}
+
+% ============ HEADER ============
+\begin{center}
+  {\Huge\bfseries\color{navy} Manar Attar}\\[3pt]
+  {\large\color{gray} AI Researcher \,\&\, NLP / LLM Engineer}\\[5pt]
+  {\small
+    \faMapMarker*\, Amstelveen, NL \quad
+    \faPhone*\, +31 6 5736 8339 \quad
+    \faEnvelope\, \href{mailto:manarattar77@gmail.com}{manarattar77@gmail.com}\\[2pt]
+    \faLinkedin\, \href{https://linkedin.com/in/manar-attar}{linkedin.com/in/manar-attar} \quad
+    \faGithub\, \href{https://github.com/manarattar}{github.com/manarattar} \quad
+    \faGlobe\, \href{https://manarattar.com}{manarattar.com}}
+\end{center}
+\vspace{-2pt}
+
+% ============ SUMMARY ============
+\section*{Summary}
+\vspace{-2pt}
+{\small AI and NLP engineer who ships production AI systems end-to-end --- from fine-tuned transformer models to agentic RAG pipelines and the interfaces around them. Published researcher (ACM SIGSPATIAL) with an MA in Language \& AI from Vrije Universiteit Amsterdam. Specialises in agentic architectures, LLM tool-calling, and taking AI ideas from prototype to deployed product --- equally comfortable training a model, wiring up a backend, and building the interface around it.}
+
+% ============ SKILLS ============
+\section*{Technical Skills}
+\vspace{1pt}
+{\small
+\textbf{Programming:} Python, SQL, JavaScript, R\par\vspace{1.5pt}
+\textbf{LLM \& NLP:} OpenAI API, GPT-4o \& GPT-4o-mini, Ollama (Llama 3.1, Qwen3), Hugging Face Transformers (BERT, RoBERTa, HateBERT), RAG, ChromaDB, Prompt Engineering, Agentic \& Multi-Agent Systems, MCP, Whisper (STT), ElevenLabs (TTS)\par\vspace{1.5pt}
+\textbf{ML \& Data:} PyTorch, scikit-learn, pandas, NumPy, Matplotlib, seaborn\par\vspace{1.5pt}
+\textbf{Web \& Infra:} FastAPI, Flask, SQLAlchemy, Pydantic, REST \& SSE APIs, PostgreSQL, Firebase, Docker, React, Vite, Tailwind CSS, Git, Vercel, Render\par\vspace{1.5pt}
+\textbf{Languages:} English (Fluent), Arabic (Native), Dutch (B2)}
+
+% ============ EXPERIENCE ============
+\section*{Work Experience}
+\entry{AI Consultant \,\textbar\, Vervai}{Apr 2024 -- Present}
+\begin{tights}
+  \item Deliver end-to-end AI solutions across client engagements --- custom LLM applications, conversational assistants, and RAG systems over proprietary document collections, alongside workflow automation.
+  \item Advise on AI strategy, scoping high-impact use cases and guiding clients from concept to production.
+  \item Lead hands-on AI workshops that upskill client teams; shipped \textbf{SwipeEat}, a swipe-based meal-recommendation MVP, to production.
+\end{tights}
+\entry{Innovation Consultant \,\textbar\, Daffee}{Jun 2024 -- Sep 2025}
+\begin{tights}
+  \item Built \textbf{4 role-specific GPT assistants} (marketing, sales, operations, and leadership) that accelerated daily workflows and decision-making.
+  \item Designed semi-automated workflows that cut repetitive manual work and freed teams for higher-value tasks.
+\end{tights}
+
+% ============ EDUCATION ============
+\section*{Education}
+\entry{MA Language \& AI \,\textbar\, Vrije Universiteit Amsterdam}{Sep 2025 -- Jul 2026}
+\begin{tights}
+  \item Specialisation in NLP, large language models, data annotation, and cross-dataset evaluation.
+\end{tights}
+\entry{Amsterdam Startup Launch Program \,\textbar\, Vrije Universiteit Amsterdam}{Sep 2024 -- Jan 2025}
+\begin{tights}
+  \item Intensive entrepreneurship program: validating business concepts with the Business Model Canvas.
+\end{tights}
+\entry{BSc Artificial Intelligence \,\textbar\, Vrije Universiteit Amsterdam}{Sep 2020 -- Aug 2023}
+\begin{tights}
+  \item Foundations of AI, machine learning, statistics, and hypothesis testing. Minor in Data Science (NLP \& text analysis).
+\end{tights}
+
+% ============ THESIS ============
+\section*{Master's Thesis}
+\project{Author Profiling of Hate Speech Spreaders: Zero-shot LLMs vs.\ Fine-tuned Encoders}{MA Thesis, 2026}
+\begin{tights}
+  \item Investigated whether the age and gender of hate speech authors can be inferred from their writing, comparing two competing paradigms under identical conditions: \textbf{zero-shot large language models} (LLaMA-3.1-8B, Qwen3-32B) prompted without task-specific training, and \textbf{encoder models fine-tuned} on labelled data (BERT, HateBERT, RoBERTa), with an \textbf{SVM} lexical baseline for reference.
+  \item Designed a cross-domain evaluation --- models trained on \textbf{PAN14} social media data and tested on \textbf{LiLaH-HAG} hate speech comments --- to measure how well author profiling transfers into an abusive-language domain it was not built for.
+  \item Found that \textbf{neither approach reached performance sufficient to recommend it} for deployment: zero-shot LLMs held a narrow edge on gender and fine-tuned encoders on age, but all results sat close to the majority baseline, so the comparison is inconclusive by design rather than by omission.
+  \item Argued from confusion-matrix and lexical error analysis that the ceiling is a property of the domain, not the models: hate speech is a strongly conventionalised register in which shared genre norms suppress the individual stylistic signal author profiling depends on.
+  \item Extended the study to \textbf{Slovene} (CroSloEngual BERT) to test whether grammatical-gender marking supplies a signal English lacks --- the strongest result in the study, and evidence that language-specific cues matter more than model scale.
+\end{tights}
+
+% ============ AI PROJECTS ============
+\newpage
+\section*{AI Projects}
+
+\project{TelecomNL Voice AI Assistant}{}
+\begin{tights}
+  \item Built a bilingual (NL/EN) voice agent combining Whisper speech-to-text, GPT-4o reasoning, and ElevenLabs speech synthesis, handling \textbf{10 telecom issue categories} across \textbf{8 customer profiles}.
+  \item Added a live support dashboard tracking intent, sentiment, and confidence, with rule- and LLM-based escalation and auto-generated handoff summaries.
+\end{tights}
+\pskills{FastAPI, GPT-4o, ElevenLabs Conversational AI, WebSocket, Whisper, JavaScript.}
+
+\project{AI Contract Risk Analyzer}{}
+\begin{tights}
+  \item Built a RAG assistant with \textbf{per-clause risk scoring (0--100)} and proposed revisions across PDF, DOCX, and TXT uploads up to 10\,MB, flagging missing standard clauses.
+  \item Added source-grounded document Q\&A and one-click PDF report export.
+\end{tights}
+\pskills{FastAPI, ChromaDB, OpenAI, RAG, React.}
+
+\project{Multi-Agent Research Assistant}{}
+\begin{tights}
+  \item Engineered a \textbf{5-agent} pipeline (coordinator, search, analysis, fact-check, synthesis) that produces structured, citation-backed research reports, with each agent's progress streamed live to the interface.
+  \item Implemented follow-up Q\&A grounded in the sources of the generated report.
+\end{tights}
+\pskills{Agentic AI, FastAPI, OpenAI, Tavily, SSE, React.}
+
+\project{Munazara: AI Debate Engine}{}
+\begin{tights}
+  \item Designed a live-deployed debate platform where \textbf{3 agents (PRO / CON / Judge)} argue across \textbf{4 structured rounds}, backed by RAG-sourced evidence and real-time fact-checking.
+  \item Added a user-vs-AI mode, before/after voting, and an interactive knowledge graph linking every debate.
+\end{tights}
+\pskills{FastAPI, gpt-4o-mini, Tavily, ChromaDB, React, SSE.}
+
+\project{RivalScan: Competitor Intelligence Dashboard}{}
+\begin{tights}
+  \item Automated competitor tracking across three sources (RSS feeds, GitHub releases, and changelogs) in a single dashboard.
+  \item Summarised each update with AI and scored it by business impact to speed prioritisation.
+\end{tights}
+\pskills{FastAPI, OpenAI, SQLAlchemy, React, Vite.}
+
+\project{SwipeEat: Adaptive Meal Recommendation}{}
+\begin{tights}
+  \item Implemented a preference-based recommendation algorithm matching users to meals from swipe feedback.
+  \item Designed a swipe-driven mobile-web interface and delivered it as a working MVP for Vervai.
+\end{tights}
+\pskills{Python, Flask, JavaScript, HTML, CSS.}
+
+% ============ ACADEMIC PROJECTS ============
+\section*{Academic Projects}
+\project{LINKED4RESILIENCE: Geo-Data Integration for Crisis Response}{}
+\begin{tights}
+  \item Built data pipelines for cleaning, processing, and visualising geo-annotated crisis datasets.
+  \item Applied Linked Data methodologies and implemented an algorithm for data unification and integration.
+\end{tights}
+\presult{Published at the 31st ACM SIGSPATIAL International Conference (2023).}
+\pskills{Python, RDF, SPARQL, Ontology, Linked Data, Geodata, data visualisation.}
+
+\project{Emotion \& Sentiment Analysis (Human Language Technology)}{}
+\begin{tights}
+  \item Developed sentiment and emotion classification models with optimised SVMs on conversational and social-media text.
+  \item Applied TF-IDF feature engineering and error analysis to study trade-offs under class imbalance.
+\end{tights}
+\presult{Competitive emotion classification under imbalanced datasets.}
+\pskills{Python, NLP, SVM, Text Mining, scikit-learn.}
+
+% ============ PUBLICATIONS ============
+\section*{Publications}
+{\small
+\textbullet\; \textbf{M.\ Attar}, S.\ Wang, R.\ Siebes, E.\ Kultorp (2023). \textit{Converting and Enriching Geoannotated Event Data: Integrating Information for Ukraine Resilience.} 31st ACM SIGSPATIAL International Conference, Nov 13--16, 2023.\par\vspace{2pt}
+\textbullet\; \textbf{M.\ Attar}, S.\ Wang, R.\ Siebes, E.\ Kultorp (2023). \textit{Using Integrated and Enriched Linked Data for Ukraine Resilience.} BNAIC 2023 Conference, Nov 8--10, 2023.
+}
+
+% ============ REFERENCES ============
+\section*{References}
+\vspace{1pt}
+{\small
+\textbf{Dr.\ Ilia Markov} --- Master's Thesis Supervisor\par
+Assistant Professor, Computational Linguistics \& Text Mining Lab (CLTL), Vrije Universiteit Amsterdam\par\vspace{3pt}
+\textbf{Raihan Karim} --- Business Partner \& Academic Collaborator\par
+Long-standing collaborator across academic projects and entrepreneurial ventures\par\vspace{3pt}
+\textit{\color{gray} Contact details available on request.}
+}
+
+\end{document}
