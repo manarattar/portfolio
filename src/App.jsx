@@ -271,10 +271,10 @@ export default function App() {
             {typedText}<span className="cursor">|</span>
           </p>
           <p style={{ maxWidth: 580, margin: '0 auto 32px', color: '#94a3b8', lineHeight: 1.8, fontSize: 15 }}>
-            AI Researcher and Developer specialising in agentic architectures, RAG pipelines,
-            and fine-tuned NLP models. Master's in Language &amp; AI from Vrije Universiteit
-            Amsterdam, with a thesis on author profiling of hate speech authors —
-            benchmarking zero-shot LLMs against fine-tuned BERT-family encoders.
+            Manar Attar is an AI Researcher and Developer specialising in agentic architectures,
+            RAG pipelines, and fine-tuned NLP models. He holds a Master's in Language &amp; AI
+            from Vrije Universiteit Amsterdam, where his thesis on author profiling of hate
+            speech authors benchmarked zero-shot LLMs against fine-tuned BERT-family encoders.
           </p>
           <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 12, marginBottom: 40 }}>
             <button onClick={() => go('projects')} style={{ padding: '11px 26px', borderRadius: 10, border: 'none', background: 'linear-gradient(135deg,#6366f1,#8b5cf6)', color: '#fff', fontWeight: 600, fontSize: 14, cursor: 'pointer' }}>
@@ -292,7 +292,9 @@ export default function App() {
             </a>
           </div>
           <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 32 }}>
-            {[['5', 'AI Portfolio Projects'], ['6', 'Academic Projects'], ['2', 'Publications']].map(([v, l]) => (
+            {/* Derived from the arrays above so the counts can never drift out of
+                sync when a project or publication is added. */}
+            {[[AI_PROJECTS.length, 'AI Portfolio Projects'], [ACADEMIC_PROJECTS.length, 'Academic Projects'], [PUBLICATIONS.length, 'Publications']].map(([v, l]) => (
               <div key={l} style={{ textAlign: 'center' }}>
                 <div style={{ fontSize: 22, fontWeight: 700, color: '#818cf8' }}>{v}</div>
                 <div style={{ fontSize: 12, color: '#64748b', marginTop: 3 }}>{l}</div>
