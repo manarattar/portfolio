@@ -1,0 +1,174 @@
+% Manar Attar — CV (Nederlands, toegespitst op Business AI Designer @ ING)
+% Compile: pdflatex Manar-Attar-CV-NL-ING.tex   (twee keer draaien voor links)
+\documentclass[10pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[dutch]{babel}
+\usepackage[margin=1.5cm, top=1.2cm, bottom=1.2cm]{geometry}
+\usepackage{carlito}                 % Calibri-metric professional font
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fontawesome5}
+
+% ---- Ingetogen palet: één accentkleur ----
+\definecolor{navy}{HTML}{1F3556}
+\definecolor{link}{HTML}{2A5DB0}
+\definecolor{gray}{HTML}{555555}
+\definecolor{rule}{HTML}{BFC7D2}
+
+\hypersetup{urlcolor=link}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+
+\titleformat{\section}
+  {\normalfont\large\bfseries\color{navy}}
+  {}{0pt}{}[{\vspace{1pt}\color{rule}\titlerule[0.8pt]}]
+\titlespacing*{\section}{0pt}{8pt}{4pt}
+
+\newcommand{\entry}[2]{\vspace{2pt}{\bfseries #1}\hfill{\small\color{gray}#2}\par}
+\newcommand{\project}[2]{\vspace{3pt}{\bfseries #1}\hfill{\footnotesize\color{gray}#2}\par\vspace{-1pt}}
+\newcommand{\pskills}[1]{{\small\textbf{Technieken:} #1}\par}
+
+\newlist{tights}{itemize}{1}
+\setlist[tights]{leftmargin=1.15em, itemsep=0.5pt, topsep=1.5pt, parsep=0pt,
+  before=\small, label={\color{navy}\footnotesize$\bullet$}}
+
+\begin{document}
+
+% ============ HEADER ============
+\begin{center}
+  {\Huge\bfseries\color{navy} Manar Attar}\\[3pt]
+  {\large\color{gray} AI Engineer \,\&\, Onderzoeker \,\textbar\, Business \,\&\, AI}\\[5pt]
+  {\small
+    \faMapMarker*\, Amstelveen \quad
+    \faPhone*\, +31 6 5736 8339 \quad
+    \faEnvelope\, \href{mailto:manarattar77@gmail.com}{manarattar77@gmail.com}\\[2pt]
+    \faLinkedin\, \href{https://linkedin.com/in/manar-attar}{linkedin.com/in/manar-attar} \quad
+    \faGithub\, \href{https://github.com/manarattar}{github.com/manarattar} \quad
+    \faGlobe\, \href{https://manarattar.com}{manarattar.com}}
+\end{center}
+\vspace{-2pt}
+
+% ============ PROFIEL ============
+\section*{Profiel}
+\vspace{-2pt}
+{\small AI-engineer met een achtergrond in NLP-onderzoek en een voorliefde voor systemen die uitlegbaar zijn. Ik beweeg me graag op het snijvlak van business en techniek: eerst begrijpen welk probleem er écht speelt, en van daaruit bepalen waar AI wél en waar juist géén antwoord op is. Ik bouw snel prototypes en verbeter ze op basis van wat gebruikers er werkelijk mee doen, met aandacht voor herbruikbaarheid zodat een oplossing verder reikt dan één use case. Als AI-consultant heb ik klanten begeleid van eerste idee tot werkende oplossing. Ik ben net zo geïnteresseerd in wat een systeem \emph{niet} kan als in wat het wel doet.}
+
+% ============ HARD SKILLS ============
+\section*{Hard skills}
+\vspace{1pt}
+{\small
+\textbf{Programmeren:} Python, SQL, JavaScript / TypeScript, R\par\vspace{1.5pt}
+\textbf{LLM \& AI-engineering:} OpenAI API (GPT-4o), Ollama (Llama 3.1, Qwen3), Hugging Face Transformers, RAG en hybride retrieval, agentic workflows (LangGraph), prompt engineering en promptversionering, gestructureerde outputs met schemavalidatie, evaluatieharnassen\par\vspace{1.5pt}
+\textbf{Machine learning \& NLP:} fine-tunen van transformer-modellen (BERT, RoBERTa, HateBERT), zero-shot inzet van LLM's, cross-domein evaluatie, foutenanalyse, PyTorch, scikit-learn, pandas, NumPy\par\vspace{1.5pt}
+\textbf{Responsible AI:} model risk assessments, human-in-the-loop-ontwerp, herleidbaarheid van conclusie naar bron, prompt-injection-mitigatie, auditability\par\vspace{1.5pt}
+\textbf{Backend \& data:} FastAPI, Flask, SQLAlchemy, Pydantic, REST- en SSE-API's, PostgreSQL met pgvector, ChromaDB, Docker\par\vspace{1.5pt}
+\textbf{Frontend:} React, Next.js, Vite, Tailwind CSS\par\vspace{1.5pt}
+\textbf{Werkwijze:} Git, geautomatiseerd testen (pytest, Playwright), type checking, AI-ondersteund ontwikkelen, business-analyse (requirements, acceptatiecriteria, Architecture Decision Records)\par\vspace{1.5pt}
+\textbf{Talen:} Engels (vloeiend), Arabisch (moedertaal), Nederlands (B2, actief in ontwikkeling)}
+
+% ============ SOFT SKILLS ============
+\section*{Soft skills}
+\vspace{1pt}
+\begin{tights}
+  \item \textbf{Nieuwsgierig en leergierig.} Ik werk me graag in een nieuw domein in en stel net zo lang vragen tot ik het probleem echt begrijp.
+  \item \textbf{Neemt initiatief.} Ik heb meerdere projecten op eigen initiatief van idee tot werkende, gedeployde applicatie gebracht.
+  \item \textbf{Verantwoordelijkheid.} Ik voel me eigenaar van wat ik oplever, inclusief de zwakke plekken erin.
+  \item \textbf{Staat open voor feedback.} Ik zoek actief tegenspraak op mijn eigen conclusies, ook als die goed uitkomen.
+  \item \textbf{Verbindend tussen business en techniek.} Ik kan een technische afweging uitleggen aan wie er geen verstand van heeft, en een businessvraag vertalen naar iets bouwbaars.
+  \item \textbf{Durft complexe problemen aan te pakken.} Ik begin liever aan iets ingewikkelds dan aan iets veiligs.
+\end{tights}
+
+% ============ WERKERVARING ============
+\section*{Werkervaring}
+\entry{AI-consultant \,\textbar\, Vervai}{apr.\ 2024 -- dec.\ 2025}
+\begin{tights}
+  \item Leverde end-to-end AI-oplossingen op bij uiteenlopende klanten: maatwerk-LLM-applicaties, conversationele assistenten en RAG-systemen over eigen documentcollecties, naast procesautomatisering.
+  \item Adviseerde over AI-strategie: use cases afbakenen op impact en haalbaarheid, en klanten begeleiden van concept naar productie.
+  \item Gaf hands-on AI-workshops waarmee klantteams zelfstandig verder konden; \textbf{SwipeEat} (maaltijdaanbevelingen op basis van swipe-feedback) live opgeleverd.
+\end{tights}
+\entry{Innovatieconsultant \,\textbar\, Daffee}{jun.\ 2024 -- sep.\ 2025}
+\begin{tights}
+  \item \textbf{Vier rolspecifieke GPT-assistenten} gebouwd (marketing, sales, operations en directie) die dagelijkse werkprocessen en besluitvorming versnelden.
+  \item Semi-geautomatiseerde workflows ontworpen die repetitief handwerk terugbrachten en tijd vrijmaakten voor werk met meer waarde.
+\end{tights}
+
+% ============ OPLEIDING ============
+\section*{Opleiding}
+\entry{MA Language \& AI \,\textbar\, Vrije Universiteit Amsterdam}{sep.\ 2025 -- dec.\ 2026 (verwacht)}
+\begin{tights}
+  \item Specialisatie in NLP, large language models, data-annotatie en cross-dataset evaluatie. Masterscriptie afgerond en beoordeeld; verwachte afstudeerdatum december 2026.
+\end{tights}
+\entry{Amsterdam Startup Launch Program \,\textbar\, Vrije Universiteit Amsterdam}{sep.\ 2024 -- jan.\ 2025}
+\begin{tights}
+  \item Intensief ondernemerschapsprogramma: businessconcepten valideren met het Business Model Canvas.
+\end{tights}
+\entry{BSc Artificial Intelligence \,\textbar\, Vrije Universiteit Amsterdam}{sep.\ 2020 -- aug.\ 2023}
+\begin{tights}
+  \item Fundamenten van AI, machine learning, statistiek en hypothesetoetsing. Minor Data Science (NLP \& tekstanalyse).
+\end{tights}
+
+\newpage
+
+% ============ PROJECTEN ============
+\section*{Projecten}
+
+\project{Multi-Agent Research Assistant}{\href{https://researcher.manarattar.com}{researcher.manarattar.com}}
+\begin{tights}
+  \item Pipeline met \textbf{vijf agents} (coördinatie, zoeken, analyse, factcheck, synthese) die gestructureerde onderzoeksrapporten met bronvermelding oplevert, waarbij de voortgang per agent live naar de interface wordt gestreamd.
+  \item Vervolgvragen worden beantwoord op basis van dezelfde bronnen als het gegenereerde rapport.
+\end{tights}
+\pskills{Agentic AI, FastAPI, OpenAI, Tavily, SSE, React.}
+
+\project{AI Contract Risk Analyzer}{\href{https://contracts.manarattar.com}{contracts.manarattar.com}}
+\begin{tights}
+  \item RAG-assistent met \textbf{risicoscore per clausule (0--100)} en voorgestelde herzieningen over PDF-, DOCX- en TXT-uploads, inclusief signalering van ontbrekende standaardclausules.
+  \item Brongebonden vraag-en-antwoord over het document en export naar PDF-rapport.
+\end{tights}
+\pskills{FastAPI, ChromaDB, OpenAI, RAG, React.}
+
+\project{TelecomNL Voice AI Assistant}{\href{https://voice.manarattar.com}{voice.manarattar.com}}
+\begin{tights}
+  \item Tweetalige (NL/EN) spraakassistent die Whisper, GPT-4o en ElevenLabs combineert en \textbf{tien probleemcategorieën} over \textbf{acht klantprofielen} afhandelt.
+  \item Live dashboard met intentie, sentiment en vertrouwensscore, met escalatie op basis van regels én model, en automatisch gegenereerde overdrachtssamenvattingen.
+\end{tights}
+\pskills{FastAPI, GPT-4o, Whisper, ElevenLabs, WebSocket.}
+
+% ============ SCRIPTIE ============
+\section*{Masterscriptie}
+\project{Author Profiling van verspreiders van haatzaaiende taal: zero-shot LLM's versus fine-tuned encoders}{VU Amsterdam, 2026}
+\begin{tights}
+  \item Onderzocht of leeftijd en geslacht van auteurs af te leiden zijn uit hun schrijfstijl, door \textbf{zero-shot LLM's} (LLaMA-3.1-8B, Qwen3-32B) en \textbf{fine-tuned encoders} (BERT, HateBERT, RoBERTa) onder identieke condities te vergelijken, met cross-domein evaluatie: getraind op \textbf{PAN14}, getest op \textbf{LiLaH-HAG}.
+  \item Conclusie: \textbf{geen van beide benaderingen presteerde goed genoeg om aan te bevelen}. Alle resultaten lagen dicht bij de meerderheidsbaseline; het uitblijven van een winnaar is als bevinding gerapporteerd in plaats van weggelaten.
+  \item Op basis van foutenanalyse beargumenteerd dat het plafond een eigenschap is van het domein en niet van de modellen: haatzaaiende taal is een sterk geconventionaliseerd register waarin gedeelde genrenormen het individuele stijlsignaal onderdrukken. Uitbreiding naar het \textbf{Sloveens} (CroSloEngual BERT) leverde het sterkste resultaat van de studie.
+\end{tights}
+
+% ============ PUBLICATIES ============
+\section*{Publicaties}
+{\small
+\textbullet\; \textbf{M.\ Attar}, S.\ Wang, R.\ Siebes, E.\ Kultorp (2023). \textit{Converting and Enriching Geoannotated Event Data: Integrating Information for Ukraine Resilience.} 31st ACM SIGSPATIAL International Conference.\par\vspace{2pt}
+\textbullet\; \textbf{M.\ Attar}, S.\ Wang, R.\ Siebes, E.\ Kultorp (2023). \textit{Using Integrated and Enriched Linked Data for Ukraine Resilience.} BNAIC 2023.
+}
+
+% ============ INTERESSES ============
+\section*{Interesses}
+\vspace{-2pt}
+{\small In mijn vrije tijd bouw ik graag dingen die iemand ook echt gebruikt, van een boekingsplatform voor restaurants tot een website voor een kleine ondernemer. Ik vind het leuk om een idee in een weekend om te zetten in iets werkends en het daarna stap voor stap beter te maken. Daarnaast volg ik de ontwikkelingen rond AI op de voet en lees ik graag over hoe organisaties er verantwoord mee omgaan. Verder houd ik van koken en van goede gesprekken over onderwerpen waarover ik van mening verschil.}
+
+% ============ REFERENTIES ============
+\section*{Referenties}
+\vspace{1pt}
+{\small
+\textbf{Dr.\ Ilia Markov}, begeleider masterscriptie\par
+Universitair docent, Computational Linguistics \& Text Mining Lab (CLTL), Vrije Universiteit Amsterdam\par\vspace{3pt}
+\textbf{Raihan Karim}, zakenpartner \& academisch samenwerkingspartner\par
+Langdurige samenwerking in zowel academische projecten als ondernemende initiatieven\par\vspace{3pt}
+\textit{\color{gray} Contactgegevens op aanvraag beschikbaar.}
+}
+
+\end{document}
