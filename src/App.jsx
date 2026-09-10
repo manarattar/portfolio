@@ -47,11 +47,17 @@ const NAV_LINKS = ['Projects', 'Research', 'Experience', 'Skills', 'Contact']
 
 const AI_PROJECTS = [
   {
+    title: 'ARGUS — Agentic Risk Governance System',
+    desc: 'Decision-support system for financial-risk analysts. An 8-step agentic workflow investigates a counterparty case file, extracts evidence tied to source documents, tests findings against policy, argues against its own conclusions, verifies every claim is carried by its citations, and computes an explainable rating by arithmetic — then stops at a human review gate. Ships with a 53-case evaluation suite.',
+    tags: ['Agentic AI', 'FastAPI', 'Next.js', 'RAG', 'pgvector', 'Docker'],
+    github: 'https://github.com/manarattar/argus',
+    demo: 'https://argus.manarattar.com',
+    preview: null,
+  },
+  {
     title: 'TelecomNL Voice AI Assistant',
     desc: 'Full-stack voice AI customer support agent: speak your issue, hear Sarah respond. Real-time Whisper STT, GPT-4o tool-calling with live diagnostics, ElevenLabs TTS, multi-agent personas, sentiment timeline, and hands-free VAD mode.',
     tags: ['FastAPI', 'GPT-4o', 'Whisper', 'ElevenLabs', 'Web Audio API', 'SSE'],
-    status: 'Live on Vercel',
-    badge: { bg: 'rgba(16,185,129,0.12)', color: '#10b981', border: 'rgba(16,185,129,0.25)' },
     github: 'https://github.com/manarattar/telecom-voice-assistant',
     demo: 'https://voice.manarattar.com',
     preview: null,
@@ -60,8 +66,6 @@ const AI_PROJECTS = [
     title: 'AI Contract Risk Analyzer',
     desc: 'Upload contracts (PDF/DOCX/TXT), get clause-level risk scores, suggested revisions, Q&A chat, and PDF report export.',
     tags: ['FastAPI', 'ChromaDB', 'OpenAI', 'React'],
-    status: 'Live on Render',
-    badge: { bg: 'rgba(139,92,246,0.12)', color: '#a78bfa', border: 'rgba(139,92,246,0.25)' },
     github: 'https://github.com/manarattar/contract-risk-analyzer',
     demo: 'https://contracts.manarattar.com',
     preview: '/preview-contract-analyzer.gif',
@@ -70,8 +74,6 @@ const AI_PROJECTS = [
     title: 'Multi-Agent Research Assistant',
     desc: '5-agent pipeline that produces structured research reports with live SSE streaming and follow-up Q&A.',
     tags: ['Agentic AI', 'FastAPI', 'Groq', 'Tavily', 'SSE', 'React'],
-    status: 'Live on Render',
-    badge: { bg: 'rgba(139,92,246,0.12)', color: '#a78bfa', border: 'rgba(139,92,246,0.25)' },
     github: 'https://github.com/manarattar/multi-agent-researcher',
     demo: 'https://researcher.manarattar.com',
     preview: '/preview-researcher.gif',
@@ -80,8 +82,6 @@ const AI_PROJECTS = [
     title: 'Munazara — AI Debate Engine',
     desc: 'Full-stack debate platform: watch AI argue both sides of any topic, or challenge the AI yourself. Features live streaming, RAG-sourced evidence, real-time fact-checking, a vote system, leaderboard, and an interactive knowledge graph of all debates.',
     tags: ['FastAPI', 'gpt-4o-mini', 'Tavily', 'ChromaDB', 'React', 'SSE'],
-    status: 'Live on Vercel',
-    badge: { bg: 'rgba(139,92,246,0.12)', color: '#a78bfa', border: 'rgba(139,92,246,0.25)' },
     github: 'https://github.com/manarattar/debate-engine',
     demo: 'https://munazara.manarattar.com',
     preview: '/preview-debate-engine.gif',
@@ -90,8 +90,6 @@ const AI_PROJECTS = [
     title: 'RivalScan: Competitor Intelligence Dashboard',
     desc: 'Track competitor product updates in real time — RSS feeds, GitHub releases, and changelogs aggregated, AI-summarised, and scored by business impact.',
     tags: ['FastAPI', 'OpenAI', 'SQLAlchemy', 'React', 'Vite'],
-    status: 'Live on Render',
-    badge: { bg: 'rgba(139,92,246,0.12)', color: '#a78bfa', border: 'rgba(139,92,246,0.25)' },
     github: 'https://github.com/manarattar/rival-scan',
     demo: 'https://rivals.manarattar.com',
     preview: '/preview-rival-scan.gif',
@@ -100,8 +98,6 @@ const AI_PROJECTS = [
     title: 'SwipeEat: Adaptive Meal Recommendation',
     desc: 'Preference-based recommendation algorithm matching users with meals via an intuitive swipe-driven UI. Built for Vervai as a mobile web app MVP.',
     tags: ['Python', 'JavaScript', 'Flask', 'HTML/CSS'],
-    status: 'Live on Render',
-    badge: { bg: 'rgba(139,92,246,0.12)', color: '#a78bfa', border: 'rgba(139,92,246,0.25)' },
     github: null,
     demo: 'https://swipeat.manarattar.com',
     preview: '/preview-swipeat.gif',
@@ -165,7 +161,7 @@ const EXPERIENCE = [
 ]
 
 const EDUCATION = [
-  { degree: "Master's in Language & AI", school: 'Vrije Universiteit Amsterdam', period: 'Sep 2025 – Jun 2026' },
+  { degree: "Master's in Language & AI", school: 'Vrije Universiteit Amsterdam', period: 'Sep 2025 – Dec 2026 (expected)' },
   { degree: 'Amsterdam Startup Launch Program', school: 'Vrije Universiteit Amsterdam', period: 'Sep 2024 – Jan 2025' },
   { degree: 'BSc Artificial Intelligence', school: 'Vrije Universiteit Amsterdam', period: 'Sep 2020 – Aug 2023' },
 ]
@@ -272,9 +268,9 @@ export default function App() {
           </p>
           <p style={{ maxWidth: 580, margin: '0 auto 32px', color: '#94a3b8', lineHeight: 1.8, fontSize: 15 }}>
             Manar Attar is an AI Researcher and Developer specialising in agentic architectures,
-            RAG pipelines, and fine-tuned NLP models. He holds a Master's in Language &amp; AI
-            from Vrije Universiteit Amsterdam, where his thesis on author profiling of hate
-            speech authors benchmarked zero-shot LLMs against fine-tuned BERT-family encoders.
+            RAG pipelines, and fine-tuned NLP models. He is completing a Master's in Language &amp; AI
+            at Vrije Universiteit Amsterdam, graduating December 2026 — his thesis on author profiling
+            of hate speech authors benchmarked zero-shot LLMs against fine-tuned BERT-family encoders.
           </p>
           <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 12, marginBottom: 40 }}>
             <button onClick={() => go('projects')} style={{ padding: '11px 26px', borderRadius: 10, border: 'none', background: 'linear-gradient(135deg,#6366f1,#8b5cf6)', color: '#fff', fontWeight: 600, fontSize: 14, cursor: 'pointer' }}>
@@ -318,9 +314,6 @@ export default function App() {
                     </div>
                   )}
                   <div style={{ padding: '18px 20px 16px', display: 'flex', flexDirection: 'column', flex: 1 }}>
-                    <span style={{ display: 'inline-block', fontSize: 11, fontWeight: 600, padding: '4px 10px', borderRadius: 999, background: p.badge.bg, color: p.badge.color, border: `1px solid ${p.badge.border}`, marginBottom: 12, alignSelf: 'flex-start' }}>
-                      {p.status}
-                    </span>
                     <h3 style={{ fontSize: 15, fontWeight: 700, color: '#f1f5f9', margin: '0 0 8px', lineHeight: 1.4 }}>{p.title}</h3>
                     <p style={{ fontSize: 13, color: '#94a3b8', lineHeight: 1.65, margin: '0 0 14px', flex: 1 }}>{p.desc}</p>
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 16 }}>
@@ -555,7 +548,7 @@ export default function App() {
             {/* Left — blurb + links */}
             <div>
               <p style={{ color: '#94a3b8', fontSize: 15, lineHeight: 1.8, margin: '0 0 28px' }}>
-                Finishing my Master's thesis — open to AI/ML roles from mid-2026.
+                Master's thesis passed; graduating December 2026 — open to AI/ML roles now.
                 Reach out for collaborations, opportunities, or just to talk AI.
               </p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>

@@ -28,11 +28,11 @@
 \titleformat{\section}
   {\normalfont\large\bfseries\color{navy}}
   {}{0pt}{}[{\vspace{1pt}\color{rule}\titlerule[0.8pt]}]
-\titlespacing*{\section}{0pt}{8pt}{4pt}
+\titlespacing*{\section}{0pt}{6pt}{3pt}
 
 % ---- Helpers ----
 \newcommand{\entry}[2]{\vspace{2pt}{\bfseries #1}\hfill{\small\color{gray}#2}\par}
-\newcommand{\project}[2]{\vspace{3pt}{\bfseries #1}\hfill{\footnotesize\color{gray}#2}\par\vspace{-1pt}}
+\newcommand{\project}[2]{\vspace{2pt}{\bfseries #1}\hfill{\footnotesize\color{gray}#2}\par\vspace{-1pt}}
 \newcommand{\presult}[1]{{\small\textbf{Result:} #1}\par}
 \newcommand{\pskills}[1]{{\small\textbf{Skills:} #1}\par}
 
@@ -59,7 +59,7 @@
 % ============ SUMMARY ============
 \section*{Summary}
 \vspace{-2pt}
-{\small AI and NLP engineer who ships production AI systems end-to-end --- from fine-tuned transformer models to agentic RAG pipelines and the interfaces around them. Published researcher (ACM SIGSPATIAL) with an MA in Language \& AI from Vrije Universiteit Amsterdam. Specialises in agentic architectures, LLM tool-calling, and taking AI ideas from prototype to deployed product --- equally comfortable training a model, wiring up a backend, and building the interface around it.}
+{\small AI and NLP engineer who ships production AI systems end-to-end --- from fine-tuned transformer models to agentic RAG pipelines and the interfaces around them. Published researcher (ACM SIGSPATIAL), graduating with an MA in Language \& AI from Vrije Universiteit Amsterdam in December 2026 (thesis passed). Specialises in agentic architectures, LLM tool-calling, and taking AI ideas from prototype to deployed product --- equally comfortable training a model, wiring up a backend, and building the interface around it.}
 
 % ============ SKILLS ============
 \section*{Technical Skills}
@@ -87,7 +87,7 @@
 
 % ============ EDUCATION ============
 \section*{Education}
-\entry{MA Language \& AI \,\textbar\, Vrije Universiteit Amsterdam}{Sep 2025 -- Jul 2026}
+\entry{MA Language \& AI \,\textbar\, Vrije Universiteit Amsterdam}{Sep 2025 -- Dec 2026 (expected)}
 \begin{tights}
   \item Specialisation in NLP, large language models, data annotation, and cross-dataset evaluation.
 \end{tights}
@@ -115,17 +115,24 @@
 \newpage
 \section*{AI Projects}
 
+\project{ARGUS: Agentic Risk Governance \& Understanding System}{}
+\begin{tights}
+  \item Built an \textbf{8-step agentic workflow} that investigates a corporate counterparty case file --- extracting evidence tied to specific source documents, testing each finding against internal policy, and running an \textbf{adversarial agent} that argues against its own conclusions.
+  \item Enforced trust in deterministic code rather than the model: verbatim quote verification, citations as checked identifiers, an arithmetic (not generated) risk score, and a review gate that no code path can complete without a recorded human decision.
+  \item Shipped with a \textbf{53-case evaluation suite} and a keyless Demo Mode that replays recorded model responses while every deterministic layer still runs.
+\end{tights}
+\pskills{FastAPI, Next.js, React Server Components, PostgreSQL, pgvector, Alembic, Agentic AI, Docker.}
+
 \project{TelecomNL Voice AI Assistant}{}
 \begin{tights}
   \item Built a bilingual (NL/EN) voice agent combining Whisper speech-to-text, GPT-4o reasoning, and ElevenLabs speech synthesis, handling \textbf{10 telecom issue categories} across \textbf{8 customer profiles}.
-  \item Added a live support dashboard tracking intent, sentiment, and confidence, with rule- and LLM-based escalation and auto-generated handoff summaries.
+  \item Added a live dashboard tracking intent, sentiment, and confidence, with rule- and LLM-based escalation and auto-generated handoff summaries.
 \end{tights}
 \pskills{FastAPI, GPT-4o, ElevenLabs Conversational AI, WebSocket, Whisper, JavaScript.}
 
 \project{AI Contract Risk Analyzer}{}
 \begin{tights}
-  \item Built a RAG assistant with \textbf{per-clause risk scoring (0--100)} and proposed revisions across PDF, DOCX, and TXT uploads up to 10\,MB, flagging missing standard clauses.
-  \item Added source-grounded document Q\&A and one-click PDF report export.
+  \item Built a RAG assistant with \textbf{per-clause risk scoring (0--100)}, proposed revisions and missing-clause detection across PDF, DOCX, and TXT uploads, plus source-grounded Q\&A and one-click PDF report export.
 \end{tights}
 \pskills{FastAPI, ChromaDB, OpenAI, RAG, React.}
 
@@ -145,17 +152,14 @@
 
 \project{RivalScan: Competitor Intelligence Dashboard}{}
 \begin{tights}
-  \item Automated competitor tracking across three sources (RSS feeds, GitHub releases, and changelogs) in a single dashboard.
-  \item Summarised each update with AI and scored it by business impact to speed prioritisation.
+  \item Automated competitor tracking across three sources (RSS feeds, GitHub releases, and changelogs), AI-summarising each update and scoring it by business impact to speed prioritisation.
 \end{tights}
 \pskills{FastAPI, OpenAI, SQLAlchemy, React, Vite.}
 
 \project{SwipeEat: Adaptive Meal Recommendation}{}
 \begin{tights}
-  \item Implemented a preference-based recommendation algorithm matching users to meals from swipe feedback.
-  \item Designed a swipe-driven mobile-web interface and delivered it as a working MVP for Vervai.
+  \item Built a preference-based recommendation algorithm with a swipe-driven mobile-web interface; delivered as a working MVP for Vervai. \textit{Python, Flask, JavaScript.}
 \end{tights}
-\pskills{Python, Flask, JavaScript, HTML, CSS.}
 
 % ============ ACADEMIC PROJECTS ============
 \section*{Academic Projects}
@@ -169,10 +173,8 @@
 
 \project{Emotion \& Sentiment Analysis (Human Language Technology)}{}
 \begin{tights}
-  \item Developed sentiment and emotion classification models with optimised SVMs on conversational and social-media text.
-  \item Applied TF-IDF feature engineering and error analysis to study trade-offs under class imbalance.
+  \item Built sentiment and emotion classification models with optimised SVMs and TF-IDF features on conversational and social-media text, with error analysis of trade-offs under class imbalance.
 \end{tights}
-\presult{Competitive emotion classification under imbalanced datasets.}
 \pskills{Python, NLP, SVM, Text Mining, scikit-learn.}
 
 % ============ PUBLICATIONS ============
@@ -186,10 +188,8 @@
 \section*{References}
 \vspace{1pt}
 {\small
-\textbf{Dr.\ Ilia Markov} --- Master's Thesis Supervisor\par
-Assistant Professor, Computational Linguistics \& Text Mining Lab (CLTL), Vrije Universiteit Amsterdam\par\vspace{3pt}
-\textbf{Raihan Karim} --- Business Partner \& Academic Collaborator\par
-Long-standing collaborator across academic projects and entrepreneurial ventures\par\vspace{3pt}
+\textbf{Dr.\ Ilia Markov} --- Master's Thesis Supervisor; Assistant Professor, Computational Linguistics \& Text Mining Lab (CLTL), Vrije Universiteit Amsterdam\par\vspace{2pt}
+\textbf{Raihan Karim} --- Business Partner \& Academic Collaborator across academic projects and entrepreneurial ventures\par\vspace{2pt}
 \textit{\color{gray} Contact details available on request.}
 }
 

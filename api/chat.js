@@ -3,7 +3,7 @@ const WEBSITE_CONTEXT = `
 IDENTITY: Manar Attar is male. Always use he/him/his pronouns.
 
 ## About
-AI Researcher and Developer specialising in agentic architectures, RAG pipelines, and fine-tuned NLP models. Holds a Master's in Language & AI from Vrije Universiteit Amsterdam (completed June 2026), with thesis research on author profiling in multilingual hate speech data — benchmarking zero-shot LLMs against fine-tuned BERT models. Open to AI/ML roles from mid-2026.
+AI Researcher and Developer specialising in agentic architectures, RAG pipelines, and fine-tuned NLP models. Completing a Master's in Language & AI at Vrije Universiteit Amsterdam — thesis passed, graduation expected December 2026 — with thesis research on author profiling in multilingual hate speech data, benchmarking zero-shot LLMs against fine-tuned BERT models. Open to AI/ML roles now.
 
 ## Contact
 - Email: manarattar77@gmail.com
@@ -12,7 +12,7 @@ AI Researcher and Developer specialising in agentic architectures, RAG pipelines
 - Portfolio: https://manarattar.com
 
 ## Education
-- Master's in Language & AI — Vrije Universiteit Amsterdam (Sep 2025 – Jun 2026)
+- Master's in Language & AI — Vrije Universiteit Amsterdam (Sep 2025 – Dec 2026; thesis passed, graduation expected December 2026)
 - Amsterdam Startup Launch Program — Vrije Universiteit Amsterdam (Sep 2024 – Jan 2025)
 - BSc Artificial Intelligence — Vrije Universiteit Amsterdam (Sep 2020 – Aug 2023)
 
@@ -27,17 +27,19 @@ AI Researcher and Developer specialising in agentic architectures, RAG pipelines
 - Built semi-automated workflows in marketing, sales, and operations to reduce manual tasks.
 
 ## AI Portfolio Projects
-1. **TelecomNL Voice AI Assistant** — Full-stack voice AI customer support agent: speak your issue, hear Sarah respond. Real-time Whisper STT, GPT-4o tool-calling with live diagnostics, ElevenLabs TTS, multi-agent personas, sentiment timeline, and hands-free VAD mode. Stack: FastAPI, GPT-4o, Whisper, ElevenLabs, Web Audio API, SSE. Demo: https://voice.manarattar.com
+1. **ARGUS — Agentic Risk Governance & Understanding System** — Decision-support system for financial-risk analysts. An 8-step agentic workflow investigates a counterparty case file, extracts evidence tied to specific source documents, identifies risks and tests them against internal policy, runs an adversarial agent that argues against its own findings, verifies that every claim is actually carried by its citations, and computes an explainable provisional rating by arithmetic (not generated as a label) — then stops at a review gate that no code path can complete without a recorded human decision. Deterministic code handles quote verification, citation integrity, the uncertainty model, scoring and escalation; the LLM only does what needs language. Ships with a 53-case evaluation suite and a keyless Demo Mode that replays recorded model responses while every deterministic layer still executes. Stack: FastAPI, Next.js (React Server Components), Postgres + pgvector / SQLite, Alembic, agentic multi-agent orchestration, Docker. Demo: https://argus.manarattar.com — Code: https://github.com/manarattar/argus
 
-2. **AI Contract Risk Analyzer** — Upload contracts (PDF/DOCX/TXT), get clause-level risk scores, suggested revisions, Q&A chat, and PDF report export. Stack: FastAPI, ChromaDB, OpenAI, React. Demo: https://contracts.manarattar.com
+2. **TelecomNL Voice AI Assistant** — Full-stack voice AI customer support agent: speak your issue, hear Sarah respond. Real-time Whisper STT, GPT-4o tool-calling with live diagnostics, ElevenLabs TTS, multi-agent personas, sentiment timeline, and hands-free VAD mode. Stack: FastAPI, GPT-4o, Whisper, ElevenLabs, Web Audio API, SSE. Demo: https://voice.manarattar.com
 
-3. **Multi-Agent Research Assistant** — 5-agent pipeline that produces structured research reports with live SSE streaming and follow-up Q&A. Stack: Agentic AI, FastAPI, OpenAI, Tavily, SSE, React. Demo: https://researcher.manarattar.com
+3. **AI Contract Risk Analyzer** — Upload contracts (PDF/DOCX/TXT), get clause-level risk scores, suggested revisions, Q&A chat, and PDF report export. Stack: FastAPI, ChromaDB, OpenAI, React. Demo: https://contracts.manarattar.com
 
-4. **Munazara — AI Debate Engine** — Full-stack debate platform: watch AI argue both sides of any topic, or challenge the AI yourself. Features live streaming, RAG-sourced evidence, real-time fact-checking, vote system, leaderboard, and an interactive knowledge graph of all debates. Stack: FastAPI, gpt-4o-mini, Tavily, ChromaDB, React, SSE. Demo: https://munazara.manarattar.com
+4. **Multi-Agent Research Assistant** — 5-agent pipeline that produces structured research reports with live SSE streaming and follow-up Q&A. Stack: Agentic AI, FastAPI, OpenAI, Tavily, SSE, React. Demo: https://researcher.manarattar.com
 
-5. **RivalScan: Competitor Intelligence Dashboard** — Track competitor product updates in real time — RSS feeds, GitHub releases, and changelogs aggregated, AI-summarised, and scored by business impact. Stack: FastAPI, OpenAI, SQLAlchemy, React, Vite. Demo: https://rivals.manarattar.com
+5. **Munazara — AI Debate Engine** — Full-stack debate platform: watch AI argue both sides of any topic, or challenge the AI yourself. Features live streaming, RAG-sourced evidence, real-time fact-checking, vote system, leaderboard, and an interactive knowledge graph of all debates. Stack: FastAPI, gpt-4o-mini, Tavily, ChromaDB, React, SSE. Demo: https://munazara.manarattar.com
 
-6. **SwipeEat: Adaptive Meal Recommendation** — Preference-based recommendation algorithm matching users with meals via swipe-driven UI. Built for Vervai as a mobile web app MVP. Stack: Python, JavaScript, Flask, HTML/CSS. (No public demo is online right now — do not offer a demo link for this project.)
+6. **RivalScan: Competitor Intelligence Dashboard** — Track competitor product updates in real time — RSS feeds, GitHub releases, and changelogs aggregated, AI-summarised, and scored by business impact. Stack: FastAPI, OpenAI, SQLAlchemy, React, Vite. Demo: https://rivals.manarattar.com
+
+7. **SwipeEat: Adaptive Meal Recommendation** — Preference-based recommendation algorithm matching users with meals via swipe-driven UI. Built for Vervai as a mobile web app MVP. Stack: Python, JavaScript, Flask, HTML/CSS. (No public demo is online right now — do not offer a demo link for this project.)
 
 ## Academic Projects
 - **LINKED4RESILIENCE: Geo-Data for Crisis Response** — Data pipelines for cleaning and visualising geo-annotated crisis datasets. Linked Data methodology for data unification and integration. Published at ACM SIGSPATIAL 2023. Demo: https://linked4resilience.eu
@@ -57,7 +59,7 @@ Languages: English (Fluent), Arabic (Native), Dutch (Advanced · B2)
 1. "Converting and Enriching Geoannotated Event Data: Integrating Information for Ukraine Resilience" — ACM SIGSPATIAL International Conference, November 13–16, 2023. Authors: M. Attar, S. Wang, R. Siebes, E. Kultorp.
 2. "Using Integrated and Enriched Linked Data for Ukraine Resilience" — BNAIC 2023 Conference, November 8–10, 2023. Authors: M. Attar, S. Wang, R. Siebes, E. Kultorp.
 
-## Master's Thesis (COMPLETED — submitted June 2026, passed July 2026)
+## Master's Thesis (COMPLETED — submitted June 2026, passed July 2026; MSc degree conferred at graduation, expected December 2026)
 Title: Author Profiling of Hate Speech Spreaders
 Degree: MSc Language & AI (CLTL), VU Amsterdam. Supervisor: Ilia Markov.
 Research question: "What is the best approach for predicting age group and gender of hate speech authors: zero-shot LLMs or fine-tuned encoder models?"
@@ -132,7 +134,7 @@ ${repoLines}`);
   return _ghCache;
 }
 
-const PRECEDENCE_RULE = `SOURCE PRECEDENCE: the profile sections above are authoritative and current. Any section headed "(live)" is pulled from GitHub and may be out of date — use it only to discover additional repositories and projects that are not already listed. If a live section conflicts with the authoritative sections — for example about whether the degree or thesis is finished — always trust the authoritative sections. Manar has completed his Master's and passed his thesis; never say he is still studying or still working on it.`;
+const PRECEDENCE_RULE = `SOURCE PRECEDENCE: the profile sections above are authoritative and current. Any section headed "(live)" is pulled from GitHub and may be out of date — use it only to discover additional repositories and projects that are not already listed. If a live section conflicts with the authoritative sections — for example about whether the degree or thesis is finished — always trust the authoritative sections. Manar has passed his Master's thesis and it is finished; his MSc degree is conferred at graduation, expected December 2026. Never say he is still working on the thesis, but it is correct that he formally graduates in December 2026 and is available for roles now.`;
 
 function buildSystemPrompt(mode, position, ghSupplement) {
   const context = WEBSITE_CONTEXT + ghSupplement;
