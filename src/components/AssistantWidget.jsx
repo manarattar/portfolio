@@ -31,7 +31,6 @@ export default function AssistantWidget() {
   const audioChunksRef   = useRef([])
   const currentAudioRef  = useRef(null)
   const inputRef         = useRef(null)
-  const isMobile         = typeof window !== 'undefined' && window.innerWidth < 520
 
   // Auto-scroll
   useEffect(() => {
@@ -185,47 +184,14 @@ export default function AssistantWidget() {
     setIsSpeaking(false)
   }
 
-  // ── Styles ────────────────────────────────────────────────────────────────
-
-  const panelW = isMobile ? 'calc(100vw - 32px)' : 380
-  const panelR = isMobile ? 16 : 28
-
-  const panel = {
-    position: 'fixed', bottom: 28, right: panelR,
-    width: panelW, height: 560,
-    background: '#0d1224',
-    border: '1px solid rgba(99,102,241,0.35)',
-    borderRadius: 20,
-    boxShadow: '0 24px 64px rgba(0,0,0,0.7), 0 0 0 1px rgba(99,102,241,0.1)',
-    display: 'flex', flexDirection: 'column',
-    zIndex: 9999, overflow: 'hidden',
-    animation: 'widgetOpen 0.22s cubic-bezier(0.34,1.56,0.64,1)',
-  }
-
-  const msgBubble = (role) => ({
-    maxWidth: '82%',
-    padding: '10px 14px',
-    borderRadius: role === 'user' ? '18px 18px 4px 18px' : '4px 18px 18px 18px',
-    background: role === 'user'
-      ? 'linear-gradient(135deg,#6366f1,#a78bfa)'
-      : 'rgba(255,255,255,0.06)',
-    border: role === 'assistant' ? '1px solid rgba(255,255,255,0.08)' : 'none',
-    color: '#e2e8f0', fontSize: 13, lineHeight: 1.55,
-    whiteSpace: 'pre-wrap', wordBreak: 'break-word',
-  })
-
   // ── Render ────────────────────────────────────────────────────────────────
 
   return (
     <>
       <style>{`
         @keyframes widgetOpen {
-          from { opacity: 0; transform: scale(0.92) translateY(12px); }
-          to   { opacity: 1; transform: scale(1) translateY(0); }
-        }
-        @keyframes recordPulse {
-          0%,100% { box-shadow: 0 0 0 0 rgba(239,68,68,0.5); }
-          50%      { box-shadow: 0 0 0 8px rgba(239,68,68,0); }
+          from { opacity: 0; transform: translateY(10px); }
+          to   { opacity: 1; transform: translateY(0); }
         }
         @keyframes dot { 0%,80%,100%{transform:scale(0.6);opacity:0.4} 40%{transform:scale(1);opacity:1} }
       `}</style>
@@ -235,85 +201,61 @@ export default function AssistantWidget() {
         <button
           onClick={() => setIsOpen(true)}
           aria-label="Open Manar AI assistant"
-          style={{
-            position: 'fixed', bottom: 28, right: 28,
-            width: 58, height: 58, borderRadius: '50%',
-            background: 'linear-gradient(135deg,#6366f1,#a78bfa)',
-            border: 'none', cursor: 'pointer',
-            boxShadow: '0 4px 24px rgba(99,102,241,0.55)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: 22, zIndex: 9999, transition: 'transform 0.18s, box-shadow 0.18s',
-          }}
-          onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.1)'; e.currentTarget.style.boxShadow = '0 8px 32px rgba(99,102,241,0.75)' }}
-          onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = '0 4px 24px rgba(99,102,241,0.55)' }}
+          className="fixed bottom-7 right-7 w-14 h-14 bg-accent hover:bg-accent-dim text-paper flex items-center justify-center z-[9999] transition-colors"
         >
-          <Icon name="message" size={26} />
+          <Icon name="message" size={24} />
         </button>
       )}
 
       {/* ── Panel ── */}
       {isOpen && (
-        <div style={panel}>
+        <div
+          className="fixed bottom-7 right-4 sm:right-7 w-[calc(100vw-32px)] sm:w-[380px] h-[560px] bg-paper-raised border border-line flex flex-col z-[9999] overflow-hidden"
+          style={{ animation: 'widgetOpen 0.18s ease-out' }}
+        >
 
           {/* Header */}
-          <div style={{
-            padding: '12px 14px',
-            borderBottom: '1px solid rgba(255,255,255,0.07)',
-            background: 'rgba(99,102,241,0.08)',
-            display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0,
-          }}>
-            <div style={{
-              width: 34, height: 34, borderRadius: '50%', flexShrink: 0,
-              background: 'linear-gradient(135deg,#6366f1,#a78bfa)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 17,
-            }}><Icon name="bot" size={18} color="#fff" /></div>
-            <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ color: '#f1f5f9', fontWeight: 700, fontSize: 14 }}>Manar AI</div>
-              <div style={{ color: '#64748b', fontSize: 11 }}>
+          <div className="px-3.5 py-3 border-b border-line flex items-center gap-2.5 shrink-0">
+            <div className="w-8 h-8 shrink-0 bg-accent text-paper flex items-center justify-center">
+              <Icon name="bot" size={16} />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="text-ink font-semibold text-sm">Manar AI</div>
+              <div className="text-ink-faint text-[11px] font-mono">
                 {mode === 'interview' && interviewStarted ? `${position?.label} Interview` : 'Ask me anything'}
               </div>
             </div>
 
             {/* Mode toggle */}
-            <div style={{ display: 'flex', gap: 3, background: 'rgba(0,0,0,0.35)', borderRadius: 9, padding: 3, flexShrink: 0 }}>
-              {[['chat','Chat'],['interview','Interview']].map(([m, label]) => (
-                <button key={m} onClick={() => setMode(m)} style={{
-                  background: mode === m ? 'linear-gradient(135deg,#6366f1,#a78bfa)' : 'transparent',
-                  border: 'none', color: mode === m ? '#fff' : '#64748b',
-                  padding: '3px 9px', borderRadius: 6, fontSize: 11, fontWeight: 600, cursor: 'pointer',
-                }}>{label}</button>
+            <div className="flex gap-0.5 border border-line shrink-0">
+              {[['chat', 'Chat'], ['interview', 'Interview']].map(([m, label]) => (
+                <button key={m} onClick={() => setMode(m)}
+                  className={`px-2.5 py-1 text-[11px] font-mono transition-colors ${mode === m ? 'bg-accent text-paper' : 'text-ink-faint'}`}>
+                  {label}
+                </button>
               ))}
             </div>
 
-            <button onClick={() => { setIsOpen(false); stopSpeaking() }} style={{
-              background: 'none', border: 'none', color: '#64748b',
-              cursor: 'pointer', fontSize: 22, lineHeight: 1, padding: '0 0 0 4px', flexShrink: 0,
-            }}>×</button>
+            <button onClick={() => { setIsOpen(false); stopSpeaking() }}
+              className="text-ink-faint hover:text-ink text-xl leading-none pl-1 shrink-0">×</button>
           </div>
 
           {/* Body */}
           {mode === 'interview' && !interviewStarted ? (
 
             /* Position selector */
-            <div style={{ flex: 1, overflowY: 'auto', padding: 16 }}>
-              <p style={{ color: '#64748b', fontSize: 12, textAlign: 'center', marginBottom: 14, marginTop: 4 }}>
+            <div className="flex-1 overflow-y-auto p-4">
+              <p className="text-ink-faint text-xs text-center mb-4 mt-1">
                 Select a role to simulate a real job interview
               </p>
               {POSITIONS.map(pos => (
-                <button key={pos.id} onClick={() => startInterview(pos)} style={{
-                  width: '100%', marginBottom: 10, cursor: 'pointer',
-                  background: 'rgba(99,102,241,0.07)', border: '1px solid rgba(99,102,241,0.2)',
-                  borderRadius: 13, padding: '12px 14px',
-                  display: 'flex', alignItems: 'center', gap: 12, textAlign: 'left',
-                  transition: 'background 0.18s, border-color 0.18s',
-                }}
-                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(99,102,241,0.18)'; e.currentTarget.style.borderColor = 'rgba(99,102,241,0.45)' }}
-                onMouseLeave={e => { e.currentTarget.style.background = 'rgba(99,102,241,0.07)'; e.currentTarget.style.borderColor = 'rgba(99,102,241,0.2)' }}
+                <button key={pos.id} onClick={() => startInterview(pos)}
+                  className="w-full mb-2.5 border border-line hover:border-accent/50 p-3 flex items-center gap-3 text-left transition-colors"
                 >
-                  <span style={{ color: '#a78bfa' }}><Icon name={pos.icon} size={24} /></span>
+                  <span className="text-accent shrink-0"><Icon name={pos.icon} size={22} /></span>
                   <div>
-                    <div style={{ color: '#e2e8f0', fontWeight: 600, fontSize: 13 }}>{pos.label}</div>
-                    <div style={{ color: '#64748b', fontSize: 11, marginTop: 1 }}>{pos.desc}</div>
+                    <div className="text-ink font-medium text-sm">{pos.label}</div>
+                    <div className="text-ink-faint text-xs mt-0.5">{pos.desc}</div>
                   </div>
                 </button>
               ))}
@@ -322,43 +264,36 @@ export default function AssistantWidget() {
           ) : (
             <>
               {/* Messages */}
-              <div style={{
-                flex: 1, overflowY: 'auto', padding: '14px 14px 6px',
-                display: 'flex', flexDirection: 'column', gap: 10,
-              }}>
+              <div className="flex-1 overflow-y-auto px-3.5 pt-3.5 pb-1.5 flex flex-col gap-2.5">
                 {messages.length === 0 && mode === 'chat' && (
-                  <div style={{ marginTop: 16 }}>
-                    <p style={{ color: '#475569', fontSize: 12, textAlign: 'center', marginBottom: 12 }}>
+                  <div className="mt-4">
+                    <p className="text-ink-faint text-xs text-center mb-3">
                       Ask me anything about Manar
                     </p>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
+                    <div className="flex flex-col gap-1.5">
                       {SUGGESTIONS.map(s => (
-                        <button key={s} onClick={() => sendMessage({ role: 'user', content: s }, [], null)} style={{
-                          background: 'rgba(99,102,241,0.07)', border: '1px solid rgba(99,102,241,0.18)',
-                          borderRadius: 10, padding: '8px 12px', color: '#94a3b8', fontSize: 12,
-                          cursor: 'pointer', textAlign: 'left', transition: 'background 0.15s',
-                        }}
-                        onMouseEnter={e => e.currentTarget.style.background = 'rgba(99,102,241,0.16)'}
-                        onMouseLeave={e => e.currentTarget.style.background = 'rgba(99,102,241,0.07)'}
-                        >{s}</button>
+                        <button key={s} onClick={() => sendMessage({ role: 'user', content: s }, [], null)}
+                          className="border border-line hover:border-accent/50 px-3 py-2 text-ink-dim text-xs text-left transition-colors">
+                          {s}
+                        </button>
                       ))}
                     </div>
                   </div>
                 )}
 
                 {messages.map((msg, i) => (
-                  <div key={i} style={{ display: 'flex', justifyContent: msg.role === 'user' ? 'flex-end' : 'flex-start' }}>
-                    <div style={msgBubble(msg.role)}>{msg.content}</div>
+                  <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                    <div className={`max-w-[82%] px-3.5 py-2.5 text-[13px] leading-relaxed whitespace-pre-wrap break-word ${
+                      msg.role === 'user' ? 'bg-accent text-paper' : 'bg-paper border border-line text-ink'
+                    }`}>{msg.content}</div>
                   </div>
                 ))}
 
                 {isLoading && (
-                  <div style={{ display: 'flex', gap: 5, padding: '10px 14px', alignItems: 'center' }}>
-                    {[0,1,2].map(i => (
-                      <div key={i} style={{
-                        width: 7, height: 7, borderRadius: '50%', background: '#6366f1',
-                        animation: `dot 1.2s ease-in-out ${i * 0.2}s infinite`,
-                      }}/>
+                  <div className="flex gap-1.5 px-3.5 py-2.5 items-center">
+                    {[0, 1, 2].map(i => (
+                      <div key={i} className="w-1.5 h-1.5 rounded-full bg-accent"
+                        style={{ animation: `dot 1.2s ease-in-out ${i * 0.2}s infinite` }} />
                     ))}
                   </div>
                 )}
@@ -367,39 +302,25 @@ export default function AssistantWidget() {
 
               {/* Interview end session bar */}
               {mode === 'interview' && interviewStarted && (
-                <div style={{
-                  textAlign: 'center', fontSize: 11, color: '#475569',
-                  padding: '5px 0', borderTop: '1px solid rgba(255,255,255,0.05)',
-                  background: 'rgba(0,0,0,0.15)', flexShrink: 0,
-                }}>
+                <div className="text-center text-[11px] py-1 border-t border-line shrink-0">
                   <button onClick={() => { setInterviewStarted(false); setMessages([]); setPosition(null); stopSpeaking() }}
-                    style={{ background: 'none', border: 'none', color: '#6366f1', cursor: 'pointer', fontSize: 11 }}>
+                    className="text-accent">
                     End session
                   </button>
                 </div>
               )}
 
               {/* Input area */}
-              <div style={{
-                padding: '10px 12px',
-                borderTop: '1px solid rgba(255,255,255,0.07)',
-                display: 'flex', gap: 7, alignItems: 'flex-end',
-                background: 'rgba(0,0,0,0.18)', flexShrink: 0,
-              }}>
+              <div className="px-3 py-2.5 border-t border-line flex gap-1.5 items-end shrink-0">
                 {/* Speaker toggle (interview only) */}
                 {mode === 'interview' && (
                   <button
                     onClick={isSpeaking ? stopSpeaking : undefined}
                     title={isSpeaking ? 'Click to stop' : 'AI voice active'}
-                    style={{
-                      background: isSpeaking ? 'rgba(99,102,241,0.2)' : 'rgba(255,255,255,0.04)',
-                      border: `1px solid ${isSpeaking ? 'rgba(99,102,241,0.5)' : 'rgba(255,255,255,0.1)'}`,
-                      borderRadius: 10, width: 36, height: 36,
-                      cursor: isSpeaking ? 'pointer' : 'default',
-                      color: isSpeaking ? '#a78bfa' : '#475569',
-                      fontSize: 15, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
-                    }}
-                  ><Icon name={isSpeaking ? 'volumeOn' : 'volumeOff'} size={16} /></button>
+                    className={`border w-9 h-9 flex items-center justify-center shrink-0 ${
+                      isSpeaking ? 'border-accent/50 text-accent cursor-pointer' : 'border-line text-ink-faint cursor-default'
+                    }`}
+                  ><Icon name={isSpeaking ? 'volumeOn' : 'volumeOff'} size={15} /></button>
                 )}
 
                 <textarea
@@ -410,13 +331,8 @@ export default function AssistantWidget() {
                   placeholder={mode === 'interview' ? 'Type your answer…' : 'Ask about Manar…'}
                   rows={1}
                   disabled={isLoading}
-                  style={{
-                    flex: 1, background: 'rgba(255,255,255,0.05)',
-                    border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12,
-                    padding: '8px 12px', color: '#e2e8f0', fontSize: 13,
-                    resize: 'none', outline: 'none', fontFamily: 'system-ui,sans-serif',
-                    maxHeight: 80, lineHeight: 1.5,
-                  }}
+                  className="flex-1 bg-paper border border-line text-ink text-[13px] px-3 py-2 outline-none focus:border-accent resize-none font-sans"
+                  style={{ maxHeight: 80, lineHeight: 1.5 }}
                 />
 
                 {/* Mic button */}
@@ -424,30 +340,19 @@ export default function AssistantWidget() {
                   onClick={isRecording ? stopRecording : startRecording}
                   disabled={isLoading && !isRecording}
                   title={isRecording ? 'Stop recording' : 'Voice input'}
-                  style={{
-                    background: isRecording ? 'rgba(239,68,68,0.18)' : 'rgba(99,102,241,0.1)',
-                    border: `1px solid ${isRecording ? 'rgba(239,68,68,0.6)' : 'rgba(99,102,241,0.3)'}`,
-                    borderRadius: 10, width: 36, height: 36, cursor: 'pointer',
-                    color: isRecording ? '#ef4444' : '#a78bfa', fontSize: 16,
-                    display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
-                    animation: isRecording ? 'recordPulse 1s ease-in-out infinite' : 'none',
-                  }}
-                ><Icon name="mic" size={16} /></button>
+                  className={`border w-9 h-9 flex items-center justify-center shrink-0 transition-colors ${
+                    isRecording ? 'border-accent/60 text-accent bg-accent/10' : 'border-line text-ink-dim'
+                  }`}
+                ><Icon name="mic" size={15} /></button>
 
                 {/* Send button */}
                 <button
                   onClick={handleSend}
                   disabled={!input.trim() || isLoading}
-                  style={{
-                    background: input.trim() && !isLoading
-                      ? 'linear-gradient(135deg,#6366f1,#a78bfa)'
-                      : 'rgba(99,102,241,0.12)',
-                    border: 'none', borderRadius: 10, width: 36, height: 36,
-                    cursor: input.trim() && !isLoading ? 'pointer' : 'default',
-                    color: input.trim() && !isLoading ? '#fff' : '#475569',
-                    fontSize: 15, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
-                  }}
-                ><Icon name="send" size={15} /></button>
+                  className={`w-9 h-9 flex items-center justify-center shrink-0 transition-colors ${
+                    input.trim() && !isLoading ? 'bg-accent text-paper' : 'bg-paper border border-line text-ink-faint'
+                  }`}
+                ><Icon name="send" size={14} /></button>
               </div>
             </>
           )}

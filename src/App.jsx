@@ -2,26 +2,15 @@ import { useState, useEffect, useRef } from 'react'
 import AssistantWidget from './components/AssistantWidget.jsx'
 import Icon from './components/Icon'
 
-function useTypewriter(words, typeSpeed = 75, deleteSpeed = 40, pauseMs = 1800) {
-  const [display, setDisplay] = useState('')
+function useRotator(words, intervalMs = 2600) {
   const [idx, setIdx] = useState(0)
-  const [deleting, setDeleting] = useState(false)
+  const [visible, setVisible] = useState(true)
   useEffect(() => {
-    const word = words[idx % words.length]
-    let t
-    if (!deleting && display === word) {
-      t = setTimeout(() => setDeleting(true), pauseMs)
-    } else if (deleting && display === '') {
-      setDeleting(false)
-      setIdx(i => i + 1)
-    } else {
-      t = setTimeout(() => {
-        setDisplay(deleting ? word.slice(0, display.length - 1) : word.slice(0, display.length + 1))
-      }, deleting ? deleteSpeed : typeSpeed)
-    }
-    return () => clearTimeout(t)
-  }, [display, idx, deleting, words, typeSpeed, deleteSpeed, pauseMs])
-  return display
+    const fadeOut = setTimeout(() => setVisible(false), intervalMs - 250)
+    const next = setTimeout(() => { setIdx(i => (i + 1) % words.length); setVisible(true) }, intervalMs)
+    return () => { clearTimeout(fadeOut); clearTimeout(next) }
+  }, [idx, words.length, intervalMs])
+  return { word: words[idx], visible }
 }
 
 function useFadeIn() {
@@ -37,7 +26,7 @@ function useFadeIn() {
   }, [])
   const style = {
     opacity: visible ? 1 : 0,
-    transform: visible ? 'translateY(0)' : 'translateY(28px)',
+    transform: visible ? 'translateY(0)' : 'translateY(24px)',
     transition: 'opacity 0.6s ease, transform 0.6s ease',
   }
   return { ref, style }
@@ -103,6 +92,8 @@ const AI_PROJECTS = [
     preview: '/preview-swipeat.gif',
   },
 ]
+
+const [FEATURED_PROJECT, ...OTHER_PROJECTS] = AI_PROJECTS
 
 const ACADEMIC_PROJECTS = [
   {
@@ -186,20 +177,27 @@ const PUBLICATIONS = [
   },
 ]
 
+const THESIS_SCORES = [
+  { metric: 'Gender · macro F1', llm: 0.515, bert: 0.488 },
+  { metric: 'Age group · macro F1', llm: 0.211, bert: 0.310 },
+]
+
 const GH = (
-  <svg width="17" height="17" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+  <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
     <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
   </svg>
 )
 
-const C = { width: '100%', maxWidth: 1200, margin: '0 auto', padding: '0 clamp(16px,4vw,48px)', boxSizing: 'border-box' }
-const SEC = { padding: '72px 0' }
-const CARD = { background: 'rgba(255,255,255,.03)', border: '1px solid rgba(255,255,255,.07)', borderRadius: 16 }
+const LI = (
+  <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+  </svg>
+)
 
 export default function App() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const typedText = useTypewriter(['AI Researcher', 'NLP Engineer', 'Agentic Systems Developer', 'LLM Specialist', 'RAG Architect'])
+  const { word: role, visible: roleVisible } = useRotator(['AI Researcher', 'NLP Engineer', 'Agentic Systems Developer', 'LLM Specialist', 'RAG Architect'])
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 30)
@@ -210,90 +208,84 @@ export default function App() {
   const go = id => { document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' }); setOpen(false) }
 
   return (
-    <div style={{ background: '#0a0e1a', color: '#e2e8f0', fontFamily: 'system-ui,sans-serif' }}>
+    <div className="bg-paper text-ink font-sans">
 
       {/* NAV */}
-      <nav style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50, transition: 'background .3s', ...(scrolled ? { background: 'rgba(10,14,26,.93)', backdropFilter: 'blur(14px)', borderBottom: '1px solid rgba(255,255,255,.06)' } : {}) }}>
-        <div style={{ ...C, display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 64 }}>
-          <span style={{ fontWeight: 700, fontSize: 17, background: 'linear-gradient(to right,#818cf8,#a78bfa)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-            Manar Attar
-          </span>
-          <div className="nav-desktop" style={{ alignItems: 'center', gap: 24 }}>
+      <nav className={`fixed top-0 inset-x-0 z-50 transition-colors ${scrolled ? 'bg-paper/95 backdrop-blur border-b border-line' : ''}`}>
+        <div className="max-w-6xl mx-auto px-4 sm:px-8 h-16 flex items-center justify-between">
+          <span className="font-display text-lg font-semibold text-ink">Manar Attar</span>
+          <div className="hidden md:flex items-center gap-7">
             {NAV_LINKS.map(l => (
-              <button key={l} onClick={() => go(l.toLowerCase())} style={{ background: 'none', border: 'none', color: '#94a3b8', fontSize: 14, cursor: 'pointer' }}
-                onMouseEnter={e => e.target.style.color = '#f1f5f9'} onMouseLeave={e => e.target.style.color = '#94a3b8'}>
+              <button key={l} onClick={() => go(l.toLowerCase())}
+                className="font-mono text-xs uppercase tracking-wide text-ink-dim hover:text-ink transition-colors">
                 {l}
               </button>
             ))}
-            <a href="/Manar-Attar-CV.pdf" download style={{ fontSize: 13, padding: '7px 16px', borderRadius: 8, border: '1px solid rgba(99,102,241,.45)', color: '#818cf8', textDecoration: 'none' }}
-              onMouseEnter={e => e.currentTarget.style.background = 'rgba(99,102,241,.1)'} onMouseLeave={e => e.currentTarget.style.background = 'transparent'}>
+            <a href="/Manar-Attar-CV.pdf" download
+              className="font-mono text-xs uppercase tracking-wide px-4 py-2 border border-accent/50 text-accent hover:bg-accent/10 transition-colors">
               Download CV
             </a>
           </div>
-          <button className="nav-mobile" onClick={() => setOpen(o => !o)} style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', padding: 6, display: 'none' }}>
+          <button onClick={() => setOpen(o => !o)} className="md:hidden text-ink-dim p-1" aria-label="Toggle menu">
             <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d={open ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'} />
             </svg>
           </button>
         </div>
         {open && (
-          <div style={{ background: '#0d1120', borderTop: '1px solid rgba(255,255,255,.06)', padding: '12px 24px 16px' }}>
+          <div className="md:hidden bg-paper border-t border-line px-6 py-4">
             {NAV_LINKS.map(l => (
-              <button key={l} onClick={() => go(l.toLowerCase())} style={{ display: 'block', width: '100%', textAlign: 'left', background: 'none', border: 'none', color: '#cbd5e1', fontSize: 15, padding: '10px 0', cursor: 'pointer' }}>
+              <button key={l} onClick={() => go(l.toLowerCase())}
+                className="block w-full text-left font-mono text-sm uppercase tracking-wide text-ink-dim py-2.5">
                 {l}
               </button>
             ))}
-            <a href="/Manar-Attar-CV.pdf" download style={{ display: 'block', color: '#818cf8', fontSize: 15, padding: '10px 0', textDecoration: 'none' }}>Download CV</a>
+            <a href="/Manar-Attar-CV.pdf" download className="block text-accent font-mono text-sm py-2.5">Download CV</a>
           </div>
         )}
       </nav>
 
       {/* HERO */}
-      <section style={{ paddingTop: 120, paddingBottom: 80, position: 'relative', overflow: 'hidden' }}>
-        <div aria-hidden style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}>
-          <div style={{ position: 'absolute', top: '10%', left: '50%', transform: 'translateX(-50%)', width: 700, height: 400, background: 'radial-gradient(ellipse,rgba(99,102,241,.13),transparent 70%)', filter: 'blur(30px)' }} />
-        </div>
-        <div style={{ ...C, textAlign: 'center', position: 'relative' }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '6px 14px', borderRadius: 999, border: '1px solid rgba(99,102,241,.3)', background: 'rgba(99,102,241,.08)', color: '#a5b4fc', fontSize: 13, marginBottom: 24 }}>
-            <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#818cf8', animation: 'pulse 2s infinite' }} />
-            Open to opportunities
-          </div>
-          <h1 style={{ fontWeight: 800, lineHeight: 1.15, margin: '0 0 14px', fontSize: 'clamp(2.1rem,5vw,3.8rem)' }}>
-            <span style={{ background: 'linear-gradient(135deg,#818cf8,#a78bfa,#c084fc)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-              Manar Attar
-            </span>
-          </h1>
-          <p style={{ fontSize: 'clamp(1.1rem,2.5vw,1.5rem)', color: '#a78bfa', fontWeight: 600, margin: '0 0 18px', minHeight: '2em' }}>
-            {typedText}<span className="cursor">|</span>
+      <section className="pt-36 pb-20">
+        <div className="max-w-3xl mx-auto px-4 sm:px-8 text-center">
+          <p className="font-mono text-xs uppercase tracking-widest text-ink-faint mb-6">
+            <span className="text-accent">·</span> Open to opportunities
           </p>
-          <p style={{ maxWidth: 580, margin: '0 auto 32px', color: '#94a3b8', lineHeight: 1.8, fontSize: 15 }}>
-            Manar Attar is an AI Researcher and Developer specialising in agentic architectures,
-            RAG pipelines, and fine-tuned NLP models. He is completing a Master's in Language &amp; AI
-            at Vrije Universiteit Amsterdam, graduating December 2026 — his thesis on author profiling
+          <h1 className="font-display font-semibold text-ink leading-tight mb-4 text-[clamp(2.4rem,6vw,4rem)]">
+            Manar Attar
+          </h1>
+          <p className="h-8 font-mono text-base text-accent mb-6 transition-opacity duration-300" style={{ opacity: roleVisible ? 1 : 0 }}>
+            {role}
+          </p>
+          <p className="text-ink-dim leading-relaxed mb-10 max-w-xl mx-auto">
+            AI Researcher and Developer specialising in agentic architectures, RAG pipelines,
+            and fine-tuned NLP models. Completing a Master's in Language &amp; AI at Vrije
+            Universiteit Amsterdam, graduating December 2026 — his thesis on author profiling
             of hate speech authors benchmarked zero-shot LLMs against fine-tuned BERT-family encoders.
           </p>
-          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 12, marginBottom: 40 }}>
-            <button onClick={() => go('projects')} style={{ padding: '11px 26px', borderRadius: 10, border: 'none', background: 'linear-gradient(135deg,#6366f1,#8b5cf6)', color: '#fff', fontWeight: 600, fontSize: 14, cursor: 'pointer' }}>
+          <div className="flex flex-wrap justify-center gap-3 mb-14">
+            <button onClick={() => go('projects')}
+              className="px-6 py-3 bg-accent text-paper font-medium text-sm hover:bg-accent-dim transition-colors">
               View Projects
             </button>
-            <a href="/Manar-Attar-CV.pdf" download style={{ padding: '11px 26px', borderRadius: 10, border: '1px solid rgba(100,116,139,.5)', color: '#cbd5e1', fontWeight: 600, fontSize: 14, textDecoration: 'none' }}>
+            <a href="/Manar-Attar-CV.pdf" download
+              className="px-6 py-3 border border-line text-ink font-medium text-sm hover:border-ink-dim transition-colors">
               Download CV
             </a>
-            <a href="https://github.com/manarattar" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: 7, padding: '11px 26px', borderRadius: 10, border: '1px solid rgba(100,116,139,.5)', color: '#cbd5e1', fontWeight: 600, fontSize: 14, textDecoration: 'none' }}>
+            <a href="https://github.com/manarattar" target="_blank" rel="noopener noreferrer"
+              className="flex items-center gap-2 px-6 py-3 border border-line text-ink font-medium text-sm hover:border-ink-dim transition-colors">
               {GH} GitHub
             </a>
-            <a href="https://linkedin.com/in/manar-attar" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: 7, padding: '11px 26px', borderRadius: 10, border: '1px solid rgba(100,116,139,.5)', color: '#cbd5e1', fontWeight: 600, fontSize: 14, textDecoration: 'none' }}>
-              <svg width="17" height="17" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" /></svg>
-              LinkedIn
+            <a href="https://linkedin.com/in/manar-attar" target="_blank" rel="noopener noreferrer"
+              className="flex items-center gap-2 px-6 py-3 border border-line text-ink font-medium text-sm hover:border-ink-dim transition-colors">
+              {LI} LinkedIn
             </a>
           </div>
-          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 32 }}>
-            {/* Derived from the arrays above so the counts can never drift out of
-                sync when a project or publication is added. */}
+          <div className="flex justify-center gap-10">
             {[[AI_PROJECTS.length, 'AI Portfolio Projects'], [ACADEMIC_PROJECTS.length, 'Academic Projects'], [PUBLICATIONS.length, 'Publications']].map(([v, l]) => (
-              <div key={l} style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: 22, fontWeight: 700, color: '#818cf8' }}>{v}</div>
-                <div style={{ fontSize: 12, color: '#64748b', marginTop: 3 }}>{l}</div>
+              <div key={l} className="text-center">
+                <div className="font-display text-2xl font-semibold text-ink">{v}</div>
+                <div className="font-mono text-[11px] uppercase tracking-wide text-ink-faint mt-1">{l}</div>
               </div>
             ))}
           </div>
@@ -301,34 +293,50 @@ export default function App() {
       </section>
 
       {/* AI PROJECTS */}
-      <section id="projects" style={SEC}>
-        <Fade><div style={C}>
+      <section id="projects" className="py-20 border-t border-line">
+        <Fade><div className="max-w-6xl mx-auto px-4 sm:px-8">
           <Hdr label="Portfolio" title="AI Projects" />
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(min(100%,320px),1fr))', gap: 20 }}>
-            {AI_PROJECTS.map(p => (
-              <div key={p.title} className="glow-wrap">
-                <div className="glow-inner" style={{ display: 'flex', flexDirection: 'column' }}>
-                  {p.preview && (
-                    <div style={{ width: '100%', height: 160, overflow: 'hidden', borderBottom: '1px solid rgba(255,255,255,.07)' }}>
-                      <img src={p.preview} alt={`${p.title} preview`} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }} />
-                    </div>
-                  )}
-                  <div style={{ padding: '18px 20px 16px', display: 'flex', flexDirection: 'column', flex: 1 }}>
-                    <h3 style={{ fontSize: 15, fontWeight: 700, color: '#f1f5f9', margin: '0 0 8px', lineHeight: 1.4 }}>{p.title}</h3>
-                    <p style={{ fontSize: 13, color: '#94a3b8', lineHeight: 1.65, margin: '0 0 14px', flex: 1 }}>{p.desc}</p>
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 16 }}>
-                      {p.tags.map(t => <span key={t} style={{ fontSize: 11, padding: '3px 8px', borderRadius: 6, background: 'rgba(30,41,59,.9)', color: '#94a3b8' }}>{t}</span>)}
-                    </div>
-                    <div style={{ display: 'flex', gap: 10 }}>
-                      {p.github
-                        ? <a href={p.github} target="_blank" rel="noopener noreferrer" style={{ flex: 1, textAlign: 'center', fontSize: 13, padding: '8px', borderRadius: 8, border: '1px solid rgba(71,85,105,.6)', color: '#94a3b8', textDecoration: 'none' }}>GitHub</a>
-                        : <span style={{ flex: 1, textAlign: 'center', fontSize: 13, padding: '8px', borderRadius: 8, border: '1px solid rgba(71,85,105,.3)', color: '#475569' }}>Private</span>
-                      }
-                      {p.demo
-                        ? <a href={p.demo} target="_blank" rel="noopener noreferrer" style={{ flex: 1, textAlign: 'center', fontSize: 13, padding: '8px', borderRadius: 8, background: 'linear-gradient(135deg,#6366f1,#8b5cf6)', color: '#fff', textDecoration: 'none' }}>Live Demo</a>
-                        : <span style={{ flex: 1, textAlign: 'center', fontSize: 13, padding: '8px', borderRadius: 8, border: '1px solid rgba(71,85,105,.3)', color: '#475569' }}>No demo</span>
-                      }
-                    </div>
+
+          {/* Featured */}
+          <div className="border border-line bg-paper-raised p-6 sm:p-10 mb-6">
+            <p className="font-mono text-[11px] uppercase tracking-widest text-accent mb-4">Featured</p>
+            <h3 className="font-display text-2xl font-semibold text-ink mb-3">{FEATURED_PROJECT.title}</h3>
+            <p className="text-ink-dim leading-relaxed mb-6 max-w-3xl">{FEATURED_PROJECT.desc}</p>
+            <div className="flex flex-wrap gap-2 mb-6">
+              {FEATURED_PROJECT.tags.map(t => (
+                <span key={t} className="font-mono text-[11px] px-2.5 py-1 border border-line text-ink-dim">{t}</span>
+              ))}
+            </div>
+            <div className="flex gap-3">
+              <a href={FEATURED_PROJECT.github} target="_blank" rel="noopener noreferrer"
+                className="text-sm px-5 py-2.5 border border-line text-ink hover:border-ink-dim transition-colors">GitHub</a>
+              <a href={FEATURED_PROJECT.demo} target="_blank" rel="noopener noreferrer"
+                className="text-sm px-5 py-2.5 bg-accent text-paper font-medium hover:bg-accent-dim transition-colors">Live Demo</a>
+            </div>
+          </div>
+
+          {/* Rest */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {OTHER_PROJECTS.map(p => (
+              <div key={p.title} className="border border-line hover:border-accent/50 transition-colors flex flex-col">
+                {p.preview && (
+                  <div className="w-full h-40 overflow-hidden border-b border-line">
+                    <img src={p.preview} alt={`${p.title} preview`} className="w-full h-full object-cover object-top" />
+                  </div>
+                )}
+                <div className="p-5 flex flex-col flex-1">
+                  <h3 className="font-display text-base font-semibold text-ink mb-2 leading-snug">{p.title}</h3>
+                  <p className="text-sm text-ink-dim leading-relaxed mb-4 flex-1">{p.desc}</p>
+                  <div className="flex flex-wrap gap-1.5 mb-4">
+                    {p.tags.map(t => <span key={t} className="font-mono text-[10px] px-2 py-0.5 border border-line text-ink-faint">{t}</span>)}
+                  </div>
+                  <div className="flex gap-2">
+                    {p.github
+                      ? <a href={p.github} target="_blank" rel="noopener noreferrer" className="flex-1 text-center text-xs py-2 border border-line text-ink-dim hover:border-ink-dim">GitHub</a>
+                      : <span className="flex-1 text-center text-xs py-2 border border-line/50 text-ink-faint">Private</span>}
+                    {p.demo
+                      ? <a href={p.demo} target="_blank" rel="noopener noreferrer" className="flex-1 text-center text-xs py-2 bg-accent text-paper font-medium">Live Demo</a>
+                      : <span className="flex-1 text-center text-xs py-2 border border-line/50 text-ink-faint">No demo</span>}
                   </div>
                 </div>
               </div>
@@ -338,26 +346,23 @@ export default function App() {
       </section>
 
       {/* ACADEMIC PROJECTS */}
-      <section style={SEC}>
-        <Fade><div style={C}>
+      <section className="py-20 border-t border-line">
+        <Fade><div className="max-w-6xl mx-auto px-4 sm:px-8">
           <Hdr label="Bachelor & Master" title="Academic Projects" />
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(min(100%,320px),1fr))', gap: 16 }}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {ACADEMIC_PROJECTS.map(p => (
-              <div key={p.title} style={{ ...CARD, padding: '20px', border: p.highlight ? '1px solid rgba(99,102,241,.3)' : CARD.border }}>
-                <h3 style={{ fontSize: 14, fontWeight: 700, color: '#f1f5f9', margin: '0 0 8px', lineHeight: 1.4 }}>{p.title}</h3>
-                <p style={{ fontSize: 13, color: '#94a3b8', lineHeight: 1.6, margin: '0 0 12px' }}>{p.desc}</p>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5, marginBottom: 10 }}>
-                  {p.tags.map(t => <span key={t} style={{ fontSize: 11, padding: '3px 7px', borderRadius: 6, background: 'rgba(30,41,59,.9)', color: '#94a3b8' }}>{t}</span>)}
+              <div key={p.title} className={`p-5 border ${p.highlight ? 'border-accent/50' : 'border-line'}`}>
+                <h3 className="font-display text-sm font-semibold text-ink mb-2 leading-snug">{p.title}</h3>
+                <p className="text-sm text-ink-dim leading-relaxed mb-3">{p.desc}</p>
+                <div className="flex flex-wrap gap-1.5 mb-3">
+                  {p.tags.map(t => <span key={t} className="font-mono text-[10px] px-2 py-0.5 border border-line text-ink-faint">{t}</span>)}
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, flexWrap: 'wrap' }}>
-                  <div style={{ fontSize: 12, color: p.highlight ? '#a5b4fc' : '#64748b', display: 'flex', alignItems: 'center', gap: 5 }}>
-                    {p.highlight && <span style={{ color: '#818cf8' }}>★</span>}
-                    {p.result}
+                <div className="flex items-center justify-between gap-2 flex-wrap">
+                  <div className={`text-xs flex items-center gap-1.5 ${p.highlight ? 'text-accent' : 'text-ink-faint'}`}>
+                    {p.highlight && '★'} {p.result}
                   </div>
                   {p.demo && (
-                    <a href={p.demo} target="_blank" rel="noopener noreferrer" style={{ fontSize: 12, padding: '4px 12px', borderRadius: 7, background: 'linear-gradient(135deg,#6366f1,#8b5cf6)', color: '#fff', textDecoration: 'none', whiteSpace: 'nowrap' }}>
-                      Live Demo
-                    </a>
+                    <a href={p.demo} target="_blank" rel="noopener noreferrer" className="text-xs px-3 py-1 bg-accent text-paper font-medium">Live Demo</a>
                   )}
                 </div>
               </div>
@@ -367,127 +372,103 @@ export default function App() {
       </section>
 
       {/* RESEARCH */}
-      <section id="research" style={SEC}>
-        <Fade><div style={C}>
+      <section id="research" className="py-20 border-t border-line">
+        <Fade><div className="max-w-6xl mx-auto px-4 sm:px-8">
           <Hdr label="Master's Thesis · VU Amsterdam · 2026" title="Thesis Research" />
-          <div style={{ position: 'relative', borderRadius: 24, overflow: 'hidden' }}>
-            {/* glow backdrop */}
-            <div aria-hidden style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg,rgba(99,102,241,.09) 0%,rgba(139,92,246,.06) 50%,rgba(192,132,252,.04) 100%)', borderRadius: 24 }} />
-            <div style={{ position: 'relative', border: '1px solid rgba(99,102,241,.25)', borderRadius: 24, padding: 'clamp(24px,5vw,48px)' }}>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
+            <div>
+              <p className="font-mono text-xs text-good mb-4">✓ Completed &amp; Passed — June 2026</p>
+              <h3 className="font-display text-2xl font-semibold text-ink mb-1">Author Profiling of Hate Speech Spreaders</h3>
+              <p className="font-mono text-xs uppercase tracking-wide text-accent mb-6">Zero-shot LLMs vs. Fine-tuned Encoder Models</p>
 
-              {/* status row */}
-              <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', gap: 10, marginBottom: 28 }}>
-                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 12, padding: '5px 13px', borderRadius: 999, background: 'rgba(16,185,129,.15)', color: '#6ee7b7', border: '1px solid rgba(16,185,129,.35)', fontWeight: 700, letterSpacing: '0.03em' }}>
-                  ✓ Completed &amp; Passed — June 2026
-                </span>
-              </div>
-
-              {/* title */}
-              <h3 style={{ fontSize: 'clamp(1.2rem,2.8vw,1.7rem)', fontWeight: 800, color: '#f1f5f9', margin: '0 0 6px', textAlign: 'center', letterSpacing: '-0.01em' }}>
-                Author Profiling of Hate Speech Spreaders
-              </h3>
-              <p style={{ textAlign: 'center', fontSize: 13, color: '#6366f1', fontWeight: 600, margin: '0 0 20px', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
-                Zero-shot LLMs vs. Fine-tuned Encoder Models
-              </p>
-
-              {/* research question callout */}
-              <div style={{ maxWidth: 680, margin: '0 auto 20px', background: 'rgba(99,102,241,.07)', border: '1px solid rgba(99,102,241,.2)', borderRadius: 14, padding: '16px 20px', textAlign: 'center' }}>
-                <p style={{ fontSize: 11, fontWeight: 700, color: '#818cf8', textTransform: 'uppercase', letterSpacing: '0.1em', margin: '0 0 8px' }}>Research Question</p>
-                <p style={{ fontSize: 14, color: '#e2e8f0', lineHeight: 1.7, margin: 0, fontStyle: 'italic' }}>
+              <blockquote className="border-l-2 border-accent pl-4 mb-6">
+                <p className="font-display italic text-lg text-ink leading-relaxed">
                   "What is the best approach for predicting the age group and gender of authors
                   from hateful comments: zero-shot classification using LLMs, or a pretrained
                   encoder model fine-tuned on datasets annotated for age and gender?"
                 </p>
-              </div>
+              </blockquote>
 
-              {/* description */}
-              <p style={{ maxWidth: 660, margin: '0 auto 20px', color: '#94a3b8', fontSize: 14, lineHeight: 1.8, textAlign: 'center' }}>
-                Evaluated on the English portion of <strong style={{ color: '#cbd5e1' }}>LiLaH-HAG</strong> (619 Facebook hate speech comments
-                annotated for author age &amp; gender): zero-shot inference with <strong style={{ color: '#cbd5e1' }}>LLaMA-3.1 &amp; Qwen3</strong> versus
-                BERT-family encoders (<strong style={{ color: '#cbd5e1' }}>BERT, HateBERT, RoBERTa</strong>) fine-tuned on the cross-domain <strong style={{ color: '#cbd5e1' }}>PAN14</strong> corpus.
+              <p className="text-ink-dim leading-relaxed mb-5">
+                Evaluated on the English portion of <strong className="text-ink">LiLaH-HAG</strong> (619 Facebook hate speech comments
+                annotated for author age &amp; gender): zero-shot inference with <strong className="text-ink">LLaMA-3.1 &amp; Qwen3</strong> versus
+                BERT-family encoders (<strong className="text-ink">BERT, HateBERT, RoBERTa</strong>) fine-tuned on the cross-domain <strong className="text-ink">PAN14</strong> corpus.
                 A follow-up experiment extends gender identification to Slovene, testing whether an explicit grammatical gender cue narrows the gap.
               </p>
+              <p className="text-ink-dim leading-relaxed mb-6">
+                Zero-shot LLMs edge out fine-tuned encoders on gender, while encoders do better on age —
+                but neither is reliable enough for practical use, and the <strong className="text-ink">66+ age group is almost never identified
+                correctly</strong> by any model.
+              </p>
 
-              {/* key finding callout */}
-              <div style={{ maxWidth: 680, margin: '0 auto 28px', background: 'rgba(16,185,129,.06)', border: '1px solid rgba(16,185,129,.2)', borderRadius: 14, padding: '16px 20px', textAlign: 'center' }}>
-                <p style={{ fontSize: 11, fontWeight: 700, color: '#6ee7b7', textTransform: 'uppercase', letterSpacing: '0.1em', margin: '0 0 8px' }}>Key Finding</p>
-                <p style={{ fontSize: 14, color: '#e2e8f0', lineHeight: 1.7, margin: 0 }}>
-                  Zero-shot LLMs edge out fine-tuned encoders on gender (macro F1 <strong style={{ color: '#cbd5e1' }}>0.515 vs. 0.488</strong>),
-                  while encoders do better on age (<strong style={{ color: '#cbd5e1' }}>0.310 vs. 0.211</strong>) — but neither is reliable enough
-                  for practical use, and the 66+ age group is almost never identified correctly by any model.
-                </p>
+              <div className="flex flex-wrap gap-2 mb-8">
+                {['NLP', 'Author Profiling', 'Hate Speech Detection', 'LLMs', 'BERT', 'Zero-shot Inference', 'Fine-tuning', 'Cross-dataset Evaluation', 'Error Analysis'].map(t => (
+                  <span key={t} className="font-mono text-[11px] px-2.5 py-1 border border-line text-ink-dim">{t}</span>
+                ))}
               </div>
 
-              {/* stat cards */}
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(min(100%,190px),1fr))', gap: 12, marginBottom: 24 }}>
-                {[
-                  { icon: 'folder', label: 'Dataset', value: 'LiLaH-HAG (EN, n=619) + PAN14' },
-                  { icon: 'cpu', label: 'Models', value: 'LLaMA-3.1-8B · Qwen3-32B · BERT · HateBERT · RoBERTa' },
-                  { icon: 'globe', label: 'Languages', value: 'English (primary) · Slovene (extension)' },
-                  { icon: 'calendar', label: 'Status', value: 'Completed · Passed June 2026' },
-                ].map(({ icon, label, value }) => (
-                  <div key={label} style={{ background: 'rgba(255,255,255,.04)', border: '1px solid rgba(255,255,255,.08)', borderRadius: 14, padding: '14px 16px' }}>
-                    <div style={{ marginBottom: 6, color: '#818cf8' }}><Icon name={icon} size={18} /></div>
-                    <div style={{ fontSize: 10, color: '#818cf8', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 4 }}>{label}</div>
-                    <div style={{ fontSize: 13, color: '#e2e8f0', lineHeight: 1.4, fontWeight: 500 }}>{value}</div>
+              <a href="/Manar-Attar-Thesis.pdf" download
+                className="inline-block px-6 py-3 bg-accent text-paper font-medium text-sm hover:bg-accent-dim transition-colors">
+                Download Thesis
+              </a>
+            </div>
+
+            <div className="border border-line bg-paper-raised p-6 sm:p-8">
+              <p className="font-mono text-[11px] uppercase tracking-widest text-ink-faint mb-5">Macro F1 by model type</p>
+              <div className="flex items-center gap-5 mb-7 font-mono text-[11px] uppercase tracking-wide">
+                <span className="flex items-center gap-2 text-accent"><span className="w-2 h-2 bg-accent inline-block" />Zero-shot LLM</span>
+                <span className="flex items-center gap-2 text-ink-dim"><span className="w-2 h-2 bg-ink-dim inline-block" />Fine-tuned BERT</span>
+              </div>
+              <div className="space-y-6">
+                {THESIS_SCORES.map(s => (
+                  <div key={s.metric}>
+                    <p className="font-mono text-xs text-ink-faint uppercase mb-2.5">{s.metric}</p>
+                    <ScoreBar value={s.llm} color="bg-accent" />
+                    <ScoreBar value={s.bert} color="bg-ink-dim" />
                   </div>
                 ))}
               </div>
-
-              {/* tags */}
-              <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 8, marginBottom: 28 }}>
-                {['NLP', 'Author Profiling', 'Hate Speech Detection', 'LLMs', 'BERT', 'Zero-shot Inference', 'Fine-tuning', 'Cross-dataset Evaluation', 'Error Analysis'].map(t => (
-                  <span key={t} style={{ fontSize: 12, padding: '4px 12px', borderRadius: 999, background: 'rgba(99,102,241,.1)', color: '#a5b4fc', border: '1px solid rgba(99,102,241,.2)' }}>{t}</span>
-                ))}
-              </div>
-
-              {/* download */}
-              <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <a href="/Manar-Attar-Thesis.pdf" download style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '11px 26px', borderRadius: 10, border: 'none', background: 'linear-gradient(135deg,#6366f1,#8b5cf6)', color: '#fff', fontWeight: 600, fontSize: 14, textDecoration: 'none' }}>
-                  Download Thesis
-                </a>
-              </div>
-
+              <p className="font-mono text-[11px] text-ink-faint mt-7">
+                Dataset: LiLaH-HAG (EN, n=619) + PAN14 · Models: LLaMA-3.1-8B, Qwen3-32B, BERT, HateBERT, RoBERTa
+              </p>
             </div>
           </div>
         </div></Fade>
       </section>
 
       {/* EXPERIENCE + EDUCATION */}
-      <section id="experience" style={SEC}>
-        <Fade><div style={C}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(min(100%,480px),1fr))', gap: 40 }}>
-            {/* Work */}
+      <section id="experience" className="py-20 border-t border-line">
+        <Fade><div className="max-w-6xl mx-auto px-4 sm:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <div>
               <Hdr label="Career" title="Work Experience" left />
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+              <div className="flex flex-col gap-6">
                 {EXPERIENCE.map(e => (
-                  <div key={e.company} style={{ ...CARD, padding: '20px 22px' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 6, marginBottom: 6 }}>
+                  <div key={e.company} className="border-l-2 border-line pl-5 hover:border-accent transition-colors">
+                    <div className="flex justify-between flex-wrap gap-1 mb-2">
                       <div>
-                        <span style={{ fontSize: 15, fontWeight: 700, color: '#f1f5f9' }}>{e.role}</span>
-                        <span style={{ fontSize: 14, color: '#818cf8', marginLeft: 8 }}>@ {e.company}</span>
+                        <span className="font-display font-semibold text-ink">{e.role}</span>
+                        <span className="font-mono text-xs text-accent ml-2">@ {e.company}</span>
                       </div>
-                      <span style={{ fontSize: 12, color: '#64748b' }}>{e.period}</span>
+                      <span className="font-mono text-xs text-ink-faint">{e.period}</span>
                     </div>
-                    <ul style={{ margin: 0, paddingLeft: 18 }}>
-                      {e.points.map(pt => <li key={pt} style={{ fontSize: 13, color: '#94a3b8', lineHeight: 1.6 }}>{pt}</li>)}
+                    <ul className="space-y-1">
+                      {e.points.map(pt => <li key={pt} className="text-sm text-ink-dim leading-relaxed list-disc ml-4">{pt}</li>)}
                     </ul>
                   </div>
                 ))}
               </div>
             </div>
-            {/* Education */}
             <div>
               <Hdr label="Academic" title="Education" left />
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+              <div className="flex flex-col gap-6">
                 {EDUCATION.map(e => (
-                  <div key={e.degree} style={{ ...CARD, padding: '20px 22px' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 6, marginBottom: 4 }}>
-                      <span style={{ fontSize: 15, fontWeight: 700, color: '#f1f5f9' }}>{e.degree}</span>
-                      <span style={{ fontSize: 12, color: '#64748b' }}>{e.period}</span>
+                  <div key={e.degree} className="border-l-2 border-line pl-5 hover:border-accent transition-colors">
+                    <div className="flex justify-between flex-wrap gap-1 mb-1">
+                      <span className="font-display font-semibold text-ink">{e.degree}</span>
+                      <span className="font-mono text-xs text-ink-faint">{e.period}</span>
                     </div>
-                    <span style={{ fontSize: 13, color: '#818cf8' }}>{e.school}</span>
+                    <span className="font-mono text-xs text-accent">{e.school}</span>
                   </div>
                 ))}
               </div>
@@ -497,25 +478,25 @@ export default function App() {
       </section>
 
       {/* SKILLS */}
-      <section id="skills" style={SEC}>
-        <Fade><div style={C}>
+      <section id="skills" className="py-20 border-t border-line">
+        <Fade><div className="max-w-6xl mx-auto px-4 sm:px-8">
           <Hdr label="Technical" title="Skills & Tools" />
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(min(100%,240px),1fr))', gap: 16, marginBottom: 16 }}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-5">
             {SKILLS.map(s => (
-              <div key={s.group} style={{ ...CARD, padding: '20px' }}>
-                <div style={{ fontSize: 11, fontWeight: 700, color: '#818cf8', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 12 }}>{s.group}</div>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
-                  {s.items.map(i => <span key={i} style={{ fontSize: 12, padding: '4px 8px', borderRadius: 6, background: 'rgba(30,41,59,.9)', color: '#cbd5e1' }}>{i}</span>)}
+              <div key={s.group} className="border border-line p-5">
+                <div className="font-mono text-[11px] uppercase tracking-widest text-accent mb-3">{s.group}</div>
+                <div className="flex flex-wrap gap-1.5">
+                  {s.items.map(i => <span key={i} className="font-mono text-[11px] px-2 py-0.5 border border-line text-ink-dim">{i}</span>)}
                 </div>
               </div>
             ))}
           </div>
-          <div style={{ ...CARD, padding: '20px' }}>
-            <div style={{ fontSize: 11, fontWeight: 700, color: '#818cf8', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 12 }}>Languages</div>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+          <div className="border border-line p-5">
+            <div className="font-mono text-[11px] uppercase tracking-widest text-accent mb-3">Languages</div>
+            <div className="flex flex-wrap gap-2">
               {[['English', 'Fluent'], ['Arabic', 'Native'], ['Dutch', 'Advanced · B2']].map(([l, lvl]) => (
-                <div key={l} style={{ fontSize: 13, padding: '6px 14px', borderRadius: 8, background: 'rgba(30,41,59,.9)', color: '#cbd5e1', border: '1px solid rgba(71,85,105,.4)' }}>
-                  {l} <span style={{ color: '#64748b', fontSize: 12 }}>· {lvl}</span>
+                <div key={l} className="text-sm px-3 py-1.5 border border-line text-ink-dim">
+                  {l} <span className="text-ink-faint font-mono text-xs">· {lvl}</span>
                 </div>
               ))}
             </div>
@@ -524,15 +505,15 @@ export default function App() {
       </section>
 
       {/* PUBLICATIONS */}
-      <section style={SEC}>
-        <Fade><div style={C}>
+      <section className="py-20 border-t border-line">
+        <Fade><div className="max-w-6xl mx-auto px-4 sm:px-8">
           <Hdr label="Research Output" title="Publications" />
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+          <div className="flex flex-col gap-4">
             {PUBLICATIONS.map(p => (
-              <div key={p.title} style={{ ...CARD, padding: '20px 24px', borderLeft: '3px solid #6366f1' }}>
-                <p style={{ fontSize: 14, fontWeight: 600, color: '#f1f5f9', margin: '0 0 6px', lineHeight: 1.5 }}>{p.title}</p>
-                <p style={{ fontSize: 13, color: '#94a3b8', margin: '0 0 4px' }}>{p.authors}</p>
-                <p style={{ fontSize: 12, color: '#6366f1', margin: 0 }}>{p.venue}</p>
+              <div key={p.title} className="border-l-2 border-accent pl-5 py-1">
+                <p className="font-medium text-ink mb-1 leading-relaxed">{p.title}</p>
+                <p className="text-sm text-ink-dim mb-1">{p.authors}</p>
+                <p className="font-mono text-xs text-accent">{p.venue}</p>
               </div>
             ))}
           </div>
@@ -540,82 +521,54 @@ export default function App() {
       </section>
 
       {/* CONTACT */}
-      <section id="contact" style={SEC}>
-        <Fade><div style={C}>
+      <section id="contact" className="py-20 border-t border-line">
+        <Fade><div className="max-w-6xl mx-auto px-4 sm:px-8">
           <Hdr label="Get In Touch" title="Contact" />
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(min(100%,460px),1fr))', gap: 40, alignItems: 'start' }}>
-
-            {/* Left — blurb + links */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             <div>
-              <p style={{ color: '#94a3b8', fontSize: 15, lineHeight: 1.8, margin: '0 0 28px' }}>
+              <p className="text-ink-dim leading-relaxed mb-7">
                 Master's thesis passed; graduating December 2026 — open to AI/ML roles now.
                 Reach out for collaborations, opportunities, or just to talk AI.
               </p>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+              <div className="flex flex-col mb-6">
                 {[
                   { href: 'mailto:manarattar77@gmail.com', label: 'manarattar77@gmail.com', icon: 'mail' },
                   { href: 'https://linkedin.com/in/manar-attar', label: 'linkedin.com/in/manar-attar', icon: 'briefcase', blank: true },
                   { href: 'https://github.com/manarattar', label: 'github.com/manarattar', icon: 'github', blank: true },
                 ].map(({ href, label, icon, blank }) => (
                   <a key={label} href={href} {...(blank ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                    style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 16px', borderRadius: 10, background: 'rgba(255,255,255,.03)', border: '1px solid rgba(255,255,255,.07)', color: '#94a3b8', textDecoration: 'none', fontSize: 14, transition: 'border-color .2s, color .2s' }}
-                    onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(99,102,241,.4)'; e.currentTarget.style.color = '#f1f5f9' }}
-                    onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,.07)'; e.currentTarget.style.color = '#94a3b8' }}>
-                    <Icon name={icon} size={16} />{label}
+                    className="flex items-center gap-3 py-3 border-b border-line text-ink-dim hover:text-accent transition-colors text-sm">
+                    <Icon name={icon} size={15} />{label}
                   </a>
                 ))}
-                <a href="/Manar-Attar-CV.pdf" download
-                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: '11px 24px', borderRadius: 10, background: 'linear-gradient(135deg,#6366f1,#8b5cf6)', color: '#fff', fontWeight: 600, fontSize: 14, textDecoration: 'none', marginTop: 4 }}>
-                  Download CV
-                </a>
               </div>
+              <a href="/Manar-Attar-CV.pdf" download
+                className="inline-flex items-center gap-2 px-6 py-3 bg-accent text-paper font-medium text-sm hover:bg-accent-dim transition-colors">
+                Download CV
+              </a>
             </div>
-
-            {/* Right — contact form */}
             <ContactForm />
           </div>
         </div></Fade>
       </section>
 
-      <footer style={{ borderTop: '1px solid rgba(255,255,255,.05)', padding: '20px 24px', textAlign: 'center', color: '#475569', fontSize: 13 }}>
-        © 2026 Manar Attar · React &amp; Tailwind CSS
+      <footer className="border-t border-line py-6 text-center font-mono text-xs text-ink-faint">
+        © 2026 Manar Attar
       </footer>
 
-      <style>{`
-        @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-        @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
-        @keyframes spin-border{to{transform:rotate(360deg)}}
-
-        .cursor{animation:blink 1s step-end infinite;color:#6366f1;font-weight:300}
-
-        .glow-wrap{
-          position:relative;border-radius:17px;overflow:hidden;
-          padding:1px;background:rgba(255,255,255,.07);
-          display:flex;flex-direction:column;
-        }
-        .glow-wrap::before{
-          content:'';position:absolute;
-          width:200%;height:200%;top:-50%;left:-50%;
-          background:conic-gradient(from 0deg,transparent 0%,#6366f1 25%,#a78bfa 50%,#c084fc 62%,transparent 75%);
-          animation:spin-border 2.5s linear infinite;
-          opacity:0;transition:opacity 0.4s ease;
-          z-index:0;
-        }
-        .glow-wrap:hover::before{opacity:1}
-        .glow-inner{
-          position:relative;z-index:1;
-          border-radius:16px;background:#0d1220;
-          flex:1;overflow:hidden;
-        }
-
-        .nav-desktop{display:flex}
-        .nav-mobile{display:none}
-        @media(max-width:680px){
-          .nav-desktop{display:none!important}
-          .nav-mobile{display:block!important}
-        }
-      `}</style>
       <AssistantWidget />
+    </div>
+  )
+}
+
+function ScoreBar({ value, color }) {
+  const max = 0.6
+  return (
+    <div className="flex items-center gap-3 mb-1.5">
+      <div className="flex-1 h-1.5 bg-line/70">
+        <div className={`h-full ${color}`} style={{ width: `${(value / max) * 100}%` }} />
+      </div>
+      <span className="font-mono text-xs text-ink-dim w-10 text-right">{value.toFixed(3)}</span>
     </div>
   )
 }
@@ -641,51 +594,40 @@ function ContactForm() {
     } catch { setStatus('error') }
   }
 
-  const inputStyle = {
-    width: '100%', padding: '11px 14px', borderRadius: 10, fontSize: 14,
-    background: 'rgba(255,255,255,.04)', border: '1px solid rgba(255,255,255,.1)',
-    color: '#f1f5f9', outline: 'none', boxSizing: 'border-box',
-    transition: 'border-color .2s',
-  }
+  const inputClass = "w-full py-2.5 bg-transparent border-b border-line text-ink text-sm outline-none focus:border-accent transition-colors placeholder:text-ink-faint"
 
   if (status === 'success') return (
-    <div style={{ ...CARD, padding: '40px 32px', textAlign: 'center' }}>
-      <div style={{ marginBottom: 16, display: 'flex', justifyContent: 'center', color: '#34d399' }}><Icon name="checkCircle" size={40} /></div>
-      <p style={{ fontSize: 16, fontWeight: 700, color: '#f1f5f9', margin: '0 0 8px' }}>Message sent!</p>
-      <p style={{ fontSize: 14, color: '#94a3b8', margin: '0 0 24px' }}>I'll get back to you soon.</p>
+    <div className="border border-line p-10 text-center">
+      <div className="flex justify-center mb-4 text-good"><Icon name="checkCircle" size={36} /></div>
+      <p className="font-display text-lg font-semibold text-ink mb-2">Message sent!</p>
+      <p className="text-sm text-ink-dim mb-6">I'll get back to you soon.</p>
       <button onClick={() => { setForm({ name: '', email: '', message: '' }); setStatus('idle') }}
-        style={{ padding: '9px 22px', borderRadius: 8, border: '1px solid rgba(99,102,241,.4)', background: 'transparent', color: '#818cf8', fontSize: 14, cursor: 'pointer' }}>
+        className="px-5 py-2 border border-accent/50 text-accent text-sm hover:bg-accent/10 transition-colors">
         Send another
       </button>
     </div>
   )
 
   return (
-    <form onSubmit={submit} style={{ ...CARD, padding: '28px 28px 24px', display: 'flex', flexDirection: 'column', gap: 16 }}>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+    <form onSubmit={submit} className="border border-line p-6 sm:p-8 flex flex-col gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label style={{ display: 'block', fontSize: 12, color: '#64748b', marginBottom: 6, fontWeight: 600, letterSpacing: '0.05em' }}>NAME</label>
-          <input required value={form.name} onChange={set('name')} placeholder="Jane Smith" style={inputStyle}
-            onFocus={e => e.target.style.borderColor = 'rgba(99,102,241,.6)'}
-            onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,.1)'} />
+          <label className="block font-mono text-[11px] text-ink-faint uppercase tracking-wide mb-2">Name</label>
+          <input required value={form.name} onChange={set('name')} placeholder="Jane Smith" className={inputClass} />
         </div>
         <div>
-          <label style={{ display: 'block', fontSize: 12, color: '#64748b', marginBottom: 6, fontWeight: 600, letterSpacing: '0.05em' }}>EMAIL</label>
-          <input required type="email" value={form.email} onChange={set('email')} placeholder="jane@company.com" style={inputStyle}
-            onFocus={e => e.target.style.borderColor = 'rgba(99,102,241,.6)'}
-            onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,.1)'} />
+          <label className="block font-mono text-[11px] text-ink-faint uppercase tracking-wide mb-2">Email</label>
+          <input required type="email" value={form.email} onChange={set('email')} placeholder="jane@company.com" className={inputClass} />
         </div>
       </div>
       <div>
-        <label style={{ display: 'block', fontSize: 12, color: '#64748b', marginBottom: 6, fontWeight: 600, letterSpacing: '0.05em' }}>MESSAGE</label>
+        <label className="block font-mono text-[11px] text-ink-faint uppercase tracking-wide mb-2">Message</label>
         <textarea required value={form.message} onChange={set('message')} placeholder="Hi Manar, I'd love to discuss..." rows={5}
-          style={{ ...inputStyle, resize: 'vertical', fontFamily: 'inherit' }}
-          onFocus={e => e.target.style.borderColor = 'rgba(99,102,241,.6)'}
-          onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,.1)'} />
+          className={`${inputClass} resize-vertical font-sans`} />
       </div>
-      {status === 'error' && <p style={{ fontSize: 13, color: '#f87171', margin: 0 }}>Something went wrong — try emailing directly.</p>}
+      {status === 'error' && <p className="text-sm text-accent">Something went wrong — try emailing directly.</p>}
       <button type="submit" disabled={status === 'sending'}
-        style={{ padding: '12px', borderRadius: 10, border: 'none', background: 'linear-gradient(135deg,#6366f1,#8b5cf6)', color: '#fff', fontWeight: 600, fontSize: 15, cursor: status === 'sending' ? 'not-allowed' : 'pointer', opacity: status === 'sending' ? 0.7 : 1, transition: 'opacity .2s' }}>
+        className="py-3 bg-accent text-paper font-medium text-sm hover:bg-accent-dim disabled:opacity-60 transition-colors">
         {status === 'sending' ? 'Sending…' : 'Send Message'}
       </button>
     </form>
@@ -703,9 +645,9 @@ function Fade({ children, delay = 0 }) {
 
 function Hdr({ label, title, left }) {
   return (
-    <div style={{ textAlign: left ? 'left' : 'center', marginBottom: 32 }}>
-      <p style={{ fontSize: 11, fontWeight: 700, color: '#818cf8', textTransform: 'uppercase', letterSpacing: '0.12em', margin: '0 0 8px' }}>{label}</p>
-      <h2 style={{ fontSize: 'clamp(1.5rem,3vw,2rem)', fontWeight: 800, color: '#f1f5f9', margin: 0 }}>{title}</h2>
+    <div className={`${left ? 'text-left' : 'text-center'} mb-10`}>
+      <p className="font-mono text-[11px] uppercase tracking-widest text-accent mb-2">{label}</p>
+      <h2 className="font-display text-3xl font-semibold text-ink">{title}</h2>
     </div>
   )
 }
