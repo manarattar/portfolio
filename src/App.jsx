@@ -13,6 +13,22 @@ function useRotator(words, intervalMs = 2600) {
   return { word: words[idx], visible }
 }
 
+function useTheme() {
+  const [theme, setTheme] = useState(() => {
+    if (typeof document === 'undefined') return 'light'
+    const attr = document.documentElement.getAttribute('data-theme')
+    if (attr === 'light' || attr === 'dark') return attr
+    return window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+  })
+  const toggle = () => {
+    const next = theme === 'dark' ? 'light' : 'dark'
+    setTheme(next)
+    document.documentElement.setAttribute('data-theme', next)
+    try { localStorage.setItem('theme', next) } catch {}
+  }
+  return { theme, toggle }
+}
+
 function useFadeIn() {
   const ref = useRef(null)
   const [visible, setVisible] = useState(false)
@@ -197,6 +213,7 @@ const LI = (
 export default function App() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const { theme, toggle: toggleTheme } = useTheme()
   const { word: role, visible: roleVisible } = useRotator(['AI Researcher', 'NLP Engineer', 'Agentic Systems Developer', 'LLM Specialist', 'RAG Architect'])
 
   useEffect(() => {
@@ -225,12 +242,22 @@ export default function App() {
               className="font-mono text-xs uppercase tracking-wide px-4 py-2 border border-accent/50 text-accent hover:bg-accent/10 transition-colors">
               Download CV
             </a>
+            <button onClick={toggleTheme} aria-label="Toggle color theme"
+              className="w-8 h-8 flex items-center justify-center border border-line text-ink-dim hover:text-ink hover:border-ink-dim transition-colors">
+              <Icon name={theme === 'dark' ? 'sun' : 'moon'} size={15} />
+            </button>
           </div>
-          <button onClick={() => setOpen(o => !o)} className="md:hidden text-ink-dim p-1" aria-label="Toggle menu">
+          <div className="md:hidden flex items-center gap-3">
+            <button onClick={toggleTheme} aria-label="Toggle color theme"
+              className="w-8 h-8 flex items-center justify-center border border-line text-ink-dim">
+              <Icon name={theme === 'dark' ? 'sun' : 'moon'} size={15} />
+            </button>
+            <button onClick={() => setOpen(o => !o)} className="text-ink-dim p-1" aria-label="Toggle menu">
             <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d={open ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'} />
             </svg>
-          </button>
+            </button>
+          </div>
         </div>
         {open && (
           <div className="md:hidden bg-paper border-t border-line px-6 py-4">

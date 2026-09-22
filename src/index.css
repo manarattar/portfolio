@@ -16,5 +16,38 @@
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
 }
 
+/* Dark mode: system preference, unless an explicit choice overrides it. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-ink: #f2f0eb;
+    --color-ink-dim: #b8b5ad;
+    --color-ink-faint: #7a776e;
+    --color-paper: #0c0c0d;
+    --color-paper-raised: #131313;
+    --color-accent: #c96442;
+    --color-accent-dim: #8a5040;
+    --color-line: #2a2a28;
+    --color-good: #7a9a76;
+  }
+}
+
+/* Explicit choice, saved in localStorage, wins either direction. */
+:root[data-theme="dark"] {
+  --color-ink: #f2f0eb;
+  --color-ink-dim: #b8b5ad;
+  --color-ink-faint: #7a776e;
+  --color-paper: #0c0c0d;
+  --color-paper-raised: #131313;
+  --color-accent: #c96442;
+  --color-accent-dim: #8a5040;
+  --color-line: #2a2a28;
+  --color-good: #7a9a76;
+}
+
 html { scroll-behavior: smooth; }
-body { background: var(--color-paper); color: var(--color-ink); font-family: var(--font-sans); }
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  transition: background-color .2s ease, color .2s ease;
+}
