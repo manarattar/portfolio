@@ -31,7 +31,7 @@ AI Researcher and Developer specialising in agentic architectures, RAG pipelines
 
 2. **TelecomNL Voice AI Assistant** — Full-stack voice AI customer support agent: speak your issue, hear Sarah respond. Real-time Whisper STT, GPT-4o tool-calling with live diagnostics, ElevenLabs TTS, multi-agent personas, sentiment timeline, and hands-free VAD mode. Stack: FastAPI, GPT-4o, Whisper, ElevenLabs, Web Audio API, SSE. Demo: https://voice.manarattar.com
 
-3. **AI Contract Risk Analyzer** — Upload contracts (PDF/DOCX/TXT), get clause-level risk scores, suggested revisions, Q&A chat, and PDF report export. Stack: FastAPI, ChromaDB, OpenAI, React. Demo: https://contracts.manarattar.com
+3. **AI Contract Risk Analyzer** — Upload contracts (PDF/DOCX/TXT), get clause-level risk scores, suggested revisions, Q&A chat, and PDF report export. Each clause is classified by Jev (TypeSafe's decision model), which returns a probability for every risk category; the risk score is computed from those probabilities, low-confidence clauses are flagged for review, and an LLM only writes the explanations. Stack: FastAPI, Jev (TypeSafe), ChromaDB, OpenAI, React. Demo: https://contracts.manarattar.com
 
 4. **Multi-Agent Research Assistant** — 5-agent pipeline that produces structured research reports with live SSE streaming and follow-up Q&A. Stack: Agentic AI, FastAPI, OpenAI, Tavily, SSE, React. Demo: https://researcher.manarattar.com
 

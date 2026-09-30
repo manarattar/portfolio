@@ -52,11 +52,11 @@ const NAV_LINKS = ['Projects', 'Research', 'Experience', 'Skills', 'Contact']
 
 const AI_PROJECTS = [
   {
-    title: 'ARGUS — Agentic Risk Governance System',
-    desc: 'Decision-support system for financial-risk analysts. An 8-step agentic workflow investigates a counterparty case file, extracts evidence tied to source documents, tests findings against policy, argues against its own conclusions, verifies every claim is carried by its citations, and computes an explainable rating by arithmetic — then stops at a human review gate. Ships with a 53-case evaluation suite.',
-    tags: ['Agentic AI', 'FastAPI', 'Next.js', 'RAG', 'pgvector', 'Docker'],
-    github: 'https://github.com/manarattar/argus',
-    demo: 'https://argus.manarattar.com',
+    title: 'ARGUS-Lite — Agentic Risk Assessment, Explained',
+    desc: 'Watch an AI agent find evidence in a document, verify it\'s real against the source text, then compute a risk score by formula — never by just asking the model for an answer. Two kinds of AI, each where it fits: an LLM finds the quotes, and Jev, a decision model, rates severity and likelihood with a probability for every level, so you can see how sure it is and low-confidence ratings are flagged for a person. Streams every step live, tagged LLM, Jev or plain code. Try a phone warranty, a bank KYC review, or a loan underwriting check.',
+    tags: ['Agentic AI', 'Jev (TypeSafe)', 'FastAPI', 'React', 'SSE', 'OpenAI', 'Docker'],
+    github: 'https://github.com/manarattar/argus-lite',
+    demo: 'https://argusv1.manarattar.com',
     preview: null,
   },
   {
@@ -69,8 +69,8 @@ const AI_PROJECTS = [
   },
   {
     title: 'AI Contract Risk Analyzer',
-    desc: 'Upload contracts (PDF/DOCX/TXT), get clause-level risk scores, suggested revisions, Q&A chat, and PDF report export.',
-    tags: ['FastAPI', 'ChromaDB', 'OpenAI', 'React'],
+    desc: 'Upload contracts (PDF/DOCX/TXT), get clause-level risk scores, suggested revisions, Q&A chat, and PDF report export. Each clause is classified by Jev, a decision model that returns a probability for every risk category: the score is computed from those probabilities rather than picked by an AI, and clauses where it is split are flagged for review. An LLM only writes the explanations and revisions.',
+    tags: ['FastAPI', 'Jev (TypeSafe)', 'ChromaDB', 'OpenAI', 'React'],
     github: 'https://github.com/manarattar/contract-risk-analyzer',
     demo: 'https://contracts.manarattar.com',
     preview: '/preview-contract-analyzer.gif',
