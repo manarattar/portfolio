@@ -52,6 +52,14 @@ const NAV_LINKS = ['Projects', 'Research', 'Experience', 'Skills', 'Contact']
 
 const AI_PROJECTS = [
   {
+    title: 'Routing Slip — A Process in Plain Words, Run on a Real Inbox',
+    desc: 'Describe a business process in plain words and watch it become a live workflow, then run it on a realistic inbox. The compiler gives each step to the tool that fits it: code for amounts and rules, Jev (a decision model) for judgment calls like "is this fraud?", and an LLM only where something must be written — grounded in a knowledge base so it can\'t invent facts. When Jev isn\'t sure enough, a person decides. The LLM\'s workflow is validated and self-repaired before it runs, and every run reports automation rate, accuracy, cost and time.',
+    tags: ['Agentic AI', 'Jev (TypeSafe)', 'FastAPI', 'React Flow', 'SSE', 'OpenAI', 'Docker'],
+    github: 'https://github.com/manarattar/workflow-studio',
+    demo: 'https://studio.manarattar.com',
+    preview: null,
+  },
+  {
     title: 'ARGUS-Lite — Agentic Risk Assessment, Explained',
     desc: 'Watch an AI agent find evidence in a document, verify it\'s real against the source text, then compute a risk score by formula — never by just asking the model for an answer. Two kinds of AI, each where it fits: an LLM finds the quotes, and Jev, a decision model, rates severity and likelihood with a probability for every level, so you can see how sure it is and low-confidence ratings are flagged for a person. Streams every step live, tagged LLM, Jev or plain code. Try a phone warranty, a bank KYC review, or a loan underwriting check.',
     tags: ['Agentic AI', 'Jev (TypeSafe)', 'FastAPI', 'React', 'SSE', 'OpenAI', 'Docker'],
