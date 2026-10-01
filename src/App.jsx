@@ -239,7 +239,7 @@ export default function App() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const { theme, toggle: toggleTheme } = useTheme()
-  const { word: role, visible: roleVisible } = useRotator(['AI Engineer', 'LLM & RAG Engineer', 'NLP Engineer', 'Agentic Systems Developer'])
+  const { word: role, visible: roleVisible } = useRotator(['AI Engineer', 'Generative AI Engineer', 'NLP Engineer', 'Agentic Systems Developer'])
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 30)
