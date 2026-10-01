@@ -201,9 +201,10 @@ export default function AssistantWidget() {
         <button
           onClick={() => setIsOpen(true)}
           aria-label="Open Manar AI assistant"
-          className="fixed bottom-7 right-7 w-14 h-14 bg-accent hover:bg-accent-dim text-paper flex items-center justify-center z-[9999] transition-colors"
+          className="fixed bottom-7 right-7 flex items-center gap-2.5 pl-4 pr-5 py-3.5 bg-accent hover:bg-accent-dim text-paper rounded-full shadow-lg hover:shadow-xl hover:scale-105 z-[9999] transition-all"
         >
-          <Icon name="message" size={24} />
+          <Icon name="message" size={20} />
+          <span className="font-medium text-sm whitespace-nowrap">Ask AI about Manar</span>
         </button>
       )}
 

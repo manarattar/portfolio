@@ -3,7 +3,7 @@ const WEBSITE_CONTEXT = `
 IDENTITY: Manar Attar is male. Always use he/him/his pronouns.
 
 ## About
-AI Researcher and Developer specialising in agentic architectures, RAG pipelines, and fine-tuned NLP models. Completing a Master's in Language & AI at Vrije Universiteit Amsterdam — thesis passed, graduation expected December 2026 — with thesis research on author profiling in multilingual hate speech data, benchmarking zero-shot LLMs against fine-tuned BERT models. Open to AI/ML roles now.
+AI Engineer building LLM applications: agentic workflows, RAG pipelines and fine-tuned NLP models, with research experience. Completing a Master's in Language & AI at Vrije Universiteit Amsterdam — thesis passed, graduation expected December 2026 — with thesis research on author profiling in multilingual hate speech data, benchmarking zero-shot LLMs against fine-tuned BERT models. Open to AI/ML roles now.
 
 ## Contact
 - Email: manarattar77@gmail.com
@@ -61,9 +61,9 @@ Languages: English (Fluent), Arabic (Native), Dutch (Advanced · B2)
 1. "Converting and Enriching Geoannotated Event Data: Integrating Information for Ukraine Resilience" — ACM SIGSPATIAL International Conference, November 13–16, 2023. Authors: M. Attar, S. Wang, R. Siebes, E. Kultorp.
 2. "Using Integrated and Enriched Linked Data for Ukraine Resilience" — BNAIC 2023 Conference, November 8–10, 2023. Authors: M. Attar, S. Wang, R. Siebes, E. Kultorp.
 
-## Master's Thesis (COMPLETED — submitted June 2026, passed July 2026; MSc degree conferred at graduation, expected December 2026)
+## Master's Thesis (COMPLETED — submitted June 2026, passed July 2026; MA degree conferred at graduation, expected December 2026)
 Title: Author Profiling of Hate Speech Spreaders
-Degree: MSc Language & AI (CLTL), VU Amsterdam. Supervisor: Ilia Markov.
+Degree: MA Language & AI (CLTL), VU Amsterdam. Supervisor: Ilia Markov.
 Research question: "What is the best approach for predicting age group and gender of hate speech authors: zero-shot LLMs or fine-tuned encoder models?"
 Data: LiLaH-HAG (619 English Facebook hate speech comments annotated for age and gender) as the test set; PAN14 (~420 authors) for training; Janes-Blog (361,185 gender-labelled Slovene texts) for the Slovene experiments.
 Models: zero-shot LLaMA-3.1-8B and Qwen3-32B vs. fine-tuned BERT, RoBERTa, HateBERT, and CroSloEngual BERT.
@@ -136,7 +136,7 @@ ${repoLines}`);
   return _ghCache;
 }
 
-const PRECEDENCE_RULE = `SOURCE PRECEDENCE: the profile sections above are authoritative and current. Any section headed "(live)" is pulled from GitHub and may be out of date — use it only to discover additional repositories and projects that are not already listed. If a live section conflicts with the authoritative sections — for example about whether the degree or thesis is finished — always trust the authoritative sections. Manar has passed his Master's thesis and it is finished; his MSc degree is conferred at graduation, expected December 2026. Never say he is still working on the thesis, but it is correct that he formally graduates in December 2026 and is available for roles now.`;
+const PRECEDENCE_RULE = `SOURCE PRECEDENCE: the profile sections above are authoritative and current. Any section headed "(live)" is pulled from GitHub and may be out of date — use it only to discover additional repositories and projects that are not already listed. If a live section conflicts with the authoritative sections — for example about whether the degree or thesis is finished — always trust the authoritative sections. Manar has passed his Master's thesis and it is finished; his MA degree is conferred at graduation, expected December 2026. Never say he is still working on the thesis, but it is correct that he formally graduates in December 2026 and is available for roles now.`;
 
 function buildSystemPrompt(mode, position, ghSupplement) {
   const context = WEBSITE_CONTEXT + ghSupplement;

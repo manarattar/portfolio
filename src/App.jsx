@@ -18,7 +18,7 @@ function useTheme() {
     if (typeof document === 'undefined') return 'light'
     const attr = document.documentElement.getAttribute('data-theme')
     if (attr === 'light' || attr === 'dark') return attr
-    return window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+    return 'light'
   })
   const toggle = () => {
     const next = theme === 'dark' ? 'light' : 'dark'
@@ -52,68 +52,76 @@ const NAV_LINKS = ['Projects', 'Research', 'Experience', 'Skills', 'Contact']
 
 const AI_PROJECTS = [
   {
-    title: 'Routing Slip — A Process in Plain Words, Run on a Real Inbox',
-    desc: 'Describe a business process in plain words and watch it become a live workflow, then run it on a realistic inbox. The compiler gives each step to the tool that fits it: code for amounts and rules, Jev (a decision model) for judgment calls like "is this fraud?", and an LLM only where something must be written — grounded in a knowledge base so it can\'t invent facts. When Jev isn\'t sure enough, a person decides. The LLM\'s workflow is validated and self-repaired before it runs, and every run reports automation rate, accuracy, cost and time.',
+    title: 'Routing Slip: A Process in Plain Words, Run on a Real Inbox',
+    category: 'Agentic Workflow',
+    desc: 'Describe a business process in plain words and watch it become a live workflow. Each step is routed to the tool that fits: code for rules, Jev for judgment calls, an LLM only where text must be written. A person steps in whenever Jev isn\'t confident enough.',
     tags: ['Agentic AI', 'Jev (TypeSafe)', 'FastAPI', 'React Flow', 'SSE', 'OpenAI', 'Docker'],
     github: 'https://github.com/manarattar/workflow-studio',
     demo: 'https://studio.manarattar.com',
-    preview: null,
+    logo: '/logos/routing-slip.png',
   },
   {
-    title: 'ARGUS-Lite — Agentic Risk Assessment, Explained',
-    desc: 'Watch an AI agent find evidence in a document, verify it\'s real against the source text, then compute a risk score by formula — never by just asking the model for an answer. Two kinds of AI, each where it fits: an LLM finds the quotes, and Jev, a decision model, rates severity and likelihood with a probability for every level, so you can see how sure it is and low-confidence ratings are flagged for a person. Streams every step live, tagged LLM, Jev or plain code. Try a phone warranty, a bank KYC review, or a loan underwriting check.',
+    title: 'ARGUS-Lite: Agentic Risk Assessment, Explained',
+    category: 'Agentic Risk AI',
+    desc: 'Watch an AI agent find evidence in a document, verify it\'s real against the source, then compute a risk score by formula, never by asking the model directly. An LLM finds quotes; Jev rates severity and likelihood with a confidence score, flagging anything uncertain for a person to review.',
     tags: ['Agentic AI', 'Jev (TypeSafe)', 'FastAPI', 'React', 'SSE', 'OpenAI', 'Docker'],
     github: 'https://github.com/manarattar/argus-lite',
     demo: 'https://argusv1.manarattar.com',
-    preview: null,
+    logo: '/logos/argus-lite.png',
   },
   {
     title: 'TelecomNL Voice AI Assistant',
-    desc: 'Full-stack voice AI customer support agent: speak your issue, hear Sarah respond. Real-time Whisper STT, GPT-4o tool-calling with live diagnostics, ElevenLabs TTS, multi-agent personas, sentiment timeline, and hands-free VAD mode.',
+    category: 'Voice AI',
+    desc: 'Full-stack voice AI customer-support agent: speak your issue, hear Sarah respond in real time. Whisper STT, GPT-4o tool-calling with live diagnostics, ElevenLabs TTS, multi-agent personas, a sentiment timeline, and a hands-free voice-activity mode.',
     tags: ['FastAPI', 'GPT-4o', 'Whisper', 'ElevenLabs', 'Web Audio API', 'SSE'],
     github: 'https://github.com/manarattar/telecom-voice-assistant',
     demo: 'https://voice.manarattar.com',
-    preview: null,
+    logo: '/logos/telecom-voice.png',
   },
   {
     title: 'AI Contract Risk Analyzer',
-    desc: 'Upload contracts (PDF/DOCX/TXT), get clause-level risk scores, suggested revisions, Q&A chat, and PDF report export. Each clause is classified by Jev, a decision model that returns a probability for every risk category: the score is computed from those probabilities rather than picked by an AI, and clauses where it is split are flagged for review. An LLM only writes the explanations and revisions.',
+    category: 'Document AI',
+    desc: 'Upload a contract and get clause-level risk scores, suggested revisions, a Q&A chat, and a PDF report. Jev classifies each clause with a probability per risk category, so the score is computed from those probabilities (not picked by an AI), and an LLM only writes the explanations.',
     tags: ['FastAPI', 'Jev (TypeSafe)', 'ChromaDB', 'OpenAI', 'React'],
     github: 'https://github.com/manarattar/contract-risk-analyzer',
     demo: 'https://contracts.manarattar.com',
-    preview: '/preview-contract-analyzer.gif',
+    logo: '/logos/contract-analyzer.png',
   },
   {
     title: 'Multi-Agent Research Assistant',
-    desc: '5-agent pipeline that produces structured research reports with live SSE streaming and follow-up Q&A.',
+    category: 'Agentic Research',
+    desc: 'A five-agent pipeline that decomposes a research question, searches the web with Tavily, and synthesizes sources into a structured report, streamed live over SSE as each agent finishes its stage, with follow-up Q&A once the report is done.',
     tags: ['Agentic AI', 'FastAPI', 'Groq', 'Tavily', 'SSE', 'React'],
     github: 'https://github.com/manarattar/multi-agent-researcher',
     demo: 'https://researcher.manarattar.com',
-    preview: '/preview-researcher.gif',
+    logo: '/logos/research-assistant.png',
   },
   {
-    title: 'Munazara — AI Debate Engine',
-    desc: 'Full-stack debate platform: watch AI argue both sides of any topic, or challenge the AI yourself. Features live streaming, RAG-sourced evidence, real-time fact-checking, a vote system, leaderboard, and an interactive knowledge graph of all debates.',
+    title: 'Munazara: AI Debate Engine',
+    category: 'Agentic NLP',
+    desc: 'Watch AI argue both sides of any topic, or challenge it yourself, with evidence pulled live via RAG and fact-checked in real time. Includes a voting system, a leaderboard, and an interactive knowledge graph connecting every debate on the platform.',
     tags: ['FastAPI', 'gpt-4o-mini', 'Tavily', 'ChromaDB', 'React', 'SSE'],
     github: 'https://github.com/manarattar/debate-engine',
     demo: 'https://munazara.manarattar.com',
-    preview: '/preview-debate-engine.gif',
+    logo: '/logos/debate-engine.png',
   },
   {
     title: 'RivalScan: Competitor Intelligence Dashboard',
-    desc: 'Track competitor product updates in real time — RSS feeds, GitHub releases, and changelogs aggregated, AI-summarised, and scored by business impact.',
+    category: 'Data Intelligence',
+    desc: 'Tracks competitor product updates in real time: RSS feeds, GitHub releases, and changelogs aggregated automatically, summarised by AI, and scored by business impact so the updates that matter surface first, not the noise.',
     tags: ['FastAPI', 'OpenAI', 'SQLAlchemy', 'React', 'Vite'],
     github: 'https://github.com/manarattar/rival-scan',
     demo: 'https://rivals.manarattar.com',
-    preview: '/preview-rival-scan.gif',
+    logo: '/logos/rivalscan.png',
   },
   {
     title: 'SwipeEat: Adaptive Meal Recommendation',
-    desc: 'Preference-based recommendation algorithm matching users with meals via an intuitive swipe-driven UI. Built for Vervai as a mobile web app MVP.',
+    category: 'ML Product',
+    desc: 'A preference-based recommendation engine matching people to meals through an intuitive swipe-driven interface, learning what someone likes with every swipe. Built for Vervai as a mobile web app MVP, from concept to a working, demo-ready product.',
     tags: ['Python', 'JavaScript', 'Flask', 'HTML/CSS'],
     github: null,
     demo: 'https://swipeat.manarattar.com',
-    preview: '/preview-swipeat.gif',
+    logo: '/logos/swipeeat.png',
   },
 ]
 
@@ -222,7 +230,7 @@ export default function App() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const { theme, toggle: toggleTheme } = useTheme()
-  const { word: role, visible: roleVisible } = useRotator(['AI Researcher', 'NLP Engineer', 'Agentic Systems Developer', 'LLM Specialist', 'RAG Architect'])
+  const { word: role, visible: roleVisible } = useRotator(['AI Engineer', 'LLM & RAG Engineer', 'NLP Engineer', 'Agentic Systems Developer'])
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 30)
@@ -284,7 +292,7 @@ export default function App() {
       <section className="pt-36 pb-20">
         <div className="max-w-3xl mx-auto px-4 sm:px-8 text-center">
           <p className="font-mono text-xs uppercase tracking-widest text-ink-faint mb-6">
-            <span className="text-accent">·</span> Open to opportunities
+            <span className="text-accent">·</span> Available now · Netherlands
           </p>
           <h1 className="font-display font-semibold text-ink leading-tight mb-4 text-[clamp(2.4rem,6vw,4rem)]">
             Manar Attar
@@ -293,10 +301,9 @@ export default function App() {
             {role}
           </p>
           <p className="text-ink-dim leading-relaxed mb-10 max-w-xl mx-auto">
-            AI Researcher and Developer specialising in agentic architectures, RAG pipelines,
-            and fine-tuned NLP models. Completing a Master's in Language &amp; AI at Vrije
-            Universiteit Amsterdam, graduating December 2026 — his thesis on author profiling
-            of hate speech authors benchmarked zero-shot LLMs against fine-tuned BERT-family encoders.
+            AI Engineer who ships products end to end, from idea to production. I design, build
+            and deploy AI solutions across generative AI, agentic systems and NLP, and every
+            project below is live.
           </p>
           <div className="flex flex-wrap justify-center gap-3 mb-14">
             <button onClick={() => go('projects')}
@@ -334,8 +341,15 @@ export default function App() {
 
           {/* Featured */}
           <div className="border border-line bg-paper-raised p-6 sm:p-10 mb-6">
-            <p className="font-mono text-[11px] uppercase tracking-widest text-accent mb-4">Featured</p>
-            <h3 className="font-display text-2xl font-semibold text-ink mb-3">{FEATURED_PROJECT.title}</h3>
+            <div className="flex items-start gap-5 mb-4">
+              <img src={FEATURED_PROJECT.logo} alt="" className="w-20 h-20 shrink-0 rounded-xl" />
+              <div>
+                <p className="font-mono text-[11px] uppercase tracking-widest text-accent mb-1.5">
+                  Featured <span className="text-ink-faint">·</span> {FEATURED_PROJECT.category}
+                </p>
+                <h3 className="font-display text-2xl font-semibold text-ink leading-snug">{FEATURED_PROJECT.title}</h3>
+              </div>
+            </div>
             <p className="text-ink-dim leading-relaxed mb-6 max-w-3xl">{FEATURED_PROJECT.desc}</p>
             <div className="flex flex-wrap gap-2 mb-6">
               {FEATURED_PROJECT.tags.map(t => (
@@ -353,14 +367,15 @@ export default function App() {
           {/* Rest */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {OTHER_PROJECTS.map(p => (
-              <div key={p.title} className="border border-line hover:border-accent/50 transition-colors flex flex-col">
-                {p.preview && (
-                  <div className="w-full h-40 overflow-hidden border-b border-line">
-                    <img src={p.preview} alt={`${p.title} preview`} className="w-full h-full object-cover object-top" />
-                  </div>
-                )}
+              <div key={p.title} className="border border-line hover:border-accent/50 hover:shadow-lg hover:-translate-y-0.5 transition-all flex flex-col">
                 <div className="p-5 flex flex-col flex-1">
-                  <h3 className="font-display text-base font-semibold text-ink mb-2 leading-snug">{p.title}</h3>
+                  <div className="flex items-start gap-3 mb-3">
+                    <img src={p.logo} alt="" loading="lazy" className="w-14 h-14 shrink-0 rounded-lg" />
+                    <div className="min-w-0">
+                      <p className="font-mono text-[10px] uppercase tracking-widest text-accent mb-1">{p.category}</p>
+                      <h3 className="font-display text-base font-semibold text-ink leading-snug">{p.title}</h3>
+                    </div>
+                  </div>
                   <p className="text-sm text-ink-dim leading-relaxed mb-4 flex-1">{p.desc}</p>
                   <div className="flex flex-wrap gap-1.5 mb-4">
                     {p.tags.map(t => <span key={t} className="font-mono text-[10px] px-2 py-0.5 border border-line text-ink-faint">{t}</span>)}
@@ -412,7 +427,7 @@ export default function App() {
           <Hdr label="Master's Thesis · VU Amsterdam · 2026" title="Thesis Research" />
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
             <div>
-              <p className="font-mono text-xs text-good mb-4">✓ Completed &amp; Passed — June 2026</p>
+              <p className="font-mono text-xs text-good mb-4">✓ Completed &amp; Passed (June 2026)</p>
               <h3 className="font-display text-2xl font-semibold text-ink mb-1">Author Profiling of Hate Speech Spreaders</h3>
               <p className="font-mono text-xs uppercase tracking-wide text-accent mb-6">Zero-shot LLMs vs. Fine-tuned Encoder Models</p>
 
@@ -431,7 +446,7 @@ export default function App() {
                 A follow-up experiment extends gender identification to Slovene, testing whether an explicit grammatical gender cue narrows the gap.
               </p>
               <p className="text-ink-dim leading-relaxed mb-6">
-                Zero-shot LLMs edge out fine-tuned encoders on gender, while encoders do better on age —
+                Zero-shot LLMs edge out fine-tuned encoders on gender, while encoders do better on age,
                 but neither is reliable enough for practical use, and the <strong className="text-ink">66+ age group is almost never identified
                 correctly</strong> by any model.
               </p>
@@ -562,8 +577,7 @@ export default function App() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             <div>
               <p className="text-ink-dim leading-relaxed mb-7">
-                Master's thesis passed; graduating December 2026 — open to AI/ML roles now.
-                Reach out for collaborations, opportunities, or just to talk AI.
+                Open to AI/ML roles. Reach out for collaborations, opportunities, or just to talk AI.
               </p>
               <div className="flex flex-col mb-6">
                 {[
@@ -660,7 +674,7 @@ function ContactForm() {
         <textarea required value={form.message} onChange={set('message')} placeholder="Hi Manar, I'd love to discuss..." rows={5}
           className={`${inputClass} resize-vertical font-sans`} />
       </div>
-      {status === 'error' && <p className="text-sm text-accent">Something went wrong — try emailing directly.</p>}
+      {status === 'error' && <p className="text-sm text-accent">Something went wrong. Try emailing directly.</p>}
       <button type="submit" disabled={status === 'sending'}
         className="py-3 bg-accent text-paper font-medium text-sm hover:bg-accent-dim disabled:opacity-60 transition-colors">
         {status === 'sending' ? 'Sending…' : 'Send Message'}
