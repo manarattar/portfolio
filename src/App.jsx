@@ -65,8 +65,8 @@ const AI_PROJECTS = [
     category: 'Agentic Risk AI',
     desc: 'Watch an AI agent find evidence in a document, verify it\'s real against the source, then compute a risk score by formula, never by asking the model directly. An LLM finds quotes; Jev rates severity and likelihood with a confidence score, flagging anything uncertain for a person to review.',
     tags: ['Agentic AI', 'Jev (TypeSafe)', 'FastAPI', 'React', 'SSE', 'OpenAI', 'Docker'],
-    github: 'https://github.com/manarattar/argus-lite',
-    demo: 'https://argusv1.manarattar.com',
+    github: 'https://github.com/manarattar/proofline',
+    demo: 'https://proofline.manarattar.com',
     logo: '/logos/proofline.png',
   },
   {
