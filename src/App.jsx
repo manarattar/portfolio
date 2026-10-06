@@ -72,7 +72,7 @@ const AI_PROJECTS = [
   {
     title: 'ARGUS: Agentic Risk Governance System',
     category: 'Agentic Risk AI',
-    desc: 'Decision-support for financial-risk analysts. An eight-step agentic workflow investigates a counterparty case file, ties every finding to a cited source passage, tests it against policy, argues against its own conclusions, and computes an explainable rating by arithmetic. It then stops at a human review gate: the AI recommends, an analyst decides. Includes an evidence graph, a scenario lab and a 53-case evaluation suite.',
+    desc: 'Decision-support for financial-risk analysts: an agentic workflow investigates a counterparty case file, cites a source for every finding, argues against its own conclusions and computes an explainable rating by arithmetic. The AI recommends; an analyst decides at a human review gate.',
     tags: ['Agentic AI', 'FastAPI', 'Next.js', 'RAG', 'pgvector', 'Docker'],
     github: 'https://github.com/manarattar/argus',
     demo: 'https://argus.manarattar.com',
