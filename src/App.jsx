@@ -133,10 +133,10 @@ const AI_PROJECTS = [
     logo: '/logos/swipeeat.png',
   },
   {
-    title: 'Hajzi: AI Restaurant Assistant for Damascus',
+    title: 'Hajzi: AI Dining Assistant',
     category: 'AI Assistant',
-    desc: 'Ask Hajzi is a bilingual Arabic/English dining assistant inside the Hajzi booking platform. An LLM calls a read-only search that blends Arabic-aware keyword matching with multilingual embeddings over 800+ venues and their menus. Answers are grounded in real venues, prices and opening hours, and every reply is checked before it is shown.',
-    tags: ['LLM tool calling', 'Semantic search', 'bge-m3', 'Ollama', 'Laravel', 'Livewire', 'Arabic / RTL'],
+    desc: 'Ask Hajzi is a bilingual Arabic/English dining assistant powered by Google Gemini and semantic embeddings. It answers questions about restaurants and menus and guides diners through the whole booking journey, from first craving to a booked table.',
+    tags: ['Gemini', 'Embeddings', 'Semantic search', 'Laravel', 'Arabic / RTL'],
     github: null,
     demo: 'https://hajzi.me',
     logo: '/logos/hajzi.png',
