@@ -26,7 +26,7 @@ AI Engineer building LLM applications: agentic workflows, RAG pipelines and fine
 - Created role-specific GPT assistants to enhance productivity and decision-making.
 - Built semi-automated workflows in marketing, sales, and operations to reduce manual tasks.
 
-## AI Portfolio Projects
+## Shipped Products (AI and full-stack)
 0. **Routing Slip** — Describe a business process in plain words and it becomes a working AI workflow that runs live on a sample inbox (supplier invoices or bank customer messages). An LLM compiles the description into steps; a validator checks the result and sends problems back for the LLM to fix. Each step goes to the tool that fits it: plain code for amounts and rules, Jev (TypeSafe's decision model) for judgment calls such as "is this fraud?" with a confidence score, and an LLM only for writing replies, grounded in a knowledge base. When Jev isn't confident enough the item goes to a person. Every run reports automation rate, accuracy against a reference policy, cost and time (e.g. 100% automated and correct on the invoice inbox for about $0.0005). Stack: FastAPI, SSE, OpenAI, Jev, React, React Flow, Docker. Demo: https://studio.manarattar.com — Code: https://github.com/manarattar/workflow-studio
 
 1. **Proofline: Agentic Risk Assessment, Explained** — Watch an AI agent find evidence in a document, verify it's real against the source, then compute a risk score by formula, never by asking the model directly. An LLM finds quotes; Jev rates severity and likelihood with a confidence score, flagging anything uncertain for a person to review. Stack: Agentic AI, Jev (TypeSafe), FastAPI, React, SSE, OpenAI, Docker. Demo: https://proofline.manarattar.com — Code: https://github.com/manarattar/proofline
@@ -44,6 +44,7 @@ AI Engineer building LLM applications: agentic workflows, RAG pipelines and fine
 7. **RivalScan: Competitor Intelligence Dashboard** — Track competitor product updates in real time — RSS feeds, GitHub releases, and changelogs aggregated, AI-summarised, and scored by business impact. Stack: FastAPI, OpenAI, SQLAlchemy, React, Vite. Demo: https://rivals.manarattar.com
 
 8. **SwipeEat: Adaptive Meal Recommendation** — Preference-based recommendation algorithm matching users with meals via swipe-driven UI. Built for Vervai as a mobile web app MVP. Stack: Python, JavaScript, Flask, HTML/CSS. (No public demo is online right now — do not offer a demo link for this project.)
+9. **Hajzi: Restaurant Booking & Table Ordering** — Full-stack platform for restaurant discovery, table booking and QR table ordering for venues in Syria, in Arabic (right-to-left) and English. Diners search, book and order from the table; vendors manage their venue from a dashboard; admins moderate reviews and listings. Bookings use serializable transactions to prevent double-booking. Stack: Laravel, Livewire, Filament, MySQL, Docker. Live at https://hajzi.me. This is a product-engineering project, not an AI project, and the source code is private — do not offer a GitHub link.
 
 ## Academic Projects
 - **LINKED4RESILIENCE: Geo-Data for Crisis Response** — Data pipelines for cleaning and visualising geo-annotated crisis datasets. Linked Data methodology for data unification and integration. Published at ACM SIGSPATIAL 2023. Demo: https://linked4resilience.eu

@@ -132,6 +132,15 @@ const AI_PROJECTS = [
     demo: 'https://swipeat.manarattar.com',
     logo: '/logos/swipeeat.png',
   },
+  {
+    title: 'Hajzi: Restaurant Booking & Table Ordering',
+    category: 'Full-stack product',
+    desc: 'Restaurant discovery, table booking and QR table ordering for venues in Syria, fully bilingual in Arabic (right-to-left) and English. Diners search, book and order from the table; vendors run their venue from a dashboard; admins moderate. Bookings use serializable transactions to prevent double-booking.',
+    tags: ['Laravel', 'Livewire', 'Filament', 'MySQL', 'Docker', 'Arabic / RTL'],
+    github: null,
+    demo: 'https://hajzi.me',
+    logo: '/logos/hajzi.png',
+  },
 ]
 
 const [FEATURED_PROJECT, ...OTHER_PROJECTS] = AI_PROJECTS
@@ -333,7 +342,7 @@ export default function App() {
             </a>
           </div>
           <div className="flex justify-center gap-10">
-            {[[AI_PROJECTS.length, 'AI Portfolio Projects'], [ACADEMIC_PROJECTS.length, 'Academic Projects'], [PUBLICATIONS.length, 'Publications']].map(([v, l]) => (
+            {[[AI_PROJECTS.length, 'Shipped Products'], [ACADEMIC_PROJECTS.length, 'Academic Projects'], [PUBLICATIONS.length, 'Publications']].map(([v, l]) => (
               <div key={l} className="text-center">
                 <div className="font-display text-2xl font-semibold text-ink">{v}</div>
                 <div className="font-mono text-[11px] uppercase tracking-wide text-ink-faint mt-1">{l}</div>
@@ -346,7 +355,7 @@ export default function App() {
       {/* AI PROJECTS */}
       <section id="projects" className="py-20 border-t border-line">
         <Fade><div className="max-w-6xl mx-auto px-4 sm:px-8">
-          <Hdr label="Portfolio" title="AI Projects" />
+          <Hdr label="Portfolio" title="Shipped Products" />
 
           {/* Featured */}
           <div className="border border-line bg-paper-raised p-6 sm:p-10 mb-6">
