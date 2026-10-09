@@ -17,10 +17,10 @@ AI Engineer building LLM applications: agentic workflows, RAG pipelines and fine
 - BSc Artificial Intelligence — Vrije Universiteit Amsterdam (Sep 2020 – Aug 2023)
 
 ## Work Experience
-**AI Consultant @ Vervai** (Apr 2024 – Present)
-- Designed and implemented AI solutions focusing on practical applications and innovation.
-- Organised and led AI workshops and training sessions to bridge theory and practice.
-- Built SwipeEat, a preference-based meal recommendation app (mobile web MVP).
+**AI Engineer @ Vervai** (Apr 2024 – Present)
+- Built several AI agents and end to end AI solutions for client engagements: custom LLM applications, conversational assistants and retrieval systems over proprietary documents, alongside workflow automation.
+- Scoped the highest impact use cases with clients and took them from concept to production.
+- Ran practical AI workshops that upskill client teams.
 
 **Innovation Consultant @ Daffee** (Jun 2024 – Sep 2025)
 - Created role-specific GPT assistants to enhance productivity and decision-making.

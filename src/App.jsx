@@ -182,12 +182,13 @@ const ACADEMIC_PROJECTS = [
 
 const EXPERIENCE = [
   {
-    role: 'AI Consultant',
+    role: 'AI Engineer',
     company: 'Vervai',
     period: 'Apr 2024 – Present',
     points: [
-      'Designed and implemented AI solutions focusing on practical applications and innovation.',
-      'Organised and led AI workshops and training sessions to bridge theory and practice.',
+      'Built several AI agents and end to end AI solutions for client engagements: custom LLM applications, conversational assistants and retrieval systems over proprietary documents, alongside workflow automation.',
+      'Scoped the highest impact use cases with clients and took them from concept to production.',
+      'Ran practical AI workshops that upskill client teams.',
     ],
   },
   {
