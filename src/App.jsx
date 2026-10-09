@@ -139,7 +139,7 @@ const AI_PROJECTS = [
     tags: ['Gemini', 'Embeddings', 'Semantic search', 'Laravel', 'Arabic / RTL'],
     github: null,
     demo: 'https://hajzi.me',
-    logo: '/logos/hajzi.png',
+    logo: '/logos/hajzi-v2.png',
   },
   {
     title: 'Reel Replies: Instagram Comment Automation',
