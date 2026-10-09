@@ -45,8 +45,11 @@ npm run build
 tar czf - -C dist . | ssh ubuntu@194.163.176.183 \
   'rm -rf /srv/www/portfolio && mkdir -p /srv/www/portfolio && tar xzf - -C /srv/www/portfolio'
 
-# API service (only when api/ or server.js changes)
-tar czf - api server.js package.json | ssh ubuntu@194.163.176.183 'tar xzf - -C /srv/apps/portfolio-api'
+# API service (only when api/ changes). Send ONLY the api/ folder:
+# server.js, the Dockerfile and the API's own package.json (express) live only
+# on the server in /srv/apps/portfolio-api. This repo's package.json is the
+# website's, and uploading it breaks `npm install` in the API image.
+tar czf - api | ssh ubuntu@194.163.176.183 'tar xzf - -C /srv/apps/portfolio-api'
 ssh ubuntu@194.163.176.183 'cd /srv/stack && sudo docker compose up -d --build portfolio-api'
 ```
 
