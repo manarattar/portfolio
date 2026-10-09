@@ -109,9 +109,24 @@
     footer { border-top: 1px solid var(--line); padding: 28px 0 44px; color: var(--ink-faint); font-size: 13px; }
     footer a { color: var(--ink-dim); }
     footer p { margin: 0 0 8px; max-width: 62em; }
+    .cols3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .reqs { margin: 0; padding-left: 1.1em; color: var(--ink-dim); }
+    .reqs li { margin: 6px 0; }
+    .price { font-family: var(--display); font-size: clamp(44px, 7vw, 64px); font-weight: 600; line-height: 1; margin: 0; }
+    .price small { font-family: var(--sans); font-size: 16px; font-weight: 400; color: var(--ink-dim); margin-left: 8px; }
+    .note { color: var(--ink-dim); margin: 12px 0 0; max-width: 40em; }
+    .faq { max-width: 46em; }
+    .faq details { border-top: 1px solid var(--line); padding: 14px 0; }
+    .faq details:last-child { border-bottom: 1px solid var(--line); }
+    .faq summary { cursor: pointer; font-weight: 600; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after { content: "+"; font-family: var(--mono); color: var(--accent); }
+    .faq details[open] summary::after { content: "\2212"; }
+    .faq p { margin: 10px 0 0; color: var(--ink-dim); }
+    [hidden] { display: none !important; }
     @media (max-width: 860px) {
       .hero { grid-template-columns: 1fr; gap: 36px; }
-      .steps, .grid, .pack { grid-template-columns: 1fr; }
+      .steps, .grid, .pack, .cols3 { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -129,10 +144,10 @@
         <p class="eyebrow">Product &middot; Instagram automation</p>
         <h1>Reel Replies</h1>
         <p class="lead">Turn Instagram comments into conversations. When someone comments a keyword on your Reel, Reel Replies answers publicly and sends them a private message, automatically.</p>
-        <p class="status"><span class="dot" aria-hidden="true"></span>Live now &middot; template and setup guide coming soon</p>
+        <p class="status"><span class="dot" aria-hidden="true"></span><span class="js-not-on-sale">Live now &middot; template and setup guide coming soon</span><span class="js-on-sale" hidden>Live now &middot; template and setup guide available</span></p>
         <div class="actions">
           <a class="btn primary" href="https://www.instagram.com/manarmeta.ai/" target="_blank" rel="noopener noreferrer">See it live on Instagram</a>
-          <a class="btn ghost" href="mailto:manarattar77@gmail.com?subject=Reel%20Replies%20updates">Get notified</a>
+          <a class="btn ghost js-buy" data-buy-text="Buy for EUR 49" href="mailto:manarattar77@gmail.com?subject=Reel%20Replies%20updates">Get notified</a>
         </div>
       </div>
 
@@ -181,15 +196,59 @@
     <section aria-labelledby="pack">
       <div class="wrap">
         <div class="head">
-          <p class="eyebrow">Coming soon</p>
+          <p class="eyebrow">The package</p>
           <h2 id="pack">Run it on your own account</h2>
-          <p>I am packaging Reel Replies so that creators and small teams can run their own copy. It is not for sale yet; leave your email address to hear when it is ready.</p>
+          <p>Reel Replies comes as one download, for your own Instagram accounts. It is built from the service that answers comments on a live account.</p>
+        </div>
+        <div class="cols3">
+          <div class="card"><h3>The template</h3><ul><li>The full service, with 38 automated tests</li><li>A free hosting path: Render plus a free Postgres database</li><li>Rules file, admin dashboard, send queue and automatic token refresh</li><li>One Instagram account per install</li></ul></div>
+          <div class="card"><h3>The setup guide</h3><ul><li>Eleven chapters and two appendices, from the Meta app to going live</li><li>Troubleshooting for the common snags</li><li>Written step by step and checked against the working code</li><li>Also as Markdown for Notion</li></ul></div>
+          <div class="card"><h3>The licence</h3><ul><li>Use and modify it for your own Instagram accounts</li><li>Hire a contractor to set it up or maintain it</li><li>Not for resale or redistribution</li></ul></div>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="who">
+      <div class="wrap">
+        <div class="head">
+          <p class="eyebrow">Before you buy</p>
+          <h2 id="who">Who it is for</h2>
+          <p>This is a technical product. The guide is written for developers, technical creators and freelancers who are comfortable with a terminal, GitHub, JSON and environment variables. Plan for about an afternoon of setup and testing.</p>
         </div>
         <div class="pack">
-          <div class="card"><h3>The template</h3><ul><li>The full service, tested and ready to deploy</li><li>Runs on free hosting tiers to start</li><li>One Instagram account per install</li></ul></div>
-          <div class="card"><h3>The setup guide</h3><ul><li>Eleven chapters, from the Meta app to going live</li><li>Troubleshooting for the common snags</li><li>Written step by step and checked against the working code</li></ul></div>
+          <div class="card"><h3>What you need</h3><ul class="reqs"><li>A Meta developer account</li><li>An Instagram Creator or Business account with a public profile</li><li>A GitHub account and a Render account</li><li>Python 3.11 or newer</li><li>A free Supabase or Neon Postgres project</li><li>A second Instagram account for a real end to end test</li></ul></div>
+          <div class="card"><h3>Good to know</h3><ul class="reqs"><li>Instagram allows one private reply per comment, within seven days of it.</li><li>The default cap is 30 public replies per hour, and you can change it.</li><li>Meta's API and free hosting tiers can change, so the guide covers troubleshooting and token refresh.</li><li>You own the hosting, the database and the data. By default the service only talks to Instagram.</li></ul></div>
         </div>
-        <div class="actions"><a class="btn primary" href="mailto:manarattar77@gmail.com?subject=Reel%20Replies%20updates">Get notified when it is ready</a></div>
+      </div>
+    </section>
+
+    <section aria-labelledby="price">
+      <div class="wrap">
+        <div class="head">
+          <p class="eyebrow">Price</p>
+          <h2 id="price">One payment, no subscription</h2>
+        </div>
+        <p class="price">EUR 49<small>one time</small></p>
+        <p class="note">The guide, the template and the licence in one download. Taxes are calculated at checkout.</p>
+        <p class="note js-not-on-sale">It is not on sale yet. Leave your email address to hear when it opens.</p>
+        <div class="actions"><a class="btn primary js-buy" data-buy-text="Buy for EUR 49" href="mailto:manarattar77@gmail.com?subject=Reel%20Replies%20updates">Get notified when it is ready</a></div>
+      </div>
+    </section>
+
+    <section aria-labelledby="faq">
+      <div class="wrap">
+        <div class="head">
+          <p class="eyebrow">Questions</p>
+          <h2 id="faq">Frequently asked</h2>
+        </div>
+        <div class="faq">
+          <details><summary>Do I need to be a developer?</summary><p>You do not write code, but the guide assumes you are comfortable with a terminal, GitHub, JSON and environment variables. If those words are new to you, this product will be a struggle.</p></details>
+          <details><summary>Does it cost anything to run?</summary><p>The Meta API has no usage fee for this flow, and the default setup runs on free tiers of Render and a Postgres database, so there is no planned monthly hosting bill within the providers' free limits. Free tier terms can change.</p></details>
+          <details><summary>Does it work with a personal Instagram account?</summary><p>It needs an Instagram Creator or Business account with a public profile. One install serves one Instagram account.</p></details>
+          <details><summary>Can I use it for a client?</summary><p>The licence covers your own Instagram accounts. You may hire a contractor to set it up, but you may not resell it or share the code.</p></details>
+          <details class="js-on-sale" hidden><summary>What if Meta changes something?</summary><p>The guide has a troubleshooting chapter and explains token refresh. If a change breaks the template, I will publish a fix and you will get the update from your purchase page.</p></details>
+          <details class="js-on-sale" hidden><summary>Can I get a refund?</summary><p>If you followed the guide and could not get it running, write to me within 14 days of your purchase and I will refund you.</p></details>
+        </div>
       </div>
     </section>
   </main>
@@ -200,5 +259,20 @@
       <p><a href="https://replies.manarattar.com/privacy">Privacy policy</a></p>
     </div>
   </footer>
+  <script>
+    // Set BUY_URL to the Gumroad product link when the product is ready to sell.
+    // While it is empty the page shows the "not on sale yet" state.
+    (function () {
+      var BUY_URL = "";
+      var on = !!BUY_URL;
+      document.querySelectorAll(".js-buy").forEach(function (a) {
+        if (!on) return;
+        a.href = BUY_URL; a.target = "_blank"; a.rel = "noopener noreferrer";
+        a.textContent = a.getAttribute("data-buy-text") || "Buy now";
+      });
+      document.querySelectorAll(".js-on-sale").forEach(function (e) { e.hidden = !on; });
+      document.querySelectorAll(".js-not-on-sale").forEach(function (e) { e.hidden = on; });
+    })();
+  </script>
 </body>
 </html>
