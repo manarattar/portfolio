@@ -141,6 +141,15 @@ const AI_PROJECTS = [
     demo: 'https://hajzi.me',
     logo: '/logos/hajzi.png',
   },
+  {
+    title: 'Reel Replies: Instagram Comment Automation',
+    category: 'Product',
+    desc: 'A live Instagram service that turns a keyword in a Reel comment into a public reply and a private DM, chosen from rotating variants by a rules engine. It has a rate limited send queue, delivery tracking and an admin dashboard, and is being packaged as a reusable template.',
+    tags: ['FastAPI', 'Instagram API', 'Webhooks', 'Postgres', 'Docker'],
+    github: null,
+    demo: '/reel-replies/',
+    logo: '/logos/reel-replies.png',
+  },
 ]
 
 const [FEATURED_PROJECT, ...OTHER_PROJECTS] = AI_PROJECTS
